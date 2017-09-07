@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div id="exampleToolbar" role="group">
+						<div class="form-group col-sm-6">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="请输入要查询的内容...">
+						</div>
+						<button class="btn btn-success" onclick="reLoad()">
+							<i class="fa fa-search" aria-hidden="true"></i>查询
+						</button>
+						<button type="button" class="btn  btn-danger"
+							onclick="batchRemove()">
+							<i class="fa fa-trash" aria-hidden="true"></i>删除
+						</button>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/common/log/log.js"></script>
+</body>
+</html>

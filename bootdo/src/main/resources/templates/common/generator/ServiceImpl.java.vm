@@ -1,0 +1,55 @@
+package ${package}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+import ${package}.Mapper.${className}Mapper;
+import ${package}.DO.${className}DO;
+import ${package}.service.${className}Service;
+
+
+
+@Service("${classname}Service")
+public class ${className}ServiceImpl implements ${className}Service {
+	@Autowired
+	private ${className}Mapper ${classname}Mapper;
+	
+	@Override
+	public ${className}DO queryObject(${pk.attrType} ${pk.attrname}){
+		return ${classname}Mapper.queryObject(${pk.attrname});
+	}
+	
+	@Override
+	public List<${className}DO> queryList(Map<String, Object> map){
+		return ${classname}Mapper.queryList(map);
+	}
+	
+	@Override
+	public int queryTotal(Map<String, Object> map){
+		return ${classname}Mapper.queryTotal(map);
+	}
+	
+	@Override
+	public int save(${className}DO ${classname}){
+		return ${classname}Mapper.save(${classname});
+	}
+	
+	@Override
+	public int update(${className}DO ${classname}){
+		return ${classname}Mapper.update(${classname});
+	}
+	
+	@Override
+	public int delete(${pk.attrType} ${pk.attrname}){
+		return ${classname}Mapper.delete(${pk.attrname});
+	}
+	
+	@Override
+	public int deleteBatch(${pk.attrType}[] ${pk.attrname}s){
+		return ${classname}Mapper.deleteBatch(${pk.attrname}s);
+	}
+	
+}
