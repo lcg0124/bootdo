@@ -39,7 +39,7 @@ public class GenUtils {
 		templates.add("templates/common/generator/add.html.vm");
 //		templates.add("templates/common/generator/edit.html.vm");
 		templates.add("templates/common/generator/list.js.vm");
-//		templates.add("templates/common/generator/add.js.vm");
+		templates.add("templates/common/generator/add.js.vm");
 //		templates.add("templates/common/generator/edit.js.vm");
 		templates.add("templates/common/generator/menu.sql.vm");
 		return templates;
@@ -106,7 +106,8 @@ public class GenUtils {
 		map.put("pk", TableDO.getPk());
 		map.put("className", TableDO.getClassName());
 		map.put("classname", TableDO.getClassname());
-		map.put("pathName", TableDO.getClassname().toLowerCase());
+		//map.put("pathName", config.getString("packageName")+"/"+TableDO.getClassname().toLowerCase());
+		map.put("pathName", config.getString("packageName"));
 		map.put("columns", TableDO.getColumns());
 		map.put("package", config.getString("package"));
 		map.put("author", config.getString("author"));
@@ -124,7 +125,7 @@ public class GenUtils {
 			
 			try {
 				//添加到zip
-				zip.putNextEntry(new ZipEntry(getFileName(template, TableDO.getClassName(), config.getString("package"))));  
+				zip.putNextEntry(new ZipEntry(getFileName(template, TableDO.getClassname(),TableDO.getClassName(), config.getString("package"))));  
 				IOUtils.write(sw.toString(), zip, "UTF-8");
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
@@ -166,7 +167,7 @@ public class GenUtils {
 	/**
 	 * 获取文件名
 	 */
-	public static String getFileName(String template, String className, String packageName){
+	public static String getFileName(String template, String classname,String className, String packageName){
 		String packagePath = "main" + File.separator + "java" + File.separator;
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath += packageName.replace(".", File.separator) + File.separator;
@@ -198,7 +199,8 @@ public class GenUtils {
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
+					+ "modules" + File.separator + "generator" + File.separator + classname + ".html";
+	//				+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
 		}
 		if(template.contains("add.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
@@ -211,12 +213,13 @@ public class GenUtils {
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
+					+ "modules" + File.separator + "generator" + File.separator + classname+ ".js";
+			//		+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
 		}
-//		if(template.contains("add.js.vm")){
-//			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-//					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
-//		}
+		if(template.contains("add.js.vm")){
+			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
+					+ "modules" + File.separator + "generator" + File.separator + "add" + ".js";
+		}
 //		if(template.contains("edit.js.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
 //					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";

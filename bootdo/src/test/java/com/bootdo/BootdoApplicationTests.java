@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.bootdo.blog.dao.BCommentsMapper;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.MenuMapper;
@@ -31,6 +32,9 @@ public class BootdoApplicationTests {
 	
 	@Autowired
 	MenuService menuService;
+	
+	@Autowired
+	BCommentsMapper bCommentsMapper;
 
 	@Test
 	public void contextLoads() {
@@ -62,8 +66,9 @@ public class BootdoApplicationTests {
  
 	@Test
 	public void test01() {
-		Tree<MenuDO> tree = menuService.getSysMenuTree(1L);
-		System.out.println(tree.getChildren().size());
+		Integer[] ids =  {3,4,5};
+		int count = bCommentsMapper.batchRemove(ids);
+		System.out.println(count);
 	}
 
 }

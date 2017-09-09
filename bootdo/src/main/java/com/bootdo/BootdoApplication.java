@@ -13,7 +13,11 @@ public class BootdoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BootdoApplication.class, args);
-		
+		System.out.println("*****************************");
+		System.out.println("*****************************");
+		System.out.println("*******BootDo启动成功********");
+		System.out.println("*****************************");
+		System.out.println("*****************************");
 	}
 	@Bean
 	public EmbeddedServletContainerCustomizer containerCustomizer() {

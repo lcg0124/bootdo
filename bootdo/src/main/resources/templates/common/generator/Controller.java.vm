@@ -5,13 +5,15 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ${package}.DO.${className}DO;
+import ${package}.domain.${className}DO;
 import ${package}.service.${className}Service;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -27,30 +29,38 @@ import com.bootdo.common.utils.R;
  * @email ${email}
  * @date ${datetime}
  */
-@RestController
-@RequestMapping("${pathName}")
+@Controller
+@RequestMapping("/${pathName}/${classname}")
 public class ${className}Controller {
 	@Autowired
 	private ${className}Service ${classname}Service;
 	
-	/**
-	 * 列表
-	 */
-	@RequestMapping("/list")
+	@GetMapping()
+	@RequiresPermissions("${pathName}:${classname}")
+	String ${className}(){
+	    return "${pathName}/${classname}/${classname}";
+	}
+	
+	@ResponseBody
+	@GetMapping("/list")
 	@RequiresPermissions("${pathName}:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
-		List<${className}DO> ${classname}List = ${classname}Service.queryList(query);
-		int total = ${classname}Service.queryTotal(query);
+		List<${className}DO> ${classname}List = ${classname}Service.list(query);
+		int total = ${classname}Service.count(query);
 		
-		PageUtils pageUtil = new PageUtils(${classname}List, total);
+		PageUtils pageUtils = new PageUtils(${classname}List, total);
 		
-		return R.ok().put("page", pageUtil);
+		return pageUtils;
 	}
 	
-	
+	@GetMapping()
+	//@RequiresPermissions("blog:bComments")
+	String add(){
+	    return "blog/${classname}/add";
+	}
 	/**
 	 * 信息
 	 */
@@ -84,13 +94,28 @@ public class ${className}Controller {
 		return R.ok();
 	}
 	
+	
 	/**
 	 * 删除
 	 */
-	@RequestMapping("/delete")
-	@RequiresPermissions("${pathName}:delete")
-	public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
-		${classname}Service.deleteBatch(${pk.attrname}s);
+	@PostMapping( "/remove")
+	@ResponseBody
+	@RequiresPermissions("${pathName}:remove")
+	public R remove( ${pk.attrType} ${pk.attrname}){
+		if(${classname}Service.remove(${pk.attrname})>0){
+		return R.ok();
+		}
+		return R.error();
+	}
+	
+	/**
+	 * 删除
+	 */
+	@PostMapping( "/batchRemove")
+	@ResponseBody
+	@RequiresPermissions("${pathName}:remove")
+	public R remove(@RequestParam("ids[]") ${pk.attrType}[] ${pk.attrname}s){
+		${classname}Service.batchRemove(${pk.attrname}s);
 		
 		return R.ok();
 	}

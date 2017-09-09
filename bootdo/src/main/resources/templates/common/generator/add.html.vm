@@ -29,8 +29,9 @@
 				</div>
 			</div>
 	</div>
+	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/sys/user/add.js">
+	<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/add.js">
 	</script>
 </body>
 </html>

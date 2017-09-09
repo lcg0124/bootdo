@@ -6,30 +6,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import ${package}.Mapper.${className}Mapper;
-import ${package}.DO.${className}DO;
+import ${package}.dao.${className}Mapper;
+import ${package}.domain.${className}DO;
 import ${package}.service.${className}Service;
 
 
 
-@Service("${classname}Service")
+@Service
 public class ${className}ServiceImpl implements ${className}Service {
 	@Autowired
 	private ${className}Mapper ${classname}Mapper;
 	
 	@Override
-	public ${className}DO queryObject(${pk.attrType} ${pk.attrname}){
-		return ${classname}Mapper.queryObject(${pk.attrname});
+	public ${className}DO get(${pk.attrType} ${pk.attrname}){
+		return ${classname}Mapper.get(${pk.attrname});
 	}
 	
 	@Override
-	public List<${className}DO> queryList(Map<String, Object> map){
-		return ${classname}Mapper.queryList(map);
+	public List<${className}DO> list(Map<String, Object> map){
+		return ${classname}Mapper.list(map);
 	}
 	
 	@Override
-	public int queryTotal(Map<String, Object> map){
-		return ${classname}Mapper.queryTotal(map);
+	public int count(Map<String, Object> map){
+		return ${classname}Mapper.count(map);
 	}
 	
 	@Override
@@ -43,13 +43,13 @@ public class ${className}ServiceImpl implements ${className}Service {
 	}
 	
 	@Override
-	public int delete(${pk.attrType} ${pk.attrname}){
-		return ${classname}Mapper.delete(${pk.attrname});
+	public int remove(${pk.attrType} ${pk.attrname}){
+		return ${classname}Mapper.remove(${pk.attrname});
 	}
 	
 	@Override
-	public int deleteBatch(${pk.attrType}[] ${pk.attrname}s){
-		return ${classname}Mapper.deleteBatch(${pk.attrname}s);
+	public int batchRemove(${pk.attrType}[] ${pk.attrname}s){
+		return ${classname}Mapper.batchRemove(${pk.attrname}s);
 	}
 	
 }

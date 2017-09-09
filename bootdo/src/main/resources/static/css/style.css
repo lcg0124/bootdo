@@ -5,6 +5,8 @@
  *   修改记录 
  *	 .checkbox-inline input[type=checkbox] 去掉margin-top:-4px
  *	 .checkbox-inline 添加font-size: 14px;默认是13px
+ *   .onoffswitch-inner:before,    ;   /* height: 16px; 两处
+ *   
  *
  *
  *
@@ -2379,9 +2381,9 @@ table.dataTable thead .sorting:after {
     display: block;
     float: left;
     width: 50%;
-    height: 16px;
+    /* height: 16px; */
     padding: 0;
-    line-height: 16px;
+   /*  line-height: 16px; */
     font-size: 10px;
     color: white;
     font-family: Trebuchet, Arial, sans-serif;
