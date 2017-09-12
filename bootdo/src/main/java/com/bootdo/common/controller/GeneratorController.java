@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -29,7 +30,6 @@ public class GeneratorController {
 	String generator() {
 		return prefix + "/list";
 	}
-
 	@ResponseBody
 	@GetMapping("/list")
 	List<Map<String, Object>> list() {
@@ -44,6 +44,22 @@ public class GeneratorController {
 		//tableNames = JSON.parseArray(tables).toArray(tableNames);
 		
 		byte[] data =generatorService.generatorCode(tableNames);
+
+		response.reset();
+		response.setHeader("Content-Disposition", "attachment; filename=\"bootdo.zip\"");
+		response.addHeader("Content-Length", "" + data.length);
+		response.setContentType("application/octet-stream; charset=UTF-8");
+
+		IOUtils.write(data, response.getOutputStream());
+	}
+	
+	@RequestMapping("/batchCode")
+	public void batchCode(HttpServletRequest request, HttpServletResponse response, @RequestParam("tables[]") String[] tables) throws IOException {
+		//String[] tableNames = new String[] {tableName};
+		//String tables = request.getParameter("tables");
+		//tableNames = JSON.parseArray(tables).toArray(tableNames);
+		
+		byte[] data =generatorService.generatorCode(tables);
 
 		response.reset();
 		response.setHeader("Content-Disposition", "attachment; filename=\"bootdo.zip\"");

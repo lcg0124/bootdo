@@ -19,7 +19,7 @@ public class BCommentsServiceImpl implements BCommentsService {
 	private BCommentsMapper bCommentsMapper;
 	
 	@Override
-	public BCommentsDO get(Integer id){
+	public BCommentsDO get(Long id){
 		return bCommentsMapper.get(id);
 	}
 	

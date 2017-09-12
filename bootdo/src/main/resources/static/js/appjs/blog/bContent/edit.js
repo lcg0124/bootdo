@@ -1,22 +1,26 @@
 $().ready(function() {
 	$('.summernote').summernote({
-		height:'220px',
+		height : '220px',
 		lang : 'zh-CN'
 	});
+	var content = $("#content").val();
+	$('#content_sn').code(content);
 	validateRule();
 });
+
 $.validator.setDefaults({
 	submitHandler : function() {
 		save();
 	}
 });
-function save() {
+function save(status) {
+	$("#status").val(status);
 	var content_sn = $("#content_sn").code();
 	$("#content").val(content_sn);
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/blog/bComments/save",
+		url : "/blog/bContent/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -41,13 +45,13 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			title : {
+			name : {
 				required : true
 			}
 		},
 		messages : {
-			title : {
-				required : icon + "请输入标题"
+			name : {
+				required : icon + "请输入姓名"
 			}
 		}
 	})

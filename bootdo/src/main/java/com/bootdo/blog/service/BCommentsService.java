@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface BCommentsService {
 	
-	BCommentsDO get(Integer id);
+	BCommentsDO get(Long id);
 	
 	List<BCommentsDO> list(Map<String, Object> map);
 	

@@ -135,6 +135,7 @@ public interface UserMapper {
 			"</script>")
 	int count(Map<String,Object> map);
 	
+	@Options(useGeneratedKeys = true, keyProperty = "userId")
 	@Insert("insert into sys_user (`username`, `password`, `email`, `mobile`, `status`, `user_id_create`, `gmt_create`, `gmt_modified`, `name`)"
 	+ "values (#{username}, #{password}, #{email}, #{mobile}, #{status}, #{userIdCreate}, #{gmtCreate}, #{gmtModified}, #{name})")
 	int save(SysUserDO obj);

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.blog.domain.BCommentsDO;
+import com.bootdo.blog.domain.BContentDO;
 import com.bootdo.blog.service.BCommentsService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -59,17 +61,12 @@ public class BCommentsController {
 	String add(){
 	    return "blog/bComments/add";
 	}
-	
-	
-	/**
-	 * 信息
-	 */
-	@RequestMapping("/info/{id}")
-	@RequiresPermissions("blog:info")
-	public R info(@PathVariable("id") Integer id){
-		BCommentsDO bComments = bCommentsService.get(id);
-		
-		return R.ok().put("bComments", bComments);
+	@GetMapping("/edit")
+	//@RequiresPermissions("blog:bComments")
+	String edit(Long id,Model model){
+		BCommentsDO bContentDO = bCommentsService.get(id);
+		model.addAttribute("bContentDO", bContentDO);
+	    return "blog/bComments/edit";
 	}
 	
 	/**

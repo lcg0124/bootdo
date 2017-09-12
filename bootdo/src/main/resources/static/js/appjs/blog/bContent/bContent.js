@@ -1,5 +1,4 @@
-
-var prefix = "/${pathName}/${classname}"
+var prefix = "/blog/bContent"
 $(function() {
 	load();
 });
@@ -10,9 +9,9 @@ function load() {
 					{
 						method : 'get', // 服务器数据的请求方式 get or post
 						url : prefix + "/list", // 服务器数据的加载地址
-					//	showRefresh : true,
-					//	showToggle : true,
-					//	showColumns : true,
+						// showRefresh : true,
+						// showToggle : true,
+						// showColumns : true,
 						iconSize : 'outline',
 						toolbar : '#exampleToolbar',
 						striped : true, // 设置为true会有隔行变色效果
@@ -25,16 +24,17 @@ function load() {
 						// //发送到服务器的数据编码类型
 						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
-						//search : true, // 是否显示搜索框
+						// search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
-						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者
+						// "server"
 						queryParams : function(params) {
 							return {
-								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
-								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
-					           // username:$('#searchName').val()
+								// 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+								limit : params.limit,
+								offset : params.offset
+							// name:$('#searchName').val(),
+							// username:$('#searchName').val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -47,27 +47,130 @@ function load() {
 								{
 									checkbox : true
 								},
-								#foreach($column in $columns)
 								{
-									field : '${column.attrname}', 
-									title : '${column.comments}' 
+									visible : false,
+									field : 'cid',
+									title : ''
 								},
-								#end
+								{
+									field : 'title',
+									title : '标题',
+									width :320
+								},
+								{
+									field : 'author',
+									title : '作者'
+								},
+								{
+									visible : false,
+									field : 'slug',
+									title : ''
+								},
+								{
+									visible : false,
+									field : 'created',
+									title : '创建人id'
+								},
+								{
+									visible : false,
+									field : 'modified',
+									title : '最近修改人id'
+								},
+								{
+									visible : false,
+									field : 'content',
+									title : '内容'
+								},
+								
+								{
+									visible : false,
+									field : 'type',
+									title : '类型'
+								},
+								{
+									visible : false,
+									field : 'tags',
+									title : '标签'
+								},
+								{
+									visible : false,
+									field : 'categories',
+									title : '分类'
+								},
+								{
+									visible : false,
+									field : 'hits',
+									title : ''
+								},
+								{
+									field : 'commentsNum',
+									title : '评论数量',
+									width :40
+								},
+								{
+									field : 'status',
+									title : '状态',
+									align : 'center',
+									formatter : function(value, row, index) {
+										if (value == '0') {
+											return '<span class="label label-danger">草稿</span>';
+										} else if (value == '1') {
+											return '<span class="label label-primary">发布</span>';
+										}
+									}
+								},
+								{
+									field : 'allowComment',
+									title : '开启评论',
+									align : 'center',
+									formatter : function(value, row, index) {
+										if (value == '0') {
+											return '<span class="label label-danger">否</span>';
+										} else if (value == '1') {
+											return '<span class="label label-primary">是</span>';
+										}
+									}
+								},
+								{
+									visible : false,
+									field : 'allowPing',
+									title : '允许ping',
+									align : 'center',
+									formatter : function(value, row, index) {
+										if (value == '0') {
+											return '<span class="label label-danger">否</span>';
+										} else if (value == '1') {
+											return '<span class="label label-primary">是</span>';
+										}
+									}
+								},
+								{
+									field : 'allowFeed',
+									title : '允许订阅',
+									align : 'center',
+									formatter : function(value, row, index) {
+										if (value == '0') {
+											return '<span class="label label-danger">否</span>';
+										} else if (value == '1') {
+											return '<span class="label label-primary">是</span>';
+										}
+									}
+								},
 								{
 									title : '操作',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.${pk.attrname}
+												+ row.cid
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.${pk.attrname}
+												+ row.cid
 												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-												+ row.${pk.attrname}
+												+ row.cid
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d ;
+										return e + d;
 									}
 								} ]
 					});
@@ -76,7 +179,7 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-	layer.open({
+	var addPage = layer.open({
 		type : 2,
 		title : '增加',
 		maxmin : true,
@@ -84,32 +187,34 @@ function add() {
 		area : [ '800px', '520px' ],
 		content : prefix + '/add' // iframe的url
 	});
+	layer.full(addPage);
 }
-function edit(id) {
-	layer.open({
+function edit(cid) {
+	var editPage = layer.open({
 		type : 2,
 		title : '编辑',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/edit/' + id // iframe的url
+		content : prefix + '/edit/' + cid // iframe的url
 	});
+	layer.full(editPage);
 }
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
-			url : prefix+"/remove",
+			url : prefix + "/remove",
 			type : "post",
 			data : {
 				'id' : id
 			},
 			success : function(r) {
-				if (r.code==0) {
+				if (r.code == 0) {
 					layer.msg(r.msg);
 					reLoad();
-				}else{
+				} else {
 					layer.msg(r.msg);
 				}
 			}
@@ -132,7 +237,7 @@ function batchRemove() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['${pk.attrname}'];
+			ids[i] = row['cid'];
 		});
 		$.ajax({
 			type : 'POST',
