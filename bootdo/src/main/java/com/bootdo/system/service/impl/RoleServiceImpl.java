@@ -55,13 +55,13 @@ public class RoleServiceImpl implements RoleService {
 		List<Long> menuIds = role.getMenuIds();
 		Long roleId = role.getRoleId();
 		roleMenuMapper.removeByRoleId(roleId);
-		int count = roleMenuMapper.batchSave(roleId, menuIds);
-//		for (Long menuId : menuIds) {
-//			RoleMenuDO roleMenuDO = new RoleMenuDO();
-//			roleMenuDO.setMenuId(menuId);
-//			roleMenuDO.setRoleId(roleId);
-//			r = roleMenuMapper.save(roleMenuDO);
-//		}
+		int count=0; ///= roleMenuMapper.batchSave(roleId, menuIds);
+		for (Long menuId : menuIds) {
+			RoleMenuDO roleMenuDO = new RoleMenuDO();
+			roleMenuDO.setMenuId(menuId);
+			roleMenuDO.setRoleId(roleId);
+			count = roleMenuMapper.save(roleMenuDO);
+		}
 		return count;
 	}
 
