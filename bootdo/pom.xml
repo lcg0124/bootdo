@@ -98,6 +98,11 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.3.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.theborakompanioni</groupId>
+			<artifactId>thymeleaf-extras-shiro</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 		<!-- utils -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -110,9 +115,15 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
-
-
-
+		<!-- ehchache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
