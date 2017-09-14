@@ -117,9 +117,11 @@ function remove(id) {
 				'id' : id
 			},
 			success : function(data) {
-				if (data.success) {
+				if (data.code==0) {
 					layer.msg("删除成功");
 					reLoad();
+				}else{
+					layer(code.msg);
 				}
 			}
 		});
