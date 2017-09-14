@@ -37,12 +37,14 @@ public class BContentController {
 	private BContentService bContentService;
 
 	@GetMapping()
+	//@RequiresPermissions("blog:bContent")
 	String BContent() {
 		return "blog/bContent/bContent";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
+	@RequiresPermissions("blog:list")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -132,7 +134,6 @@ public class BContentController {
 	@ResponseBody
 	public R remove(@RequestParam("ids[]") Long[] cids) {
 		bContentService.batchRemove(cids);
-
 		return R.ok();
 	}
 

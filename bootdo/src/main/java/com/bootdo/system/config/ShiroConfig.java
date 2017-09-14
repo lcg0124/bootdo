@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.bootdo.system.shiro.UserRealm;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+
 @Configuration
 public class ShiroConfig {
 	@Bean
@@ -64,6 +66,11 @@ public class ShiroConfig {
 		proxyCreator.setProxyTargetClass(true);
 		return proxyCreator;
 	}
+	
+	@Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
