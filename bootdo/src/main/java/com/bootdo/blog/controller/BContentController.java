@@ -37,14 +37,12 @@ public class BContentController {
 	private BContentService bContentService;
 
 	@GetMapping()
-	@RequiresPermissions("blog:bContent")
 	String BContent() {
 		return "blog/bContent/bContent";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("blog:list")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -73,7 +71,6 @@ public class BContentController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{cid}")
-	@RequiresPermissions("blog:info")
 	public R info(@PathVariable("cid") Long cid) {
 		BContentDO bContent = bContentService.get(cid);
 
@@ -85,7 +82,6 @@ public class BContentController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("blog:save")
 	public R save( BContentDO bContent){
 		//处理是否允许评论等
 		if (bContent.getAllowComment()==null) {
@@ -111,7 +107,6 @@ public class BContentController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("blog:update")
 	public R update(@RequestBody BContentDO bContent) {
 		bContentService.update(bContent);
 
@@ -123,7 +118,6 @@ public class BContentController {
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	@RequiresPermissions("blog:remove")
 	public R remove(Long id) {
 		if (bContentService.remove(id) > 0) {
 			return R.ok();
@@ -136,7 +130,6 @@ public class BContentController {
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("blog:remove")
 	public R remove(@RequestParam("ids[]") Long[] cids) {
 		bContentService.batchRemove(cids);
 
