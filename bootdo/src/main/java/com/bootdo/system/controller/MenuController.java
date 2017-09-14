@@ -58,12 +58,12 @@ public class MenuController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if (menuService.remove(id) > 0) {
-			return R.ok();
-		} else {
-			return R.error(1, "删除失败");
-		}
-
+		return R.error(1, "演示系统不允许删除");
+//		if (menuService.remove(id) > 0) {
+//			return R.ok();
+//		} else {
+//			return R.error(1, "删除失败");
+//		}
 	}
 
 	@PostMapping("/save")

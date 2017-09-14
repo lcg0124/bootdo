@@ -122,7 +122,8 @@ public class UserController {
 
 	@PostMapping("/exit")
 	@ResponseBody
-	boolean exit(Map<String, Object> params) {
+	boolean exit(@RequestParam Map<String, Object> params) {
+		//Query query = new Query(params);
 		return !userService.exit(params);// 存在，不通过，false
 	}
 

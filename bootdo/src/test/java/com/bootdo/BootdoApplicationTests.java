@@ -1,7 +1,9 @@
 package com.bootdo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +20,7 @@ import com.bootdo.system.dao.UserMapper;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.service.MenuService;
+import com.bootdo.system.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,6 +35,9 @@ public class BootdoApplicationTests {
 	
 	@Autowired
 	MenuService menuService;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	BCommentsMapper bCommentsMapper;
@@ -66,8 +72,10 @@ public class BootdoApplicationTests {
  
 	@Test
 	public void test01() {
-		Tree<MenuDO> tree = menuService.getSysMenuTree(1L);
-		System.out.println(tree);
+		Map<String, Object> map = new HashMap<>();
+		map.put("username", "fff");
+		boolean b = userService.exit(map);
+		System.out.println(b);
 	}
 
 }
