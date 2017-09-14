@@ -85,6 +85,7 @@ public class UserController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(SysUserDO user) {
+		// return R.error(1, "演示系统不允许修改");
 		if (userService.update(user) > 0) {
 			return R.ok();
 		}
@@ -95,44 +96,38 @@ public class UserController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if (1 == id) {
-			return R.error("演示系统不允许删除管理员");
-		}
-		if (userService.remove(id) > 0) {
-			return R.ok();
-		}
-		return R.error();
+		//return R.error("演示系统不允许删除");
+		 if (userService.remove(id) > 0) {
+		 return R.ok();
+		 }
+		 return R.error();
 	}
 
 	@Log("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
-		if (Arrays.asList(userIds).contains(1L)) {
-			return R.error("演示系统不允许删除管理员");
-		}
-		List<Long> Ids = Arrays.asList(userIds);
-		int r = userService.batchremove(Ids);
-		System.out.println(r);
-		if (r > 0) {
-			return R.ok();
-		}
-		return R.error();
+	//	return R.error("演示系统不允许删除");
+		 List<Long> Ids = Arrays.asList(userIds);
+		 int r = userService.batchremove(Ids);
+		 System.out.println(r);
+		 if (r > 0) {
+		 return R.ok();
+		 }
+		 return R.error();
 	}
 
 	@PostMapping("/exit")
 	@ResponseBody
 	boolean exit(@RequestParam Map<String, Object> params) {
-		//Query query = new Query(params);
+		// Query query = new Query(params);
 		return !userService.exit(params);// 存在，不通过，false
 	}
 
 	@Log("请求更改用户密码")
 	@GetMapping("/resetPwd/{id}")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
-		if (1 == userId) {
-			return "演示系统不允许修改管理员密码";
-		}
+
 		SysUserDO userDO = new SysUserDO();
 		userDO.setUserId(userId);
 		model.addAttribute("user", userDO);
@@ -143,6 +138,9 @@ public class UserController {
 	@PostMapping("/resetPwd")
 	@ResponseBody
 	R resetPwd(SysUserDO user) {
+		if (1L == user.getUserId()) {
+			return R.error("演示系统不允许修改管理员密码");
+		}
 		user.setPassword(MD5Utils.encrypt(userService.get(user.getUserId()).getUsername(), user.getPassword()));
 		if (userService.resetPwd(user) > 0) {
 			return R.ok();

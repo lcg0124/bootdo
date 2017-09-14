@@ -44,15 +44,15 @@ function update() {
 		error : function(request) {
 			alert("Connection error");
 		},
-		success : function(data) {
-			if (data.code == 0) {
-				parent.layer.msg("操作成功");
+		success : function(r) {
+			if (r.code == 0) {
+				parent.layer.msg(r.msg);
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
 
 			} else {
-				parent.layer.msg(code.msg);
+				parent.layer.msg(r.msg);
 			}
 
 		}

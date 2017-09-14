@@ -60,6 +60,9 @@ public class RoleController {
 	@PostMapping("/update")
 	@ResponseBody()
 	R update(RoleDO role) {
+//		if (role.getRoleId()==1) {
+//			return R.error(1, "演示系统不允许修改管理员菜单");
+//		}
 		if (roleService.update(role) > 0) {
 			return R.ok();
 		} else {
@@ -71,12 +74,12 @@ public class RoleController {
 	@PostMapping("/remove")
 	@ResponseBody()
 	R save(Long id) {
-		return R.error(1, "演示系统不允许删除");
-//		if (roleService.remove(id) > 0) {
-//			return R.ok();
-//		} else {
-//			return R.error(1, "删除失败");
-//		}
+	//	return R.error(1, "演示系统不允许删除");
+		if (roleService.remove(id) > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "删除失败");
+		}
 
 	}
 

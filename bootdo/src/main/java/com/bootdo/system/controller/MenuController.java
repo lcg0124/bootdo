@@ -58,12 +58,12 @@ public class MenuController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		return R.error(1, "演示系统不允许删除");
-//		if (menuService.remove(id) > 0) {
-//			return R.ok();
-//		} else {
-//			return R.error(1, "删除失败");
-//		}
+		//return R.error(1, "演示系统不允许删除");
+		if (menuService.remove(id) > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "删除失败");
+		}
 	}
 
 	@PostMapping("/save")
@@ -80,6 +80,7 @@ public class MenuController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(MenuDO menu) {
+		//return R.error(1, "演示系统不允许修改");
 		if (menuService.update(menu) > 0) {
 			return R.ok();
 		} else {
