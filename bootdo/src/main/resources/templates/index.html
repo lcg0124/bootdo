@@ -63,7 +63,7 @@
 							<li><a id="index001" class="J_menuItem" href="index_v1.html"
 								data-index="0" th:href="@{/main}">了解BootDo</a></li>
 						</ul></li>
-					<li th:each="menu : ${menus.children}"><a href="#"> <i
+					<li th:each="menu : ${menus}"><a href="#"> <i
 							class="fa fa fa-bar-chart-o"
 							th:class="${menu.attributes.icon}"></i> <span
 							class="nav-label" th:text="${menu.text}">基础信息</span> <span

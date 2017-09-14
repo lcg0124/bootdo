@@ -4698,7 +4698,7 @@
 		 * @name $.jstree.defaults.checkbox.three_state
 		 * @plugin checkbox
 		 */
-		three_state			: true,
+		three_state			: false,
 		/**
 		 * a boolean indicating if clicking anywhere on the node should act as clicking on the checkbox. Defaults to `true`.
 		 * @name $.jstree.defaults.checkbox.whole_node

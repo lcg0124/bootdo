@@ -66,9 +66,8 @@ public class BootdoApplicationTests {
  
 	@Test
 	public void test01() {
-		Integer[] ids =  {3,4,5};
-		int count = bCommentsMapper.batchRemove(ids);
-		System.out.println(count);
+		Tree<MenuDO> tree = menuService.getSysMenuTree(1L);
+		System.out.println(tree);
 	}
 
 }

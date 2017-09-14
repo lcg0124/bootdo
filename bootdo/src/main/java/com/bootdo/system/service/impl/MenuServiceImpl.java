@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.bootdo.common.domain.Tree;
@@ -30,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
 	 * @param 用户ID
 	 * @return 树形菜单
 	 */
-
+	@Cacheable
 	@Override
 	public Tree<MenuDO> getSysMenuTree(Long id) {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
@@ -139,6 +140,26 @@ public class MenuServiceImpl implements MenuService {
 			}
 		}
 		return permsSet;
+	}
+
+	@Override
+	public List<Tree<MenuDO>> listMenuTree(Long id) {
+		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
+		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
+		for (MenuDO sysMenuDO : menuDOs) {
+			Tree<MenuDO> tree = new Tree<MenuDO>();
+			tree.setId(sysMenuDO.getMenuId().toString());
+			tree.setParentId(sysMenuDO.getParentId().toString());
+			tree.setText(sysMenuDO.getName());
+			Map<String, Object> attributes = new HashMap<>();
+			attributes.put("url", sysMenuDO.getUrl());
+			attributes.put("icon", sysMenuDO.getIcon());
+			tree.setAttributes(attributes);
+			trees.add(tree);
+		}
+		// 默认顶级菜单为０，根据数据库实际情况调整
+		List<Tree<MenuDO>> list = BuildTree.buildList(trees,"0");
+		return list;
 	}
 
 }

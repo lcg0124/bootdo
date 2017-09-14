@@ -7,23 +7,8 @@ import com.bootdo.common.domain.Tree;
 
 import javassist.bytecode.LineNumberAttribute;
 
-/**
- * 构建tree TODO <br>
- * 
- * @author kangxu2 2017-1-7
- *
- */
 public class BuildTree {
 
-	/**
-	 * 
-	 * TODO <br>
-	 * 
-	 * @author kangxu2 2017-1-7
-	 *
-	 * @param nodes
-	 * @return
-	 */
 	public static <T> Tree<T> build(List<Tree<T>> nodes) {
 
 		if (nodes == null) {
@@ -69,7 +54,7 @@ public class BuildTree {
 		return root;
 	}
 
-	public static <T> List<Tree<T>> buildList(List<Tree<T>> nodes,String idParam) {
+	public static <T> List<Tree<T>> buildList(List<Tree<T>> nodes, String idParam) {
 		if (nodes == null) {
 			return null;
 		}

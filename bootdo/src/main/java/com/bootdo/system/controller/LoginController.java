@@ -1,5 +1,7 @@
 package com.bootdo.system.controller;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LogoutAware;
@@ -32,8 +34,9 @@ public class LoginController extends BaseController {
 
 	@GetMapping({ "/", "", "/index" })
 	String Index(Model model) {
-		Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
-		model.addAttribute("menus", menuTree);
+		//Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
+		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
+		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		logger.info(getUser().getName());
 		return "index";

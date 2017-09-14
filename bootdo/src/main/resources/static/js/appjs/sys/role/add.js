@@ -12,17 +12,20 @@ $.validator.setDefaults({
 });
 function loadMenuTree() {
 	$('#menuTree').jstree({
-		"plugins" : [ "wholerow", "checkbox" ],
 		'core' : {
 			'data' : menuTree
-		}
+		},
+		"checkbox" : {
+			"three_state" : false//不起作用，修改了源代码的默认true--false
+		},
+		"plugins" : [ "wholerow", "checkbox" ]
 	});
 	$('#menuTree').jstree().open_all();
 }
 function getAllSelectNodes() {
 	var ref = $('#menuTree').jstree(true);// 获得整个树
-	menuIds = ref.get_selected(); // 获得所有选中节点，返回值为数组
-	// alert(sel);
+	menuIds = ref.get_selected(); // 获得所有选中节点的，返回值为数组
+	alert(sel);
 }
 function getMenuTreeData() {
 	$.ajax({

@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +36,7 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSecurityManager(securityManager());
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		shiroFilterFactoryBean.setSuccessUrl("/index");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		Map<String, String> filterChainDefinitionMap = new HashMap<>();
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/js/**", "anon");
@@ -40,12 +45,32 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/docs/**", "anon");
 		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/**", "authc");
-		filterChainDefinitionMap.put("/sys/user/", "perms[sys:user]");
-		filterChainDefinitionMap.put("/sys/menu/", "perms[sys:menu]");
-		filterChainDefinitionMap.put("/sys/role/", "perms[sys:role]");
+		// filterChainDefinitionMap.put("/sys/user", "perms[sys:user]");
+		// filterChainDefinitionMap.put("/sys/user/add", "perms[sys:user:add]");
+		filterChainDefinitionMap.put("/sys/menu", "perms[sys:menu]");
+		filterChainDefinitionMap.put("/sys/role", "perms[sys:role]");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		return shiroFilterFactoryBean;
+	}
+
+	@Bean("lifecycleBeanPostProcessor")
+	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+		return new LifecycleBeanPostProcessor();
+	}
+
+	@Bean
+	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+		DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+		proxyCreator.setProxyTargetClass(true);
+		return proxyCreator;
+	}
+
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+			@Qualifier("securityManager") SecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+		return authorizationAttributeSourceAdvisor;
 	}
 
 }
