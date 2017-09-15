@@ -1,6 +1,6 @@
 var prefix = "/sys/menu"
 $(function() {
-	$("#signupForm").validate();
+	validateRule();
 });
 $.validator.setDefaults({
 	submitHandler : function() {
@@ -12,7 +12,7 @@ function submit01() {
 		cache : true,
 		type : "POST",
 		url : prefix + "/save",
-		data : $('#signupForm').serialize(),// 你的formid
+		data : $('#signupForm').serialize(),
 		async : false,
 		error : function(request) {
 			laryer.alert("Connection error");
@@ -29,4 +29,26 @@ function submit01() {
 			}
 		}
 	});
+}
+
+function validateRule() {
+	var icon = "<i class='fa fa-times-circle'></i> ";
+	$("#signupForm").validate({
+		rules : {
+			name : {
+				required : true
+			},
+			type : {
+				required : true
+			}
+		},
+		messages : {
+			name : {
+				required : icon + "请输入菜单名"
+			},
+			type : {
+				required : icon + "请选择菜单类型"
+			}
+		}
+	})
 }
