@@ -37,14 +37,14 @@ public class BContentController {
 	private BContentService bContentService;
 
 	@GetMapping()
-	@RequiresPermissions("blog:bContent")
+	@RequiresPermissions("blog:bContent:bContent")
 	String BContent() {
 		return "blog/bContent/bContent";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
-//	@RequiresPermissions("blog:list")
+	@RequiresPermissions("blog:bContent:bContent")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -58,47 +58,49 @@ public class BContentController {
 	}
 
 	@GetMapping("/add")
-	// @RequiresPermissions("blog:bComments")
+	@RequiresPermissions("blog:bContent:add")
 	String add() {
 		return "blog/bContent/add";
 	}
+
 	@GetMapping("/edit/{cid}")
-	//@RequiresPermissions("blog:bComments")
-	String edit(@PathVariable("cid") Long cid,Model model){
+	@RequiresPermissions("blog:bContent:edit")
+	String edit(@PathVariable("cid") Long cid, Model model) {
 		BContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);
-	    return "blog/bContent/edit";
+		return "blog/bContent/edit";
 	}
 
 	/**
 	 * 保存
 	 */
 	@ResponseBody
+	@RequiresPermissions("blog:bContent:add")
 	@PostMapping("/save")
-	public R save( BContentDO bContent){
-		//处理是否允许评论等
-		if (bContent.getAllowComment()==null) {
+	public R save(BContentDO bContent) {
+		// 处理是否允许评论等
+		if (bContent.getAllowComment() == null) {
 			bContent.setAllowComment(0);
 		}
-		if (bContent.getAllowFeed()==null) {
+		if (bContent.getAllowFeed() == null) {
 			bContent.setAllowFeed(0);
 		}
 		int count;
-		if(bContent.getCid()==null||bContent.getCid().equals("")) {
+		if (bContent.getCid() == null || bContent.getCid().equals("")) {
 			count = bContentService.save(bContent);
-		}else{
+		} else {
 			count = bContentService.update(bContent);
 		}
-		if(count>0){
+		if (count > 0) {
 			return R.ok().put("cid", bContent.getCid());
 		}
 		return R.error();
 	}
-	
 
 	/**
 	 * 修改
 	 */
+	@RequiresPermissions("blog:bContent:edit")
 	@RequestMapping("/update")
 	public R update(@RequestBody BContentDO bContent) {
 		bContentService.update(bContent);
@@ -109,6 +111,7 @@ public class BContentController {
 	/**
 	 * 删除
 	 */
+	@RequiresPermissions("blog:bContent:remove")
 	@PostMapping("/remove")
 	@ResponseBody
 	public R remove(Long id) {
@@ -121,6 +124,7 @@ public class BContentController {
 	/**
 	 * 删除
 	 */
+	@RequiresPermissions("blog:bContent:batchRemove")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	public R remove(@RequestParam("ids[]") Long[] cids) {

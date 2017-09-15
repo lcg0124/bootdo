@@ -16,11 +16,11 @@
 						<button class="btn btn-success" onclick="reLoad()">查询</button>
 						<button shiro:hasPermission="sys:user:add" type="button"
 							class="btn  btn-primary" onclick="add()">
-							<i class="fa fa-plus" aria-hidden="true"></i>添加
+							<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
 						</button>
-						<button shiro:hasPermission="sys:user:batchRemove" type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
+						<button shiro:hasPermission="sys:user:batchRemove" type="button"
+							class="btn  btn-danger" onclick="batchRemove()">
+							<i class="fa fa-trash hidden" aria-hidden="true"></i>删除
 						</button>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -30,7 +30,6 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<!--业务js  -->
 	<script type="text/javascript" src="/js/appjs/sys/user/user.js"></script>
 </body>
 </html>

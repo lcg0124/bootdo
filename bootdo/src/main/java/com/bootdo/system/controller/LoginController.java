@@ -32,9 +32,10 @@ public class LoginController extends BaseController {
 	@Autowired
 	MenuService menuService;
 
+	@Log("请求访问主页")
 	@GetMapping({ "/", "", "/index" })
 	String Index(Model model) {
-		//Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
+		// Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
 		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
@@ -60,6 +61,7 @@ public class LoginController extends BaseController {
 			return "redirect:/login";
 		}
 	}
+
 	@Log("登录")
 	@PostMapping("/login")
 	@ResponseBody
@@ -74,6 +76,7 @@ public class LoginController extends BaseController {
 			return R.error("用户或密码错误");
 		}
 	}
+
 	@GetMapping("/logout")
 	String logout() {
 		ShiroUtils.logout();
@@ -84,6 +87,7 @@ public class LoginController extends BaseController {
 	String main() {
 		return "main";
 	}
+
 	@GetMapping("/403")
 	String error403() {
 		return "403";

@@ -130,7 +130,7 @@ public class GenUtils {
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
 			} catch (IOException e) {
-				throw new RRException("渲染模板失败，表名：" + TableDO.getTableName(), e);
+				throw new BDException("渲染模板失败，表名：" + TableDO.getTableName(), e);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ public class GenUtils {
 		try {
 			return new PropertiesConfiguration("generator.properties");
 		} catch (ConfigurationException e) {
-			throw new RRException("获取配置文件失败，", e);
+			throw new BDException("获取配置文件失败，", e);
 		}
 	}
 	

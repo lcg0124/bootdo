@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bootdo.common.annotation.Log;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.R;
@@ -25,12 +26,14 @@ public class MenuController extends BaseController {
 	String prefix = "sys/menu";
 	@Autowired
 	MenuService menuService;
-	
+
+	@RequiresPermissions("sys:menu:menu")
 	@GetMapping()
 	String menu(Model model) {
 		return "sys/menu/menu";
 	}
 
+	@RequiresPermissions("sys:menu:menu")
 	@RequestMapping("/list")
 	@ResponseBody
 	List<MenuDO> list() {
@@ -38,27 +41,33 @@ public class MenuController extends BaseController {
 		return menus;
 	}
 
+	@Log("添加菜单")
+	@RequiresPermissions("sys:menu:add")
 	@GetMapping("/add/{pId}")
 	String add(Model model, @PathVariable("pId") Long pId) {
 		model.addAttribute("pId", pId);
-		if (pId==0) {
+		if (pId == 0) {
 			model.addAttribute("pName", "根目录");
-		}else {
+		} else {
 			model.addAttribute("pName", menuService.get(pId).getName());
 		}
 		return "sys/menu/add";
 	}
 
+	@Log("编辑菜单")
+	@RequiresPermissions("sys:menu:edit")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("menu", menuService.get(id));
 		return "sys/menu/edit";
 	}
 
+	@Log("删除菜单")
+	@RequiresPermissions("sys:menu:remove")
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		//return R.error(1, "演示系统不允许删除");
+		// return R.error(1, "演示系统不允许删除");
 		if (menuService.remove(id) > 0) {
 			return R.ok();
 		} else {
@@ -66,10 +75,11 @@ public class MenuController extends BaseController {
 		}
 	}
 
+	@Log("保存菜单")
+	@RequiresPermissions("sys:menu:add")
 	@PostMapping("/save")
 	@ResponseBody
 	R save(MenuDO menu) {
-		System.out.println("-------"+menu.getType());
 		if (menuService.save(menu) > 0) {
 			return R.ok();
 		} else {
@@ -77,10 +87,12 @@ public class MenuController extends BaseController {
 		}
 	}
 
+	@Log("更新菜单")
+	@RequiresPermissions("sys:menu:edit")
 	@PostMapping("/update")
 	@ResponseBody
 	R update(MenuDO menu) {
-		//return R.error(1, "演示系统不允许修改");
+		// return R.error(1, "演示系统不允许修改");
 		if (menuService.update(menu) > 0) {
 			return R.ok();
 		} else {

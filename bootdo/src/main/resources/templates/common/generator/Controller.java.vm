@@ -57,14 +57,14 @@ public class ${className}Controller {
 	@GetMapping("/add")
 	//@RequiresPermissions("blog:bComments")
 	String add(){
-	    return "blog/${classname}/add";
+	    return "${pathName}/${classname}/add";
 	}
 	@GetMapping("/edit")
 	//@RequiresPermissions("blog:bComments")
 	String edit(${pk.attrType} ${pk.attrname}){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
-		model.addAttribute("${className}DO", ${className}DO);
-	    return "blog/${classname}/edit";
+		model.addAttribute("${className}", ${className});
+	    return "${pathName}/${classname}/edit";
 	}
 	/**
 	 * 信息

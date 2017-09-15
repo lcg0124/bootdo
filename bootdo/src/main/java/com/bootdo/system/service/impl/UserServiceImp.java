@@ -16,6 +16,7 @@ import com.bootdo.system.domain.SysUserDO;
 import com.bootdo.system.domain.UserRoleDO;
 import com.bootdo.system.service.UserService;
 
+@Transactional
 @Service
 public class UserServiceImp implements UserService {
 	@Autowired

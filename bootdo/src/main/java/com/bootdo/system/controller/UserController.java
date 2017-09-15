@@ -35,6 +35,7 @@ public class UserController {
 	@Autowired
 	RoleService roleService;
 
+	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
 	String user(Model model) {
 		return "sys/user/user";
@@ -60,6 +61,7 @@ public class UserController {
 		return "sys/user/add";
 	}
 
+	@RequiresPermissions("sys:user:edit")
 	@Log("编辑用户")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
@@ -70,6 +72,7 @@ public class UserController {
 		return "sys/user/edit";
 	}
 
+	@RequiresPermissions("sys:user:add")
 	@Log("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
@@ -81,6 +84,7 @@ public class UserController {
 		return R.error();
 	}
 
+	@RequiresPermissions("sys:user:edit")
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
@@ -92,29 +96,31 @@ public class UserController {
 		return R.error();
 	}
 
+	@RequiresPermissions("sys:user:remove")
 	@Log("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		//return R.error("演示系统不允许删除");
-		 if (userService.remove(id) > 0) {
-		 return R.ok();
-		 }
-		 return R.error();
+		// return R.error("演示系统不允许删除");
+		if (userService.remove(id) > 0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 
+	@RequiresPermissions("sys:user:batchRemove")
 	@Log("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
-	//	return R.error("演示系统不允许删除");
-		 List<Long> Ids = Arrays.asList(userIds);
-		 int r = userService.batchremove(Ids);
-		 System.out.println(r);
-		 if (r > 0) {
-		 return R.ok();
-		 }
-		 return R.error();
+		// return R.error("演示系统不允许删除");
+		List<Long> Ids = Arrays.asList(userIds);
+		int r = userService.batchremove(Ids);
+		System.out.println(r);
+		if (r > 0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 
 	@PostMapping("/exit")
@@ -124,6 +130,7 @@ public class UserController {
 		return !userService.exit(params);// 存在，不通过，false
 	}
 
+	@RequiresPermissions("sys:user:resetPwd")
 	@Log("请求更改用户密码")
 	@GetMapping("/resetPwd/{id}")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {

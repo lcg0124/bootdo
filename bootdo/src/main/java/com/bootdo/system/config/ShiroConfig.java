@@ -45,12 +45,9 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/fonts/**", "anon");
 		filterChainDefinitionMap.put("/img/**", "anon");
 		filterChainDefinitionMap.put("/docs/**", "anon");
+		filterChainDefinitionMap.put("/druid/**", "anon");
 		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/**", "authc");
-		// filterChainDefinitionMap.put("/sys/user", "perms[sys:user]");
-		// filterChainDefinitionMap.put("/sys/user/add", "perms[sys:user:add]");
-		filterChainDefinitionMap.put("/sys/menu", "perms[sys:menu]");
-		filterChainDefinitionMap.put("/sys/role", "perms[sys:role]");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
@@ -66,11 +63,11 @@ public class ShiroConfig {
 		proxyCreator.setProxyTargetClass(true);
 		return proxyCreator;
 	}
-	
+
 	@Bean
-    public ShiroDialect shiroDialect() {
-        return new ShiroDialect();
-    }
+	public ShiroDialect shiroDialect() {
+		return new ShiroDialect();
+	}
 
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
