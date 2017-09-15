@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bootdo.common.utils.R;
 
@@ -40,14 +41,16 @@ public class BTExceptionHandler {
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
-	public R handleAuthorizationException(AuthorizationException e) {
-		logger.error(e.getMessage(), e);
-		return R.error("没有权限，请联系管理员授权");
+	public ModelAndView handleAuthorizationException(AuthorizationException e) {
+		ModelAndView mView = new ModelAndView("403");
+		return mView;
+//		logger.error(e.getMessage(), e);
+//		return R.error("没有权限，请联系管理员授权");
 	}
 
 	@ExceptionHandler(Exception.class)
-	public R handleException(Exception e) {
-		logger.error(e.getMessage(), e);
-		return R.error();
+	public ModelAndView handleException(Exception e) {
+		ModelAndView mView = new ModelAndView("500");
+		return mView;
 	}
 }

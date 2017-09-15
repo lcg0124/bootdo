@@ -37,7 +37,7 @@ public class BContentController {
 	private BContentService bContentService;
 
 	@GetMapping()
-	//@RequiresPermissions("blog:bContent")
+	@RequiresPermissions("blog:bContent")
 	String BContent() {
 		return "blog/bContent/bContent";
 	}
