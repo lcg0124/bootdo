@@ -69,15 +69,6 @@ public class BContentController {
 		model.addAttribute("bContent", bContentDO);
 	    return "blog/bContent/edit";
 	}
-	/**
-	 * 信息
-	 */
-	@RequestMapping("/info/{cid}")
-	public R info(@PathVariable("cid") Long cid) {
-		BContentDO bContent = bContentService.get(cid);
-
-		return R.ok().put("bContent", bContent);
-	}
 
 	/**
 	 * 保存

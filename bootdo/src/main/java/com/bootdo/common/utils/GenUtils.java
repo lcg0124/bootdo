@@ -199,12 +199,12 @@ public class GenUtils {
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + classname + ".html";
+					+ "modules" + File.separator + classname + File.separator + classname + ".html";
 	//				+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
 		}
 		if(template.contains("add.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + "add" + ".html";
+					+ "modules" + File.separator + classname + File.separator +  "add.html";
 		}
 //		if(template.contains("edit.html.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
@@ -213,12 +213,12 @@ public class GenUtils {
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + classname+ ".js";
+					+ "modules" + File.separator + classname + File.separator + classname+ ".js";
 			//		+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
 		}
 		if(template.contains("add.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "modules" + File.separator + "generator" + File.separator + "add" + ".js";
+					+ "modules" + File.separator + classname + File.separator + "add.js";
 		}
 //		if(template.contains("edit.js.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
