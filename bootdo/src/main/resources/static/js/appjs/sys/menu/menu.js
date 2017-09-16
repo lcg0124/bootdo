@@ -15,7 +15,7 @@ var load = function() {
 						striped : true, // 是否各行渐变色
 						bordered : true, // 是否显示边框
 						expandAll : false, // 是否全部展开
-						// toolbar: '#exampleToolbar',
+					//	toolbar : '#exampleToolbar',
 						columns : [
 								{
 									title : '编号',
@@ -71,13 +71,13 @@ var load = function() {
 									field : 'id',
 									align : 'center',
 									formatter : function(item, index) {
-										var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="编辑" onclick="edit(\''
+										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ item.menuId
 												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var p = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="添加下级" onclick="add(\''
+										var p = '<a class="btn btn-primary btn-sm '+s_add_h+'" href="#" mce_href="#" title="添加下级" onclick="add(\''
 												+ item.menuId
 												+ '\')"><i class="fa fa-plus"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" onclick="remove(\''
+										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ item.menuId
 												+ '\')"><i class="fa fa-remove"></i></a> ';
 										return e + d + p;
@@ -89,12 +89,11 @@ function reLoad() {
 	load();
 }
 function add(pId) {
-	// iframe层
 	layer.open({
 		type : 2,
-		title : '增加',
+		title : '增加菜单',
 		maxmin : true,
-		shadeClose : true, // 点击遮罩关闭层
+		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
 		content : prefix + '/add/' + pId // iframe的url
 	});
@@ -130,7 +129,7 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-function removeMore() {
-	var rows = $('#exampleTable').bootstrapTable('getSelections');
+function batchRemove() {
+	// var rows = $('#exampleTable').bootstrapTable('getSelections');
 
 }

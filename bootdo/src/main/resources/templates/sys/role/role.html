@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include::header"></head>
 <body class="gray-bg">
@@ -8,11 +9,11 @@
 			<div class="ibox">
 				<div class="ibox-body">
 					<div id="exampleToolbar" role="group">
-						<button type="button" class="btn btn-primary" onclick="add()">
+						<button shiro:hasPermission="sys:role:add" type="button" class="btn btn-primary" onclick="add()">
 							<i class="fa fa-plus" aria-hidden="true"></i>添加
 						</button>
-						<button type="button" class="btn btn-danger"
-							onclick="removeMore()">
+						<button shiro:hasPermission="sys:role:batchRemove" type="button" class="btn btn-danger"
+							onclick="batchRemove()">
 							<i class="fa fa-trash" aria-hidden="true"></i>删除
 						</button>
 					</div>
@@ -24,6 +25,7 @@
 	</div>
 	<div th:include="include::footer"></div>
 	<script type="text/javascript" src="/js/appjs/sys/role/role.js">
+		
 	</script>
 </body>
 
