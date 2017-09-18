@@ -132,7 +132,21 @@ public class BContentController {
 		return R.ok();
 	}
 	
-	@GetMapping("/post/{cid}")
+	@ResponseBody
+	@GetMapping("/open/list")
+	public PageUtils opentList(@RequestParam Map<String, Object> params) {
+		// 查询列表数据
+		Query query = new Query(params);
+
+		List<BContentDO> bContentList = bContentService.list(query);
+		int total = bContentService.count(query);
+
+		PageUtils pageUtils = new PageUtils(bContentList, total);
+
+		return pageUtils;
+	}
+	
+	@GetMapping("/open/post/{cid}")
 	String post(@PathVariable("cid") Long cid, Model model) {
 		BContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);
