@@ -169,6 +169,7 @@ public class GenUtils {
 	 */
 	public static String getFileName(String template, String classname,String className, String packageName){
 		String packagePath = "main" + File.separator + "java" + File.separator;
+		String modulesname=classname;
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath += packageName.replace(".", File.separator) + File.separator;
 		}
@@ -199,12 +200,12 @@ public class GenUtils {
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ classname + File.separator + classname + ".html";
+					+ modulesname + File.separator + classname + File.separator + classname + ".html";
 	//				+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
 		}
 		if(template.contains("add.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ classname + File.separator +  "add.html";
+					+ modulesname + File.separator + classname + File.separator +  "add.html";
 		}
 //		if(template.contains("edit.html.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
@@ -213,12 +214,12 @@ public class GenUtils {
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "appjs" + File.separator + classname + File.separator + classname+ ".js";
+					+ modulesname + File.separator + classname + File.separator + classname+ ".js";
 			//		+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
 		}
 		if(template.contains("add.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "appjs" + File.separator + classname + File.separator + "add.js";
+					+ modulesname + File.separator + classname + File.separator + "add.js";
 		}
 //		if(template.contains("edit.js.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
