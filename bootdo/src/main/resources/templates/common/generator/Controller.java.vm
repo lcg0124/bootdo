@@ -63,7 +63,7 @@ public class ${className}Controller {
 	//@RequiresPermissions("blog:bComments")
 	String edit(${pk.attrType} ${pk.attrname}){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
-		model.addAttribute("${className}", ${className});
+		model.addAttribute("${className}", ${classname});
 	    return "${pathName}/${classname}/edit";
 	}
 	/**
