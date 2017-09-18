@@ -29,5 +29,5 @@ public interface RoleMapper {
 	RoleDO get(Long id);
 	
 	@Update("update sys_role set role_name = #{roleName}, remark=#{remark} where role_id=#{roleId}")
-	void update(RoleDO role);
+	int update(RoleDO role);
 }

@@ -1,6 +1,9 @@
 package com.bootdo.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +54,19 @@ public class RoleServiceImpl implements RoleService {
 	@Transactional
 	@Override
 	public int save(RoleDO role) {
-		roleMapper.save(role);
+		int count = roleMapper.save(role);
 		List<Long> menuIds = role.getMenuIds();
 		Long roleId = role.getRoleId();
-		roleMenuMapper.removeByRoleId(roleId);
-		int count=0; ///= roleMenuMapper.batchSave(roleId, menuIds);
+		List<RoleMenuDO> rms = new ArrayList<>();
 		for (Long menuId : menuIds) {
-			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setMenuId(menuId);
-			roleMenuDO.setRoleId(roleId);
-			count = roleMenuMapper.save(roleMenuDO);
+			RoleMenuDO rmDo = new RoleMenuDO();
+			rmDo.setRoleId(roleId);
+			rmDo.setMenuId(menuId);
+			rms.add(rmDo);
+		}
+		roleMenuMapper.removeByRoleId(roleId);
+		if (rms.size() > 0) {
+			roleMenuMapper.batchSave(rms);
 		}
 		return count;
 	}
@@ -81,16 +87,20 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public int update(RoleDO role) {
-		roleMapper.update(role);
-		int r = 0;
+		int r = roleMapper.update(role);
 		List<Long> menuIds = role.getMenuIds();
 		Long roleId = role.getRoleId();
 		roleMenuMapper.removeByRoleId(roleId);
+		List<RoleMenuDO> rms = new ArrayList<>();
 		for (Long menuId : menuIds) {
-			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setMenuId(menuId);
-			roleMenuDO.setRoleId(roleId);
-			r = roleMenuMapper.save(roleMenuDO);
+			RoleMenuDO rmDo = new RoleMenuDO();
+			rmDo.setRoleId(roleId);
+			rmDo.setMenuId(menuId);
+			rms.add(rmDo);
+		}
+		roleMenuMapper.removeByRoleId(roleId);
+		if (rms.size() > 0) {
+			roleMenuMapper.batchSave(rms);
 		}
 		return r;
 	}

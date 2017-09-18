@@ -1,5 +1,6 @@
 package com.bootdo.system.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,32 +47,38 @@ public class UserServiceImp implements UserService {
 	@Transactional
 	@Override
 	public int save(SysUserDO user) {
-		int r = 0;
-		userMapper.save(user);
+		int count = userMapper.save(user);
 		Long userId = user.getUserId();
 		List<Long> roles = user.getroleIds();
 		userRoleMapper.removeByUserId(userId);
+		List<UserRoleDO> list = new ArrayList<>();
 		for (Long roleId : roles) {
 			UserRoleDO ur = new UserRoleDO();
 			ur.setUserId(userId);
 			ur.setRoleId(roleId);
-			r = userRoleMapper.save(ur);
+			list.add(ur);
 		}
-		return r;
+		if (list.size() > 0) {
+			userRoleMapper.batchSave(list);
+		}
+		return count;
 	}
 
 	@Override
 	public int update(SysUserDO user) {
-		int r = 0;
-		userMapper.update(user);
+		int r = userMapper.update(user);
 		Long userId = user.getUserId();
 		List<Long> roles = user.getroleIds();
 		userRoleMapper.removeByUserId(userId);
+		List<UserRoleDO> list = new ArrayList<>();
 		for (Long roleId : roles) {
 			UserRoleDO ur = new UserRoleDO();
 			ur.setUserId(userId);
 			ur.setRoleId(roleId);
-			r = userRoleMapper.save(ur);
+			list.add(ur);
+		}
+		if (list.size() > 0) {
+			userRoleMapper.batchSave(list);
 		}
 		return r;
 	}

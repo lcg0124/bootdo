@@ -1,11 +1,8 @@
 package com.bootdo.system.dao;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.bootdo.system.domain.RoleMenuDO;
@@ -15,11 +12,12 @@ public interface RoleMenuMapper {
 	int save(RoleMenuDO rm);
 	
 	@Insert("<script>" + 
-			"INSERT INTO sys_role_menu(id, role_id, menu_id) values"+
-			" <foreach collection=\"menuIds\" index=\"i\" open=\"(\" separator=\",\" close=\")\" item=\"item\"  >#{roleId},#{item.menuId}</foreach>"+ 
-			"</script>"
-			)
-	int batchSave(Long roleId,List<Long> menuIds);
+			"INSERT INTO sys_role_menu(role_id, menu_id) values"+
+			" <foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\" >  " + 
+			" (#{item.roleId},#{item.menuId})" + 
+			" </foreach>  "+ 
+			"</script>")
+	int batchSave(List<RoleMenuDO> list);
 
 	@Delete("DELETE FROM  sys_role_menu WHERE id=#{id}")
 	int remove(Long id);

@@ -17,6 +17,7 @@ logging:
   level:
     root: info
     org.mybatis: info
+    com.bootdo: debug
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

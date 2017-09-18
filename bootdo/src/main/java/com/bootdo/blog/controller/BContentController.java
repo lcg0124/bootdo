@@ -131,5 +131,12 @@ public class BContentController {
 		bContentService.batchRemove(cids);
 		return R.ok();
 	}
+	
+	@GetMapping("/post/{cid}")
+	String post(@PathVariable("cid") Long cid, Model model) {
+		BContentDO bContentDO = bContentService.get(cid);
+		model.addAttribute("bContent", bContentDO);
+		return "blog/index/post";
+	}
 
 }

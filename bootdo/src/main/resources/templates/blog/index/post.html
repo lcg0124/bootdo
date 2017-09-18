@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Clean Blog - Start Bootstrap Theme</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="/css/blog/bootstrap.min.css" rel="stylesheet">
+
+<!-- Additional fonts for this theme -->
+<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+<!-- Custom styles for this theme -->
+<link href="/css/blog/clean-blog.min.css" rel="stylesheet">
+
+<!-- Temporary navbar container fix until Bootstrap 4 is patched -->
+<style>
+.navbar-toggler {
+	z-index: 1;
+}
+
+@media ( max-width : 576px) {
+	nav>.container {
+		width: 100%;
+	}
+}
+</style>
+
+</head>
+
+<body>
+
+	<!-- Navigation -->
+	<nav class="navbar fixed-top navbar-toggleable-md navbar-light"
+		id="mainNav">
+		<div class="container">
+			<button class="navbar-toggler navbar-toggler-right" type="button"
+				data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false"
+				aria-label="Toggle navigation">
+				Menu <i class="fa fa-bars"></i>
+			</button>
+			<a class="navbar-brand page-scroll" href="/">Start
+				Bootstrap</a>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="index.html">Home</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="about.html">About</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="post.html">Sample Post</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="contact.html">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Page Header -->
+	<header class="intro-header"
+		style="background-image: url('/img/blog/post-bg.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+					<div class="post-heading">
+						<h1 th:text="${bContent.title}">Man must explore, and this is exploration at its greatest</h1>
+						<h2 class="subheading">Problems look mighty small from 150
+							miles up</h2>
+						<span class="meta">作者 <a href="#" th:text="${bContent.author}">Start
+								Bootstrap</a> on August 24, 2017
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Post Content -->
+	<article>
+		<div class="container">
+			<div class="col-sm-11">
+				<div id="content" class="summernote"></div>
+			</div>
+		</div>
+	</article>
+
+	<hr>
+
+	<!-- Footer -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+					<ul class="list-inline text-center">
+						<li class="list-inline-item"><a href="#"> <span
+								class="fa-stack fa-lg"> <i
+									class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+						<li class="list-inline-item"><a href="#"> <span
+								class="fa-stack fa-lg"> <i
+									class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+						<li class="list-inline-item"><a href="#"> <span
+								class="fa-stack fa-lg"> <i
+									class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-github fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- jQuery Version 3.1.1 -->
+	<script src="/js/jquery.min.js"></script>
+
+	<!-- Tether -->
+	<script src="/js/appjs/blog/tether.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="/js/bootstrap.min.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="/js/appjs/blog/clean-blog.min.js"></script>
+	<!-- SUMMERNOTE -->
+	<script src="/js/plugins/summernote/summernote.min.js"></script>
+	<script src="/js/plugins/summernote/summernote-zh-CN.js"></script>
+
+	<script type="text/javascript" th:inline="javascript">
+		$().ready(function() {
+			$('.summernote').summernote({
+				lang : 'zh-CN'
+			});
+			var content = /*[[${bContent.content}]]*/
+			$('#content').code(content);
+			$('.summernote').destroy();
+		});
+	</script>
+
+</body>
+
+</html>
