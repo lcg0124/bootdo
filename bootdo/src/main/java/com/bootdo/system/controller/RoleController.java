@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.common.annotation.Log;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.service.RoleService;
 
 @RequestMapping("/sys/role")
 @Controller
-public class RoleController {
+public class RoleController extends BaseController{
 	String prefix = "sys/role";
 	@Autowired
 	RoleService roleService;
@@ -59,6 +60,9 @@ public class RoleController {
 	@PostMapping("/save")
 	@ResponseBody()
 	R save(RoleDO role) {
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
 		if (roleService.save(role) > 0) {
 			return R.ok();
 		} else {
@@ -71,9 +75,9 @@ public class RoleController {
 	@PostMapping("/update")
 	@ResponseBody()
 	R update(RoleDO role) {
-		// if (role.getRoleId()==1) {
-		// return R.error(1, "演示系统不允许修改管理员菜单");
-		// }
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
 		if (roleService.update(role) > 0) {
 			return R.ok();
 		} else {
@@ -86,7 +90,9 @@ public class RoleController {
 	@PostMapping("/remove")
 	@ResponseBody()
 	R save(Long id) {
-		// return R.error(1, "演示系统不允许删除");
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
 		if (roleService.remove(id) > 0) {
 			return R.ok();
 		} else {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.bootdo.common.annotation.Log;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
@@ -67,7 +68,10 @@ public class MenuController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		// return R.error(1, "演示系统不允许删除");
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
+		
 		if (menuService.remove(id) > 0) {
 			return R.ok();
 		} else {
@@ -80,6 +84,10 @@ public class MenuController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(MenuDO menu) {
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
+		
 		if (menuService.save(menu) > 0) {
 			return R.ok();
 		} else {
@@ -92,7 +100,9 @@ public class MenuController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(MenuDO menu) {
-		// return R.error(1, "演示系统不允许修改");
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
 		if (menuService.update(menu) > 0) {
 			return R.ok();
 		} else {

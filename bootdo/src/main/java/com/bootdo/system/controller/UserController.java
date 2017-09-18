@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.common.annotation.Log;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -29,7 +30,7 @@ import com.bootdo.system.service.UserService;
 
 @RequestMapping("/sys/user")
 @Controller
-public class UserController {
+public class UserController extends BaseController{
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -77,6 +78,9 @@ public class UserController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(SysUserDO user) {
+		if ("test"==getUsername()) {
+			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if (userService.save(user) > 0) {
 			return R.ok();
