@@ -61,9 +61,9 @@ public class ${className}Controller {
 	    return "${pathName}/${classname}/add";
 	}
 
-	@GetMapping("/edit")
+	@GetMapping("/edit/{${pk.attrname}}")
 	//@RequiresPermissions("blog:bComments")
-	String edit(${pk.attrType} ${pk.attrname},Model model){
+	String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname},Model model){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
 		model.addAttribute("${className}", ${classname});
 	    return "${pathName}/${classname}/edit";
