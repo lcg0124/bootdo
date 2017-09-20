@@ -30,7 +30,7 @@ import com.bootdo.system.service.UserService;
 
 @RequestMapping("/sys/user")
 @Controller
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -78,8 +78,8 @@ public class UserController extends BaseController{
 	@PostMapping("/save")
 	@ResponseBody
 	R save(SysUserDO user) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if (userService.save(user) > 0) {
@@ -93,7 +93,9 @@ public class UserController extends BaseController{
 	@PostMapping("/update")
 	@ResponseBody
 	R update(SysUserDO user) {
-		// return R.error(1, "演示系统不允许修改");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		if (userService.update(user) > 0) {
 			return R.ok();
 		}
@@ -105,7 +107,9 @@ public class UserController extends BaseController{
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		// return R.error("演示系统不允许删除");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		if (userService.remove(id) > 0) {
 			return R.ok();
 		}
@@ -117,7 +121,9 @@ public class UserController extends BaseController{
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
-		// return R.error("演示系统不允许删除");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		List<Long> Ids = Arrays.asList(userIds);
 		int r = userService.batchremove(Ids);
 		System.out.println(r);
@@ -149,8 +155,8 @@ public class UserController extends BaseController{
 	@PostMapping("/resetPwd")
 	@ResponseBody
 	R resetPwd(SysUserDO user) {
-		if (1L == user.getUserId()) {
-			return R.error("演示系统不允许修改管理员密码");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(userService.get(user.getUserId()).getUsername(), user.getPassword()));
 		if (userService.resetPwd(user) > 0) {

@@ -15,7 +15,7 @@ public interface MenuMapper {
 	@Select("SELECT  menu_id, parent_id, name, url, perms, `type`, icon, order_num, gmt_create, gmt_modified FROM sys_menu where menu_id =#{id}")
 	MenuDO getMenu(Long id);
 
-	@Select("select distinct m.menu_id , parent_id, name, url, perms, `type`, icon, order_num, gmt_create, gmt_modified from sys_menu m left join sys_role_menu rm on m.menu_id = rm.menu_id left join sys_user_role ur on rm.role_id = ur.role_id where ur.user_id = #{id} and m.type in(0,1) order by m.type")
+	@Select("select distinct m.menu_id , parent_id, name, url, perms, `type`, icon, order_num, gmt_create, gmt_modified from sys_menu m left join sys_role_menu rm on m.menu_id = rm.menu_id left join sys_user_role ur on rm.role_id = ur.role_id where ur.user_id = #{id} and m.type in(0,1) order by m.order_num")
 	List<MenuDO> listMenuByUserId(Long id);
 
 	@Select("select m.perms from sys_menu m left join sys_role_menu rm on m.menu_id = rm.menu_id left join sys_user_role ur on rm.role_id = ur.role_id where ur.user_id = #{id} ")

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
-<head th:include="/blog/index/include_blog::header"></head>
+<head th:include="blog/index/include_blog::header"></head>
 <body>
-	<div th:include="/blog/index/include_blog::nav"></div>
+	<div th:include="blog/index/include_blog::nav"></div>
 	<!-- Page Header -->
 	<header class="intro-header"
 		style="background-image: url('/img/blog/home-bg.jpg')">
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<hr>
-	<div th:include="/blog/index/include_blog::footer"></div>
+	<div th:include="blog/index/include_blog::footer"></div>
 	<script>
 		$(function() {
 			var offseet = 0;
@@ -41,7 +41,7 @@
 		function bindList(offset) {
 			$
 					.ajax({
-						url : 'blog/bContent/list?limit=10&offset=' + offset,
+						url : 'blog/open/list?limit=10&offset=' + offset,
 						method : 'get',
 						dataType : 'json',
 						success : function(data) {
@@ -50,7 +50,7 @@
 							var htmlText = "";
 							for (i = 0; i < rows.length; i++) {
 								htmlText += '<div class="post-preview">';
-								htmlText += '<a href="/blog/bContent/post/'+rows[i].cid+'">';
+								htmlText += '<a href="/blog/open/post/'+rows[i].cid+'">';
 								htmlText += '<h2 class="post-title">';
 								htmlText += rows[i].title;
 								htmlText += '</h2>';

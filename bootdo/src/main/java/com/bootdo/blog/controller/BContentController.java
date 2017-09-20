@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.blog.domain.BCommentsDO;
 import com.bootdo.blog.domain.BContentDO;
 import com.bootdo.blog.service.BContentService;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -32,9 +32,9 @@ import com.bootdo.common.utils.R;
  */
 @Controller
 @RequestMapping("/blog/bContent")
-public class BContentController {
+public class BContentController extends BaseController {
 	@Autowired
-	private BContentService bContentService;
+	BContentService bContentService;
 
 	@GetMapping()
 	@RequiresPermissions("blog:bContent:bContent")
@@ -78,7 +78,9 @@ public class BContentController {
 	@RequiresPermissions("blog:bContent:add")
 	@PostMapping("/save")
 	public R save(BContentDO bContent) {
-		// 处理是否允许评论等
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		if (bContent.getAllowComment() == null) {
 			bContent.setAllowComment(0);
 		}
@@ -103,6 +105,9 @@ public class BContentController {
 	@RequiresPermissions("blog:bContent:edit")
 	@RequestMapping("/update")
 	public R update(@RequestBody BContentDO bContent) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		bContentService.update(bContent);
 
 		return R.ok();
@@ -115,6 +120,9 @@ public class BContentController {
 	@PostMapping("/remove")
 	@ResponseBody
 	public R remove(Long id) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		if (bContentService.remove(id) > 0) {
 			return R.ok();
 		}
@@ -128,29 +136,10 @@ public class BContentController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	public R remove(@RequestParam("ids[]") Long[] cids) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		bContentService.batchRemove(cids);
 		return R.ok();
 	}
-	
-	@ResponseBody
-	@GetMapping("/open/list")
-	public PageUtils opentList(@RequestParam Map<String, Object> params) {
-		// 查询列表数据
-		Query query = new Query(params);
-
-		List<BContentDO> bContentList = bContentService.list(query);
-		int total = bContentService.count(query);
-
-		PageUtils pageUtils = new PageUtils(bContentList, total);
-
-		return pageUtils;
-	}
-	
-	@GetMapping("/open/post/{cid}")
-	String post(@PathVariable("cid") Long cid, Model model) {
-		BContentDO bContentDO = bContentService.get(cid);
-		model.addAttribute("bContent", bContentDO);
-		return "blog/index/post";
-	}
-
 }

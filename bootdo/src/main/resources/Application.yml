@@ -1,5 +1,9 @@
 server:
   port: 80
+  tomcat:
+    uri-encoding: utf-8
+    basedir: /springboot-tomcat-tmp
+  
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -7,6 +11,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/bootdo?useUnicode=true&characterEncoding=utf8
     username: root
     password: root
+    initialSize: 2
   thymeleaf:
     mode: LEGACYHTML5
     cache: false

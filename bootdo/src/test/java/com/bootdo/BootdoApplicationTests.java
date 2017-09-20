@@ -12,8 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bootdo.blog.dao.BCommentsMapper;
+import com.bootdo.common.dao.SysFileMapper;
+import com.bootdo.common.domain.SysFileDO;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
+import com.bootdo.common.utils.Query;
 import com.bootdo.system.dao.MenuMapper;
 import com.bootdo.system.dao.RoleMapper;
 import com.bootdo.system.dao.UserMapper;
@@ -41,6 +44,9 @@ public class BootdoApplicationTests {
 	
 	@Autowired
 	BCommentsMapper bCommentsMapper;
+	
+	@Autowired
+	SysFileMapper sysFileMapper;
 
 	@Test
 	public void contextLoads() {
@@ -72,10 +78,9 @@ public class BootdoApplicationTests {
  
 	@Test
 	public void test01() {
-		Map<String, Object> map = new HashMap<>();
-		map.put("username", "fff");
-		boolean b = userService.exit(map);
-		System.out.println(b);
+	Map<String,Object> map = new HashMap<>();
+	SysFileDO oDo = sysFileMapper.list(map).get(0);
+	System.out.println(oDo.getUrl());
 	}
 
 }

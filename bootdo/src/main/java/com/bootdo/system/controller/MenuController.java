@@ -68,10 +68,9 @@ public class MenuController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		
 		if (menuService.remove(id) > 0) {
 			return R.ok();
 		} else {
@@ -84,10 +83,9 @@ public class MenuController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(MenuDO menu) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		
 		if (menuService.save(menu) > 0) {
 			return R.ok();
 		} else {
@@ -100,8 +98,8 @@ public class MenuController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(MenuDO menu) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.update(menu) > 0) {
 			return R.ok();

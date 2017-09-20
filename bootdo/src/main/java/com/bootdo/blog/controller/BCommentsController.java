@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bootdo.blog.domain.BCommentsDO;
 import com.bootdo.blog.domain.BContentDO;
 import com.bootdo.blog.service.BCommentsService;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -31,7 +32,7 @@ import com.bootdo.common.utils.R;
  */
 @Controller
 @RequestMapping("/blog/bComments")
-public class BCommentsController {
+public class BCommentsController extends BaseController{
 	@Autowired
 	private BCommentsService bCommentsService;
 	

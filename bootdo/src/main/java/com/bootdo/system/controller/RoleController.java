@@ -60,8 +60,8 @@ public class RoleController extends BaseController{
 	@PostMapping("/save")
 	@ResponseBody()
 	R save(RoleDO role) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.save(role) > 0) {
 			return R.ok();
@@ -75,8 +75,8 @@ public class RoleController extends BaseController{
 	@PostMapping("/update")
 	@ResponseBody()
 	R update(RoleDO role) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.update(role) > 0) {
 			return R.ok();
@@ -90,8 +90,8 @@ public class RoleController extends BaseController{
 	@PostMapping("/remove")
 	@ResponseBody()
 	R save(Long id) {
-		if ("test"==getUsername()) {
-			return R.error(1, "演示系统不允许删除,完整体验请部署程序");
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.remove(id) > 0) {
 			return R.ok();
