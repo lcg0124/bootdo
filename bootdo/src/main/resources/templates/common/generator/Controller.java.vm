@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,11 +60,12 @@ public class ${className}Controller {
 	String add(){
 	    return "${pathName}/${classname}/add";
 	}
-	@GetMapping("/edit")
+
+	@GetMapping("/edit/{${pk.attrname}}")
 	//@RequiresPermissions("blog:bComments")
-	String edit(${pk.attrType} ${pk.attrname}){
+	String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname},Model model){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
-		model.addAttribute("${className}", ${className});
+		model.addAttribute("${className}", ${classname});
 	    return "${pathName}/${classname}/edit";
 	}
 	/**

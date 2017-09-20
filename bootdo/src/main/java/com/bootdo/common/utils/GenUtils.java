@@ -27,6 +27,8 @@ import java.util.zip.ZipOutputStream;
  */
 public class GenUtils {
 
+    static Configuration config = getConfig();
+
 	public static List<String> getTemplates(){
 		List<String> templates = new ArrayList<String>();
 		templates.add("templates/common/generator/domain.java.vm");
@@ -48,10 +50,12 @@ public class GenUtils {
 	/**
 	 * 生成代码
 	 */
+
+
 	public static void generatorCode(Map<String, String> table,
 			List<Map<String, String>> columns, ZipOutputStream zip){
 		//配置信息
-		Configuration config = getConfig();
+
 		
 		//表信息
 		TableDO TableDO = new TableDO();
@@ -169,6 +173,7 @@ public class GenUtils {
 	 */
 	public static String getFileName(String template, String classname,String className, String packageName){
 		String packagePath = "main" + File.separator + "java" + File.separator;
+		String modulesname=config.getString("packageName");
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath += packageName.replace(".", File.separator) + File.separator;
 		}
@@ -199,12 +204,12 @@ public class GenUtils {
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ "modules" + File.separator + classname + File.separator + classname + ".html";
+					+ modulesname + File.separator + classname + File.separator + classname + ".html";
 	//				+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
 		}
 		if(template.contains("add.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ "modules" + File.separator + classname + File.separator +  "add.html";
+					+ modulesname + File.separator + classname + File.separator +  "add.html";
 		}
 //		if(template.contains("edit.html.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
@@ -213,12 +218,12 @@ public class GenUtils {
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "modules" + File.separator + classname + File.separator + classname+ ".js";
+					+ "appjs" + File.separator + modulesname + File.separator + classname + File.separator + classname+ ".js";
 			//		+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
 		}
 		if(template.contains("add.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "modules" + File.separator + classname + File.separator + "add.js";
+                    + "appjs" + File.separator+ modulesname + File.separator + classname + File.separator + "add.js";
 		}
 //		if(template.contains("edit.js.vm")){
 //			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
