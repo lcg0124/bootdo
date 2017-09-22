@@ -72,7 +72,7 @@ public class LogAspect {
 		// 用户名
 		SysUserDO currUser = ShiroUtils.getUser();
 		if (null == currUser) {
-			if (null == sysLog.getParams()) {
+			if (null != sysLog.getParams()) {
 				sysLog.setUserId(-1L);
 				sysLog.setUsername(sysLog.getParams());
 			} else {

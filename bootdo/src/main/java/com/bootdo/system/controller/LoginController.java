@@ -33,14 +33,21 @@ public class LoginController extends BaseController {
 	MenuService menuService;
 
 	@Log("请求访问主页")
-	@GetMapping({ "/", "", "/index" })
-	String Index(Model model) {
+	@GetMapping({ "/", "" })
+	String welcome(Model model) {
+		return "redirect:/blog";
+	}
+
+	
+	@Log("请求访问主页")
+	@GetMapping({ "/index" })
+	String index(Model model) {
 		// Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
 		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		logger.info(getUser().getName());
-		return "index";
+		return "index_v1";
 	}
 
 	@GetMapping("/login")

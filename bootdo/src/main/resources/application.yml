@@ -2,8 +2,6 @@ server:
   port: 80
   tomcat:
     uri-encoding: utf-8
-    basedir: /springboot-tomcat-tmp
-  
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -18,11 +16,13 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-logging:
-  level:
-    root: info
-    org.mybatis: info
-    com.bootdo: debug
+  profiles: 
+    active: dev
+  http:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    

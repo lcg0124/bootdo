@@ -1,7 +1,5 @@
 package com.bootdo.common.controller;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bootdo.common.config.BootdoConfig;
 import com.bootdo.common.domain.SysFileDO;
 import com.bootdo.common.service.SysFileService;
 import com.bootdo.common.utils.FileType;
@@ -40,11 +39,11 @@ import com.bootdo.common.utils.R;
 @RequestMapping("/common/sysFile")
 public class SysFileController extends BaseController {
 
-	public static final String CLASSPATH = SysFileController.class.getClassLoader().getResource("").getPath();
-	public static final String upDir = SysFileController.CLASSPATH.substring(0,
-			SysFileController.CLASSPATH.length() - 1);
 	@Autowired
 	private SysFileService sysFileService;
+
+	@Autowired
+	private BootdoConfig bootdoConfig;
 
 	@GetMapping()
 	@RequiresPermissions("common:sysFile:sysFile")
@@ -120,9 +119,7 @@ public class SysFileController extends BaseController {
 	@ResponseBody
 	// @RequiresPermissions("common:remove")
 	public R remove(Long id, HttpServletRequest request) {
-		//String fileName = upDir + "/static/" + sysFileService.get(id).getUrl();
-		String fileName = request.getSession().getServletContext()
-				+ sysFileService.get(id).getUrl();
+		String fileName = bootdoConfig.getUploadPath() + sysFileService.get(id).getUrl().replace("/files/", "");
 		if (sysFileService.remove(id) > 0) {
 			boolean b = FileUtil.deleteFile(fileName);
 			if (!b) {
@@ -132,7 +129,6 @@ public class SysFileController extends BaseController {
 		} else {
 			return R.error();
 		}
-
 	}
 
 	/**
@@ -157,12 +153,9 @@ public class SysFileController extends BaseController {
 		}
 		String fileName = file.getOriginalFilename();
 		fileName = FileUtil.RenameToUUID(fileName);
-		// String filePath = ".//static//upload//";
-		// String filePath = upDir + "/static/upload/";
-		String filePath = request.getSession().getServletContext().getRealPath("upload/");
-		SysFileDO sysFile = new SysFileDO(FileType.fileType(fileName), "/upload/" + fileName, new Date());
+		SysFileDO sysFile = new SysFileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
 		try {
-			FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
 		} catch (Exception e) {
 			return R.error();
 		}

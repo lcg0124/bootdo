@@ -24,11 +24,17 @@
 					<div class="ibox-content">
 						<div class="file-manager">
 							<h3>显示：</h3>
-							<a href="javascript:void(0)" class="file-control active" onclick="changeType(null)">所有</a> <a href="#"
-								class="file-control" href="javascript:void(0)" onclick="changeType(0)">图片</a> <a href="javascript:void(0)" onclick="changeType(1)" class="file-control">文档</a>
-							<a href="javascript:void(0)" onclick="changeType(2)" class="file-control">视频</a><a href="javascript:void(0)" onclick="changeType(3)" class="file-control">音乐</a>
-							<a href="javascript:void(0)" onclick="changeType(99)" class="file-control">其他</a>
-							
+							<a href="javascript:void(0)" class="file-control active"
+								onclick="changeType(null)">所有</a> <a href="#"
+								class="file-control" href="javascript:void(0)"
+								onclick="changeType(0)">图片</a> <a href="javascript:void(0)"
+								onclick="changeType(1)" class="file-control">文档</a> <a
+								href="javascript:void(0)" onclick="changeType(2)"
+								class="file-control">视频</a><a href="javascript:void(0)"
+								onclick="changeType(3)" class="file-control">音乐</a> <a
+								href="javascript:void(0)" onclick="changeType(99)"
+								class="file-control">其他</a>
+
 							<div class="hr-line-dashed"></div>
 							<form id="uploadForm" class="form-horizontal m-t ">
 								<input type="file" id="file" class="form-control" name="file"
@@ -36,7 +42,7 @@
 							</form>
 							<button class="btn btn-primary btn-block" onclick="doUpload()">上传文件</button>
 							<div class="hr-line-dashed"></div>
-							
+
 							<div class="clearfix"></div>
 						</div>
 					</div>
@@ -108,7 +114,7 @@
 					bindList(0);
 				},
 				error : function(r) {
-					layer.alert(r.msg);
+					layer.alert("文件大小超限,最大支持30MB");
 				}
 			});
 		}
