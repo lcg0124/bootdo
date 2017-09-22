@@ -11,6 +11,7 @@
 .navbar-toggler {
 	z-index: 1;
 }
+
 @media ( max-width : 576px) {
 	nav>.container {
 		width: 100%;
@@ -28,15 +29,16 @@
 				aria-label="Toggle navigation">
 				Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" href="/">Start
-				BootDo</a>
+			<a class="navbar-brand page-scroll" href="/">Start BootDo</a>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link page-scroll"
 						href="/blog">首页</a></li>
 					<li class="nav-item"><a class="nav-link page-scroll" href="#">关于布嘟</a></li>
-					<li class="nav-item"><a class="nav-link page-scroll" href="/index">学习交流</a></li>
-					<li class="nav-item"><a class="nav-link page-scroll" href="/index">登录后台</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="/index">学习交流</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="/index">登录后台</a></li>
 				</ul>
 			</div>
 		</div>
@@ -72,10 +74,18 @@
 					</ul>
 					<p class="copyright text-muted"></p>
 				</div>
+
 			</div>
+
+			<span href="http://www.miitbeian.gov.cn/"
+				style="text-align: center; display: block;">鲁ICP备17042918号</span>
 		</div>
 	</footer>
-
+	<div style="position: fixed; top: 50%; right: 20px; z-index: 100;">
+		<a
+			style="height: 38px; width: 38px; display: block; background: #2f4050; padding: 9px 8px; text-align: center; color: #fff; border-radius: 50%; opacity: .5;"
+			href="javascript:scroll(0,0)" title="返回首页"><i class="fa fa-home"></i></a>
+	</div>
 	<!-- jQuery Version 3.1.1 -->
 	<script src="/js/appjs/blog/jquery.min.js"></script>
 	<!-- Tether -->

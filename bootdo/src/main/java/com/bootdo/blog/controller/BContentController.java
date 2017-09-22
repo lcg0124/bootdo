@@ -1,5 +1,6 @@
 package com.bootdo.blog.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +88,8 @@ public class BContentController extends BaseController {
 		if (bContent.getAllowFeed() == null) {
 			bContent.setAllowFeed(0);
 		}
+		bContent.setGtmCreate(new Date());
+		bContent.setGtmModified(new Date());
 		int count;
 		if (bContent.getCid() == null || bContent.getCid().equals("")) {
 			count = bContentService.save(bContent);
@@ -108,8 +111,8 @@ public class BContentController extends BaseController {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		bContent.setGtmCreate(new Date());
 		bContentService.update(bContent);
-
 		return R.ok();
 	}
 

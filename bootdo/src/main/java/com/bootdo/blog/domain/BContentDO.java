@@ -3,6 +3,8 @@ package com.bootdo.blog.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 /**
@@ -10,7 +12,7 @@ import java.util.Date;
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2017-09-11 13:48:19
+ * @date 2017-09-22 13:16:10
  */
 public class BContentDO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -47,6 +49,10 @@ public class BContentDO implements Serializable {
 	private Integer status;
 	//作者
 	private String author;
+	//创建时间
+	private Date gtmCreate;
+	//修改时间
+	private Date gtmModified;
 
 	/**
 	 * 设置：
@@ -239,5 +245,29 @@ public class BContentDO implements Serializable {
 	 */
 	public String getAuthor() {
 		return author;
+	}
+	/**
+	 * 设置：创建时间
+	 */
+	public void setGtmCreate(Date gtmCreate) {
+		this.gtmCreate = gtmCreate;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getGtmCreate() {
+		return gtmCreate;
+	}
+	/**
+	 * 设置：修改时间
+	 */
+	public void setGtmModified(Date gtmModified) {
+		this.gtmModified = gtmModified;
+	}
+	/**
+	 * 获取：修改时间
+	 */
+	public Date getGtmModified() {
+		return gtmModified;
 	}
 }

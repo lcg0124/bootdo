@@ -26,7 +26,9 @@
 				<div id="incomeNum" class="post-preview"></div>
 				<!-- Pager -->
 				<div class="clearfix">
-					<a class="btn btn-secondary float-right" href="#">更早 &rarr;</a>
+					<p id="flagLoaded" style="display: none; text-align: center;">已全部加载</p>
+					<a id="flagLoad" class="btn btn-secondary float-right" href="javascript:void(0)" onclick="nextPage()">更早
+						&rarr;</a>
 				</div>
 			</div>
 		</div>
@@ -34,10 +36,15 @@
 	<hr>
 	<div th:include="blog/index/include_blog::footer"></div>
 	<script>
+		var limit = 10;
+		var currentPage = 0;
+		var total;
 		$(function() {
-			var offseet = 0;
-			bindList(offseet);
+			bindList(0);
 		});
+		function nextPage(){
+			bindList(currentPage*limit)
+		}
 		function bindList(offset) {
 			$
 					.ajax({
@@ -46,7 +53,7 @@
 						dataType : 'json',
 						success : function(data) {
 							var rows = data.rows;
-							//alert(rows.length);
+							total = data.total;
 							var htmlText = "";
 							for (i = 0; i < rows.length; i++) {
 								htmlText += '<div class="post-preview">';
@@ -58,16 +65,20 @@
 								htmlText += '<p class="post-meta">作者：<a href="#">'
 										+ rows[i].author
 										+ '</a> &nbsp;&nbsp; '
-										+ rows[i].createdtime + '</p>';
+										+ rows[i].gtmModified + '</p>';
 								htmlText += '</div>';
 								htmlText += '<hr>';
 							}
 							$("#incomeNum").append(htmlText);
+
+							currentPage++;
+							if (total <= currentPage * limit) {
+								document.getElementById("flagLoaded").style.display = "block";
+								document.getElementById("flagLoad").style.display = "none";
+							}
 						}
 					});
 		}
 	</script>
-
 </body>
-
 </html>

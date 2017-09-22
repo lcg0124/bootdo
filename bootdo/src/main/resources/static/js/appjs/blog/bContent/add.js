@@ -30,17 +30,12 @@ function save(status) {
 				parent.layer.msg(r.msg);
 				parent.reLoad();
 				$("#cid").val(r.cid);
-				var index = parent.layer.getFrameIndex(window.name);
-				获取窗口索引
-				parent.layer.close(index);
 
 			} else {
 				parent.layer.alert(r.msg)
 			}
-
 		}
 	});
-
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
@@ -59,8 +54,6 @@ function validateRule() {
 }
 
 function returnList() {
-	var index = parent.layer.getFrameIndex(window.name);
-	获取窗口索引
-	// parent.layer.close(index);
-	layer.close(index);
+	var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+	parent.layer.close(index);
 }

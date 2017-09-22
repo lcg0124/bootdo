@@ -77,6 +77,11 @@ function load() {
 									title : '最近修改人id'
 								},
 								{
+									visible : true,
+									field : 'gtmModified',
+									title : '最近修改时间'
+								},
+								{
 									visible : false,
 									field : 'content',
 									title : '内容'

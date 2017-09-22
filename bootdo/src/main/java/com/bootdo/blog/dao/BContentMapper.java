@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 /**
@@ -16,12 +15,12 @@ import org.apache.ibatis.annotations.Update;
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2017-09-11 13:48:19
+ * @date 2017-09-22 13:16:10
  */
 @Mapper
 public interface BContentMapper {
 
-	@Select("select `cid`, `title`, `slug`, `created`, `modified`, `content`, `type`, `tags`, `categories`, `hits`, `comments_num`, `allow_comment`, `allow_ping`, `allow_feed`, `status`, `author` from b_content where cid = #{id}")
+	@Select("select `cid`, `title`, `slug`, `created`, `modified`, `content`, `type`, `tags`, `categories`, `hits`, `comments_num`, `allow_comment`, `allow_ping`, `allow_feed`, `status`, `author`, `gtm_create`, `gtm_modified` from b_content where cid = #{id}")
 	BContentDO get(Long cid);
 	
 	@Select("<script>" +
@@ -43,6 +42,8 @@ public interface BContentMapper {
 		  		  "<if test=\"allowFeed != null and allowFeed != ''\">"+ "and allow_feed = #{allowFeed} " + "</if>" + 
 		  		  "<if test=\"status != null and status != ''\">"+ "and status = #{status} " + "</if>" + 
 		  		  "<if test=\"author != null and author != ''\">"+ "and author = #{author} " + "</if>" + 
+		  		  "<if test=\"gtmCreate != null and gtmCreate != ''\">"+ "and gtm_create = #{gtmCreate} " + "</if>" + 
+		  		  "<if test=\"gtmModified != null and gtmModified != ''\">"+ "and gtm_modified = #{gtmModified} " + "</if>" + 
 		  			"</where>"+ 
 			" <choose>" + 
 	            "<when test=\"sort != null and sort.trim() != ''\">" + 
@@ -77,13 +78,14 @@ public interface BContentMapper {
 		  		  "<if test=\"allowFeed != null and allowFeed != ''\">"+ "and allow_feed = #{allowFeed} " + "</if>" + 
 		  		  "<if test=\"status != null and status != ''\">"+ "and status = #{status} " + "</if>" + 
 		  		  "<if test=\"author != null and author != ''\">"+ "and author = #{author} " + "</if>" + 
+		  		  "<if test=\"gtmCreate != null and gtmCreate != ''\">"+ "and gtm_create = #{gtmCreate} " + "</if>" + 
+		  		  "<if test=\"gtmModified != null and gtmModified != ''\">"+ "and gtm_modified = #{gtmModified} " + "</if>" + 
 		  			"</where>"+ 
 			"</script>")
 	int count(Map<String,Object> map);
 	
-	@Options(useGeneratedKeys = true, keyProperty = "cid")
-	@Insert("insert into b_content (`title`, `slug`, `created`, `modified`, `content`, `type`, `tags`, `categories`, `hits`, `comments_num`, `allow_comment`, `allow_ping`, `allow_feed`, `status`, `author`)"
-	+ "values (#{title}, #{slug}, #{created}, #{modified}, #{content}, #{type}, #{tags}, #{categories}, #{hits}, #{commentsNum}, #{allowComment}, #{allowPing}, #{allowFeed}, #{status}, #{author})")
+	@Insert("insert into b_content (`title`, `slug`, `created`, `modified`, `content`, `type`, `tags`, `categories`, `hits`, `comments_num`, `allow_comment`, `allow_ping`, `allow_feed`, `status`, `author`, `gtm_create`, `gtm_modified`)"
+	+ "values (#{title}, #{slug}, #{created}, #{modified}, #{content}, #{type}, #{tags}, #{categories}, #{hits}, #{commentsNum}, #{allowComment}, #{allowPing}, #{allowFeed}, #{status}, #{author}, #{gtmCreate}, #{gtmModified})")
 	int save(BContentDO bContent);
 	
 	@Update("<script>"+ 
@@ -105,6 +107,8 @@ public interface BContentMapper {
                     "<if test=\"allowFeed != null\">`allow_feed` = #{allowFeed}, </if>" + 
                     "<if test=\"status != null\">`status` = #{status}, </if>" + 
                     "<if test=\"author != null\">`author` = #{author}, </if>" + 
+                    "<if test=\"gtmCreate != null\">`gtm_create` = #{gtmCreate}, </if>" + 
+                    "<if test=\"gtmModified != null\">`gtm_modified` = #{gtmModified}, </if>" + 
           					"</set>" + 
 					"where cid = #{cid}"+
 			"</script>")

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 		List<RoleDO> roles = roleMapper.listRole();
 		return roles;
 	}
-
+	@Cacheable
 	@Override
 	public List<RoleDO> list(Long userId) {
 		List<Long> rolesIds = userRoleMapper.listRoleId(userId);
