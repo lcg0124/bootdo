@@ -2,10 +2,10 @@
  *
  *   H+ - åŽå°ä¸»é¢˜UIæ¡†æž¶
  *   version 4.0
- *   ÐÞ¸Ä¼ÇÂ¼ 
- *	 .checkbox-inline input[type=checkbox] È¥µômargin-top:-4px
- *	 .checkbox-inline Ìí¼Ófont-size: 14px;Ä¬ÈÏÊÇ13px
- *   .onoffswitch-inner:before,    ;   /* height: 16px; Á½´¦
+ *   ï¿½Þ¸Ä¼ï¿½Â¼ 
+ *	 .checkbox-inline input[type=checkbox] È¥ï¿½ï¿½margin-top:-4px
+ *	 .checkbox-inline ï¿½ï¿½ï¿½font-size: 14px;Ä¬ï¿½ï¿½ï¿½ï¿½13px
+ *   .onoffswitch-inner:before,    ;   /* height: 16px; ï¿½ï¿½ï¿½ï¿½
  *   
  *	.file-control {
  *  	color: inherit;
@@ -314,9 +314,13 @@ body.mini-navbar .navbar-default .nav>li>.nav-second-level li a {
 	padding-bottom: 60px;
 	position: relative;
 }
+.fixed-sidebar.mini-navbar .slimScrollDiv>*{
+	overflow: visible!important;
+}
 
-.slimScrollDiv>* {
-	overflow: hidden;
+.fixed-sidebar .slimScrollDiv>* {
+	overflow-y: hidden;
+	overflow-x: visible;
 }
 
 .mini-navbar .nav-second-level li a {
@@ -480,18 +484,51 @@ body.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
 	border-left-width: 0;
 }
 
-.fixed-sidebar.mini-navbar .nav li:hover>.nav-second-level, .canvas-menu.mini-navbar .nav li:hover>.nav-second-level
-	{
+/*.fixed-sidebar.mini-navbar .nav li:hover>.nav-second-level, .canvas-menu.mini-navbar .nav li:hover>.nav-second-level*/
+	/*{*/
+	/*position: absolute;*/
+	/*left: 70px;*/
+	/*top: 40px;*/
+	/*background-color: #2f4050;*/
+	/*padding: 10px 10px 0 10px;*/
+	/*font-size: 12px;*/
+	/*display: block;*/
+	/*min-width: 140px;*/
+	/*border-radius: 2px;*/
+/*}*/
+/*.fixed-sidebar.mini-navbar .nav li:hover>a> .nav-label,.fixed-sidebar.mini-navbar .nav li:hover>.nav-second-level{*/
+	/*display: block !important;*/
+	/*position: absolute;*/
+	/*width: 180px;*/
+	/*left: 70px;*/
+/*}*/
+/*.mini-navbar .nav li span{*/
+	/*background: #2f4050;*/
+
+/*}*/
+/*ä¼¸ç¼©èœå•*/
+.fixed-sidebar.mini-navbar .nav li:hover>a> span.nav-label{
+	top:0px;
+	padding: 10px 10px 10px 10px;
+	text-align: center;
+	background-color: #243747;
+	border-bottom: dashed 1px #fff;
+}
+.fixed-sidebar.mini-navbar .nav li:hover>.nav-second-level{
+	top: 40px;
+	font-size: 12px;
+	/*padding: 10px 10px 0 10px;*/
+	background-color: #2f4050;
+}
+
+.fixed-sidebar.mini-navbar .nav li:hover>.nav-second-level,.fixed-sidebar.mini-navbar .nav li:hover>a> span.nav-label{
 	position: absolute;
 	left: 70px;
-	top: 0px;
-	background-color: #2f4050;
-	padding: 10px 10px 0 10px;
-	font-size: 12px;
 	display: block;
 	min-width: 140px;
 	border-radius: 2px;
 }
+
 
 body.fixed-sidebar.mini-navbar .navbar-default .nav>li>.nav-second-level li a
 	{
