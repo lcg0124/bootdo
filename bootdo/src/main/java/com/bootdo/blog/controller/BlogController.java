@@ -1,6 +1,7 @@
 package com.bootdo.blog.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.blog.domain.BContentDO;
 import com.bootdo.blog.service.BContentService;
+import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 
@@ -46,6 +48,14 @@ public class BlogController {
 	@GetMapping("/open/post/{cid}")
 	String post(@PathVariable("cid") Long cid, Model model) {
 		BContentDO bContentDO = bContentService.get(cid);
+		model.addAttribute("bContent", bContentDO);
+		return "blog/index/post";
+	}
+	@GetMapping("/open/page/{categories}")
+	String about(@PathVariable("categories") String categories, Model model) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("categories", categories);
+		BContentDO bContentDO = bContentService.list(map).get(0);
 		model.addAttribute("bContent", bContentDO);
 		return "blog/index/post";
 	}

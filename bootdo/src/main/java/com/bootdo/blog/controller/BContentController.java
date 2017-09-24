@@ -39,7 +39,7 @@ public class BContentController extends BaseController {
 
 	@GetMapping()
 	@RequiresPermissions("blog:bContent:bContent")
-	String BContent() {
+	String bContent() {
 		return "blog/bContent/bContent";
 	}
 
@@ -47,14 +47,10 @@ public class BContentController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("blog:bContent:bContent")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
-		// 查询列表数据
 		Query query = new Query(params);
-
 		List<BContentDO> bContentList = bContentService.list(query);
 		int total = bContentService.count(query);
-
 		PageUtils pageUtils = new PageUtils(bContentList, total);
-
 		return pageUtils;
 	}
 

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@ServletComponentScan 
+@ServletComponentScan
 @MapperScan("com.bootdo.*.dao")
 @SpringBootApplication
 public class BootdoApplication {

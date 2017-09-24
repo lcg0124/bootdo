@@ -119,6 +119,9 @@ public class SysFileController extends BaseController {
 	@ResponseBody
 	// @RequiresPermissions("common:remove")
 	public R remove(Long id, HttpServletRequest request) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
 		String fileName = bootdoConfig.getUploadPath() + sysFileService.get(id).getUrl().replace("/files/", "");
 		if (sysFileService.remove(id) > 0) {
 			boolean b = FileUtil.deleteFile(fileName);

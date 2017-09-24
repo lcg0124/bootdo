@@ -63,21 +63,6 @@ public class MenuController extends BaseController {
 		return "sys/menu/edit";
 	}
 
-	@Log("删除菜单")
-	@RequiresPermissions("sys:menu:remove")
-	@PostMapping("/remove")
-	@ResponseBody
-	R remove(Long id) {
-		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if (menuService.remove(id) > 0) {
-			return R.ok();
-		} else {
-			return R.error(1, "删除失败");
-		}
-	}
-
 	@Log("保存菜单")
 	@RequiresPermissions("sys:menu:add")
 	@PostMapping("/save")
@@ -105,6 +90,21 @@ public class MenuController extends BaseController {
 			return R.ok();
 		} else {
 			return R.error(1, "更新失败");
+		}
+	}
+
+	@Log("删除菜单")
+	@RequiresPermissions("sys:menu:remove")
+	@PostMapping("/remove")
+	@ResponseBody
+	R remove(Long id) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		if (menuService.remove(id) > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "删除失败");
 		}
 	}
 

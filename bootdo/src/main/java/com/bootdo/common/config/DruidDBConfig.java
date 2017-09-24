@@ -112,10 +112,10 @@ public class DruidDBConfig {
         ServletRegistrationBean reg = new ServletRegistrationBean();
         reg.setServlet(new StatViewServlet());
         reg.addUrlMappings("/druid/*");
-        reg.addInitParameter("allow", "127.0.0.1"); //白名单
-        reg.addInitParameter("deny",""); //黑名单
-        reg.addInitParameter("loginUsername", "admin");
-        reg.addInitParameter("loginPassword", "admin");
+        reg.addInitParameter("allow", ""); //白名单
+      //  reg.addInitParameter("deny",""); //黑名单
+       // reg.addInitParameter("loginUsername", "admin");
+      //  reg.addInitParameter("loginPassword", "admin");
         return reg;
     }
 

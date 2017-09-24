@@ -15,6 +15,7 @@
 <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="/css/animate.css" rel="stylesheet">
 <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+<link href="/css/layui.css" rel="stylesheet">
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content">
@@ -25,7 +26,7 @@
 						<div class="file-manager">
 							<h3>显示：</h3>
 							<a href="javascript:void(0)" class="file-control active"
-								onclick="changeType(null)">所有</a> <a href="#"
+								onclick="changeType('')">所有</a> <a href="javascript:void(0)"
 								class="file-control" href="javascript:void(0)"
 								onclick="changeType(0)">图片</a> <a href="javascript:void(0)"
 								onclick="changeType(1)" class="file-control">文档</a> <a
@@ -36,13 +37,17 @@
 								class="file-control">其他</a>
 
 							<div class="hr-line-dashed"></div>
-							<form id="uploadForm" class="form-horizontal m-t ">
+							<form id="uploadForm" class="form-horizontal m-t hidden">
 								<input type="file" id="file" class="form-control" name="file"
 									style="height: 100px;" />
 							</form>
-							<button class="btn btn-primary btn-block" onclick="doUpload()">上传文件</button>
+							<button class="btn btn-primary btn-block hidden"
+								onclick="doUpload()">上传文件</button>
 							<div class="hr-line-dashed"></div>
 
+							<button type="button" class="layui-btn" id="test1">
+								<i class="fa fa-cloud"></i>上传文件
+							</button>
 							<div class="clearfix"></div>
 						</div>
 					</div>
@@ -66,29 +71,41 @@
 	<script src="/js/bootstrap-paginator.min.js"></script>
 
 	<script src="/js/content.js?v=1.0.0"></script>
+	<script src="/js/layui.js"></script>
 	<script src="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
 	<script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
 	<script src="/js/plugins/layer/layer.min.js"></script>
-	<!-- <script>
-		$(document).ready(function() {
-			$('.file-box').each(function() {
-				animationHover(this, 'pulse');
-			});
-		});
-	</script> -->
+
 	<script type="text/javascript">
 		var total;
 		var type;
 		$(function() {
-			bindList(0);
+			changeType('');
 			
 		});
 		 var clipboard = new Clipboard('button.copy', {
 			text : function(trigger) {
 				return $(trigger).attr('url');
+				layer.msg('文件路径已复制到粘贴板');
 			}
 		}); 
-		
+		 layui.use('upload', function(){
+			  var upload = layui.upload;
+			  //执行实例
+			  var uploadInst = upload.render({
+			    elem: '#test1' //绑定元素
+			    ,url: '/common/sysFile/upload' //上传接口
+			    ,size: 1000
+			    ,accept:'file'
+			    ,done: function(r){
+			    	layer.msg(r.msg);
+					bindList(0);
+			    }
+			    ,error: function(r){
+			    	layer.msg(r.msg);
+			    }
+			  });
+			});
 	</script>
 	<script>
 	function changeType(i){

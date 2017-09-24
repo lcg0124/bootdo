@@ -28,13 +28,11 @@
 			<div class="col-sm-11">
 				<div id="content" class="summernote"></div>
 			</div>
+			
 		</div>
 	</article>
-
 	<hr>
-
 	<div th:include="blog/index/include_blog::footer"></div>
-
 	<script type="text/javascript" th:inline="javascript">
 		$().ready(function() {
 			$('.summernote').summernote({
@@ -45,7 +43,5 @@
 			$('.summernote').destroy();
 		});
 	</script>
-
 </body>
-
 </html>

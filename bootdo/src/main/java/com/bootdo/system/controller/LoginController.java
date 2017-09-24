@@ -32,17 +32,14 @@ public class LoginController extends BaseController {
 	@Autowired
 	MenuService menuService;
 
-	@Log("请求访问主页")
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
 		return "redirect:/blog";
 	}
 
-	
 	@Log("请求访问主页")
 	@GetMapping({ "/index" })
 	String index(Model model) {
-		// Tree<MenuDO> menuTree = menuService.getSysMenuTree(getUserId());
 		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
@@ -53,20 +50,6 @@ public class LoginController extends BaseController {
 	@GetMapping("/login")
 	String login() {
 		return "login";
-	}
-
-	@PostMapping("/login_bak")
-	String doLogin(String username, String password) {
-		password = MD5Utils.encrypt(username, password);
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		Subject subject = SecurityUtils.getSubject();
-		try {
-			subject.login(token);
-			return "redirect:/index";
-		} catch (AuthenticationException e) {
-			System.out.println("登录失败信息------" + e.getMessage());
-			return "redirect:/login";
-		}
 	}
 
 	@Log("登录")

@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,16 @@ import com.bootdo.system.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+	/**
+	 * 缓存的key
+	 */
+	public static final String ROLE_ALL_KEY = "\"role_all\"";
+	/**
+	 * value属性表示使用哪个缓存策略，缓存策略在ehcache.xml
+	 */
+
+	public static final String DEMO_CACHE_NAME = "role";
+
 	@Autowired
 	RoleMapper roleMapper;
 	@Autowired
@@ -35,7 +47,8 @@ public class RoleServiceImpl implements RoleService {
 		List<RoleDO> roles = roleMapper.listRole();
 		return roles;
 	}
-	@Cacheable
+
+	@Cacheable(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
 	@Override
 	public List<RoleDO> list(Long userId) {
 		List<Long> rolesIds = userRoleMapper.listRoleId(userId);
@@ -52,6 +65,7 @@ public class RoleServiceImpl implements RoleService {
 		return roles;
 	}
 
+	@CacheEvict(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
 	@Transactional
 	@Override
 	public int save(RoleDO role) {
@@ -72,6 +86,7 @@ public class RoleServiceImpl implements RoleService {
 		return count;
 	}
 
+	@CacheEvict(value = DEMO_CACHE_NAME)
 	@Transactional
 	@Override
 	public int remove(Long id) {
@@ -86,6 +101,7 @@ public class RoleServiceImpl implements RoleService {
 		return roleDO;
 	}
 
+	@CacheEvict(value = DEMO_CACHE_NAME)
 	@Override
 	public int update(RoleDO role) {
 		int r = roleMapper.update(role);

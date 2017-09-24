@@ -20,7 +20,7 @@ import com.bootdo.system.service.RoleService;
 
 @RequestMapping("/sys/role")
 @Controller
-public class RoleController extends BaseController{
+public class RoleController extends BaseController {
 	String prefix = "sys/role";
 	@Autowired
 	RoleService roleService;

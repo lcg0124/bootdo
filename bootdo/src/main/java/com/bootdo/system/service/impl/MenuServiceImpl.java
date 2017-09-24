@@ -91,12 +91,6 @@ public class MenuServiceImpl implements MenuService {
 			tree.setId(sysMenuDO.getMenuId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
-			// Map<String, Object> attribute = new HashMap<>();
-			// attribute.put("url", sysMenuDO.getUrl());
-			// attribute.put("icon", sysMenuDO.getIcon());
-			// List<Map<String, Object>> attributes = new ArrayList<>();
-			// attributes.add(attribute);
-			// tree.setAttributes(attributes);
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
@@ -158,7 +152,7 @@ public class MenuServiceImpl implements MenuService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		List<Tree<MenuDO>> list = BuildTree.buildList(trees,"0");
+		List<Tree<MenuDO>> list = BuildTree.buildList(trees, "0");
 		return list;
 	}
 
