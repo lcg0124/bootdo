@@ -65,7 +65,6 @@ public class RoleServiceImpl implements RoleService {
 		return roles;
 	}
 
-	@CacheEvict(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
 	@Transactional
 	@Override
 	public int save(RoleDO role) {
