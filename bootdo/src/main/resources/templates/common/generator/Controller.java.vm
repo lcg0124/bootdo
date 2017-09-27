@@ -21,9 +21,6 @@ import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 
-
-
-
 /**
  * ${comments}
  * 
@@ -31,6 +28,7 @@ import com.bootdo.common.utils.R;
  * @email ${email}
  * @date ${datetime}
  */
+ 
 @Controller
 @RequestMapping("/${pathName}/${classname}")
 public class ${className}Controller {
@@ -38,14 +36,14 @@ public class ${className}Controller {
 	private ${className}Service ${classname}Service;
 	
 	@GetMapping()
-	@RequiresPermissions("${pathName}:${classname}")
+	@RequiresPermissions("${pathName}:${classname}:${classname}")
 	String ${className}(){
 	    return "${pathName}/${classname}/${classname}";
 	}
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("${pathName}:list")
+	@RequiresPermissions("${pathName}:${classname}:${classname}")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
@@ -56,26 +54,17 @@ public class ${className}Controller {
 	}
 	
 	@GetMapping("/add")
-	//@RequiresPermissions("blog:bComments")
+	@RequiresPermissions("${pathName}:${classname}:add")
 	String add(){
 	    return "${pathName}/${classname}/add";
 	}
 
 	@GetMapping("/edit/{${pk.attrname}}")
-	//@RequiresPermissions("blog:bComments")
+	@RequiresPermissions("${pathName}:${classname}:edit")
 	String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname},Model model){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
 		model.addAttribute("${className}", ${classname});
 	    return "${pathName}/${classname}/edit";
-	}
-	/**
-	 * 信息
-	 */
-	@RequestMapping("/info/{${pk.attrname}}")
-	@RequiresPermissions("${pathName}:info")
-	public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
-		return R.ok().put("${classname}", ${classname});
 	}
 	
 	/**
@@ -83,32 +72,31 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("${pathName}:save")
+	@RequiresPermissions("${pathName}:${classname}:add")
 	public R save( ${className}DO ${classname}){
 		if(${classname}Service.save(${classname})>0){
 			return R.ok();
 		}
 		return R.error();
 	}
-	
 	/**
 	 * 修改
 	 */
+	@RequestBody
 	@RequestMapping("/update")
-	@RequiresPermissions("${pathName}:update")
-	public R update(@RequestBody ${className}DO ${classname}){
+	@RequiresPermissions("${pathName}:${classname}:edit")
+	public R update( ${className}DO ${classname}){
 		${classname}Service.update(${classname});
 		
 		return R.ok();
 	}
-	
 	
 	/**
 	 * 删除
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("${pathName}:remove")
+	@RequiresPermissions("${pathName}:${classname}:remove")
 	public R remove( ${pk.attrType} ${pk.attrname}){
 		if(${classname}Service.remove(${pk.attrname})>0){
 		return R.ok();
@@ -121,10 +109,9 @@ public class ${className}Controller {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("${pathName}:remove")
+	@RequiresPermissions("${pathName}:${classname}:batchRemove")
 	public R remove(@RequestParam("ids[]") ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.batchRemove(${pk.attrname}s);
-		
 		return R.ok();
 	}
 	
