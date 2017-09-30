@@ -1,7 +1,9 @@
 package com.bootdo.common.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bootdo.common.domain.Tree;
 
@@ -48,7 +50,9 @@ public class BuildTree {
 			root.setChecked(true);
 			root.setChildren(topNodes);
 			root.setText("顶级节点");
-
+			Map<String, Object> state = new HashMap<>();
+			state.put("opened", true);
+			root.setState(state);
 		}
 
 		return root;

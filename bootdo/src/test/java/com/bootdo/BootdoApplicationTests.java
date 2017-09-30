@@ -17,12 +17,14 @@ import com.bootdo.common.domain.SysFileDO;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.common.utils.Query;
+import com.bootdo.system.controller.SysDeptController;
 import com.bootdo.system.dao.MenuMapper;
 import com.bootdo.system.dao.RoleMapper;
 import com.bootdo.system.dao.UserMapper;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.service.MenuService;
+import com.bootdo.system.service.SysDeptService;
 import com.bootdo.system.service.UserService;
 
 @RunWith(SpringRunner.class)
@@ -48,6 +50,12 @@ public class BootdoApplicationTests {
 
 	@Autowired
 	SysFileMapper sysFileMapper;
+	
+	@Autowired
+	SysDeptService deptService;
+	
+	@Autowired
+	SysDeptController sysDeptController;
 
 	@Test
 	public void contextLoads() {
@@ -79,9 +87,8 @@ public class BootdoApplicationTests {
 
 	@Test
 	public void test01() {
-		Map<String, Object> map = new HashMap<>();
-		SysFileDO oDo = sysFileMapper.list(map).get(0);
-		System.out.println(oDo.getUrl());
+		System.out.println(sysDeptController.tree().toString());
+		
 	}
 
 }

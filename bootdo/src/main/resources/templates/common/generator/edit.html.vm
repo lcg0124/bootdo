@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="wrapper wrapper-content ">
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
@@ -14,7 +14,7 @@
 <div class="form-group">	
 								<label class="col-sm-3 control-label">${column.comments}：</label>
 								<div class="col-sm-8">
-									<input id="${column.attrname}" name="${column.attrname}" th:value="${${column.attrname}}" class="form-control" type="text">
+									<input id="${column.attrname}" name="${column.attrname}" th:value="${${classname}.${column.attrname}}" class="form-control" type="text">
 								</div>
 							</div>
 							#end

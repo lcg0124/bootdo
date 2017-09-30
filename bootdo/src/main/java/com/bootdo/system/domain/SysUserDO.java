@@ -15,6 +15,9 @@ public class SysUserDO implements Serializable {
 	private String name;
 	// 密码
 	private String password;
+	// 部门
+	private Long deptId;
+	private String deptName;
 	// 邮箱
 	private String email;
 	// 手机号
@@ -79,6 +82,22 @@ public class SysUserDO implements Serializable {
 	 */
 	public String getPassword() {
 		return password;
+	}
+
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 
 	/**

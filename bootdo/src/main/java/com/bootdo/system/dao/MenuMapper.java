@@ -21,15 +21,15 @@ public interface MenuMapper {
 	@Select("select m.perms from sys_menu m left join sys_role_menu rm on m.menu_id = rm.menu_id left join sys_user_role ur on rm.role_id = ur.role_id where ur.user_id = #{id} ")
 	List<String> listUserPerms(Long id);
 
-	@Select("SELECT menu_id, parent_id, name, url, perms, `type`, icon, order_num, gmt_create, gmt_modified FROM sys_menu order by type")
+	@Select("SELECT menu_id, parent_id, name, url, perms, `type`, icon, order_num, gmt_create, gmt_modified FROM sys_menu order by order_num")
 	List<MenuDO> listMenu();
 
 	@Delete("delete from sys_menu where menu_id = #{id}")
 	int remove(Long id);
 
-	@Insert("insert sys_menu(parent_id,name,url,perms,type) values(#{parentId},#{name},#{url},#{perms},#{type})")
+	@Insert("insert sys_menu(parent_id,name,url,perms,type,order_num,icon) values(#{parentId},#{name},#{url},#{perms},#{type},#{orderNum},#{icon})")
 	int save(MenuDO menu);
 
-	@Update("UPDATE sys_menu SET  name=#{name}, url=#{url},  icon=#{icon},type=#{type},perms=#{perms} WHERE menu_id=#{menuId}")
+	@Update("UPDATE sys_menu SET  name=#{name}, url=#{url},  icon=#{icon},type=#{type},perms=#{perms}, order_num=#{orderNum} WHERE menu_id=#{menuId}")
 	int update(MenuDO menu);
 }

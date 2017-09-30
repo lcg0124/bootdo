@@ -4,27 +4,39 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="col-sm-12">
-			<div class="ibox">
-				<div class="ibox-body">
-					<div id="exampleToolbar" role="group">
-						<div class="form-group col-sm-6">
-							<input id="searchName" type="text" class="form-control"
-								placeholder="姓名">
-						</div>
-						<button class="btn btn-success" onclick="reLoad()">查询</button>
-						<button shiro:hasPermission="sys:user:add" type="button"
-							class="btn  btn-primary" onclick="add()">
-							<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
-						</button>
-						<button shiro:hasPermission="sys:user:batchRemove" type="button"
-							class="btn  btn-danger" onclick="batchRemove()">
-							<i class="fa fa-trash hidden" aria-hidden="true"></i>删除
-						</button>
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="ibox ibox-body">
+				<div class="ibox-title">
+						<h5>选择部门</h5>
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
-					</table>
+					<div class="ibox-content">
+						<div id="jstree"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div id="exampleToolbar" role="group">
+							<div class="form-group col-sm-6">
+								<input id="searchName" type="text" class="form-control"
+									placeholder="姓名">
+							</div>
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+							<button shiro:hasPermission="sys:user:add" type="button"
+								class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="sys:user:batchRemove" type="button"
+								class="btn  btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash hidden" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bootdo.system.dao.SysDeptMapper;
 import com.bootdo.system.dao.UserMapper;
 import com.bootdo.system.dao.UserRoleMapper;
 import com.bootdo.system.domain.SysUserDO;
@@ -24,12 +25,15 @@ public class UserServiceImp implements UserService {
 	UserMapper userMapper;
 	@Autowired
 	UserRoleMapper userRoleMapper;
+	@Autowired
+	SysDeptMapper sysDeptMapper;
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Override
 	public SysUserDO get(Long id) {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
 		SysUserDO user = userMapper.get(id);
+		user.setDeptName(sysDeptMapper.get(user.getDeptId()).getName());
 		user.setroleIds(roleIds);
 		return user;
 	}

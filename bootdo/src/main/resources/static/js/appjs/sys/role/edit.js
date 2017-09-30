@@ -14,12 +14,16 @@ function loadMenuTree(menuTree) {
 		"plugins" : [ "wholerow", "checkbox" ],
 		'core' : {
 			'data' : menuTree
+		},
+		"checkbox" : {
+			"three_state" : false,
+		//"cascade" : 'down'
 		}
 	});
 	$('#menuTree').jstree('open_all');
 }
 function getAllSelectNodes() {
-	var ref = $('#menuTree').jstree(true);// 获得整个树
+	var ref = $('#menuTree').jstree(true); // 获得整个树
 	menuIds = ref.get_selected(); // 获得所有选中节点，返回值为数组
 }
 function getMenuTreeData() {
@@ -39,7 +43,7 @@ function update() {
 		cache : true,
 		type : "POST",
 		url : "/sys/role/update",
-		data : role,// 你的formid
+		data : role, // 你的formid
 		async : false,
 		error : function(request) {
 			alert("Connection error");

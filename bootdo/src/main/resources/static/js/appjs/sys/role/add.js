@@ -31,12 +31,12 @@ function loadMenuTree(menuTree) {
 			'data' : menuTree
 		},
 		"checkbox" : {
-			"three_state" : false
-		// 不起作用，修改了源代码的默认true--false
+			"three_state" : false,
+			//"cascade" : 'down'
 		},
 		"plugins" : [ "wholerow", "checkbox" ]
 	});
-	$('#menuTree').jstree().open_all();
+	//$('#menuTree').jstree("open_all");
 }
 
 function save() {

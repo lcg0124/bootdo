@@ -63,7 +63,7 @@ public class ${className}Controller {
 	@RequiresPermissions("${pathName}:${classname}:edit")
 	String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname},Model model){
 		${className}DO ${classname} = ${classname}Service.get(${pk.attrname});
-		model.addAttribute("${className}", ${classname});
+		model.addAttribute("${classname}", ${classname});
 	    return "${pathName}/${classname}/edit";
 	}
 	
@@ -82,12 +82,11 @@ public class ${className}Controller {
 	/**
 	 * 修改
 	 */
-	@RequestBody
+	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("${pathName}:${classname}:edit")
 	public R update( ${className}DO ${classname}){
 		${classname}Service.update(${classname});
-		
 		return R.ok();
 	}
 	

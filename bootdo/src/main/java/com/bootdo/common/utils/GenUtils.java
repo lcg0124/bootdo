@@ -39,10 +39,10 @@ public class GenUtils {
 		templates.add("templates/common/generator/Controller.java.vm");
 		templates.add("templates/common/generator/list.html.vm");
 		templates.add("templates/common/generator/add.html.vm");
-//		templates.add("templates/common/generator/edit.html.vm");
+		templates.add("templates/common/generator/edit.html.vm");
 		templates.add("templates/common/generator/list.js.vm");
 		templates.add("templates/common/generator/add.js.vm");
-//		templates.add("templates/common/generator/edit.js.vm");
+		templates.add("templates/common/generator/edit.js.vm");
 		templates.add("templates/common/generator/menu.sql.vm");
 		return templates;
 	}
@@ -211,10 +211,10 @@ public class GenUtils {
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
 					+ modulesname + File.separator + classname + File.separator +  "add.html";
 		}
-//		if(template.contains("edit.html.vm")){
-//			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-//					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
-//		}
+		if(template.contains("edit.html.vm")){
+			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
+					+ modulesname + File.separator + classname + File.separator +  "edit.html";
+		}
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
@@ -225,10 +225,10 @@ public class GenUtils {
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
                     + "appjs" + File.separator+ modulesname + File.separator + classname + File.separator + "add.js";
 		}
-//		if(template.contains("edit.js.vm")){
-//			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-//					+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
-//		}
+		if(template.contains("edit.js.vm")){
+			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
+                    + "appjs" + File.separator+ modulesname + File.separator + classname + File.separator + "edit.js";
+		}
 
 		if(template.contains("menu.sql.vm")){
 			return className.toLowerCase() + "_menu.sql";
