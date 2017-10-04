@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.common.domain.TaskScheduleJobDO;
+import com.bootdo.common.domain.TaskDO;
 import com.bootdo.common.service.TaskScheduleJobService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -33,7 +33,7 @@ import com.bootdo.common.utils.R;
  */
 @Controller
 @RequestMapping("/common/taskScheduleJob")
-public class TaskScheduleJobController extends BaseController{
+public class JobController extends BaseController{
 	@Autowired
 	private TaskScheduleJobService taskScheduleJobService;
 
@@ -49,7 +49,7 @@ public class TaskScheduleJobController extends BaseController{
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<TaskScheduleJobDO> taskScheduleJobList = taskScheduleJobService.list(query);
+		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query);
 		int total = taskScheduleJobService.count(query);
 		PageUtils pageUtils = new PageUtils(taskScheduleJobList, total);
 		return pageUtils;
@@ -64,7 +64,7 @@ public class TaskScheduleJobController extends BaseController{
 	@GetMapping("/edit/{id}")
 	// @RequiresPermissions("blog:bComments")
 	String edit(@PathVariable("id") Long id, Model model) {
-		TaskScheduleJobDO taskScheduleJob = taskScheduleJobService.get(id);
+		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
 		model.addAttribute("TaskScheduleJob", taskScheduleJob);
 		return "common/taskScheduleJob/edit";
 	}
@@ -75,7 +75,7 @@ public class TaskScheduleJobController extends BaseController{
 	@RequestMapping("/info/{id}")
 	// @RequiresPermissions("common:info")
 	public R info(@PathVariable("id") Long id) {
-		TaskScheduleJobDO taskScheduleJob = taskScheduleJobService.get(id);
+		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
 		return R.ok().put("taskScheduleJob", taskScheduleJob);
 	}
 
@@ -85,7 +85,7 @@ public class TaskScheduleJobController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	// @RequiresPermissions("common:save")
-	public R save(TaskScheduleJobDO taskScheduleJob) {
+	public R save(TaskDO taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -100,7 +100,7 @@ public class TaskScheduleJobController extends BaseController{
 	 */
 	@RequestMapping("/update")
 	// @RequiresPermissions("common:update")
-	public R update(@RequestBody TaskScheduleJobDO taskScheduleJob) {
+	public R update(@RequestBody TaskDO taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

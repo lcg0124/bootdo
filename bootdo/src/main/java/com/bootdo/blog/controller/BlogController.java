@@ -1,6 +1,5 @@
 package com.bootdo.blog.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.blog.domain.BContentDO;
+import com.bootdo.blog.domain.ContentDO;
 import com.bootdo.blog.service.BContentService;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.PageUtils;
@@ -37,7 +36,7 @@ public class BlogController {
 		// 查询列表数据
 		Query query = new Query(params);
 
-		List<BContentDO> bContentList = bContentService.list(query);
+		List<ContentDO> bContentList = bContentService.list(query);
 		int total = bContentService.count(query);
 
 		PageUtils pageUtils = new PageUtils(bContentList, total);
@@ -47,15 +46,16 @@ public class BlogController {
 
 	@GetMapping("/open/post/{cid}")
 	String post(@PathVariable("cid") Long cid, Model model) {
-		BContentDO bContentDO = bContentService.get(cid);
+		ContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);
+		model.addAttribute("gtmModified", DateUtils.format(bContentDO.getGtmModified()));
 		return "blog/index/post";
 	}
 	@GetMapping("/open/page/{categories}")
 	String about(@PathVariable("categories") String categories, Model model) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("categories", categories);
-		BContentDO bContentDO = bContentService.list(map).get(0);
+		ContentDO bContentDO = bContentService.list(map).get(0);
 		model.addAttribute("bContent", bContentDO);
 		return "blog/index/post";
 	}

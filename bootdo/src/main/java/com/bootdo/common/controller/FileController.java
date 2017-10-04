@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bootdo.common.config.BootdoConfig;
-import com.bootdo.common.domain.SysFileDO;
+import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.service.SysFileService;
 import com.bootdo.common.utils.FileType;
 import com.bootdo.common.utils.FileUtil;
@@ -37,7 +37,7 @@ import com.bootdo.common.utils.R;
  */
 @Controller
 @RequestMapping("/common/sysFile")
-public class SysFileController extends BaseController {
+public class FileController extends BaseController {
 
 	@Autowired
 	private SysFileService sysFileService;
@@ -58,7 +58,7 @@ public class SysFileController extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<SysFileDO> sysFileList = sysFileService.list(query);
+		List<FileDO> sysFileList = sysFileService.list(query);
 		int total = sysFileService.count(query);
 		PageUtils pageUtils = new PageUtils(sysFileList, total);
 		return pageUtils;
@@ -73,7 +73,7 @@ public class SysFileController extends BaseController {
 	@GetMapping("/edit")
 	// @RequiresPermissions("common:bComments")
 	String edit(Long id, Model model) {
-		SysFileDO sysFile = sysFileService.get(id);
+		FileDO sysFile = sysFileService.get(id);
 		model.addAttribute("sysFile", sysFile);
 		return "common/sysFile/edit";
 	}
@@ -84,7 +84,7 @@ public class SysFileController extends BaseController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("common:info")
 	public R info(@PathVariable("id") Long id) {
-		SysFileDO sysFile = sysFileService.get(id);
+		FileDO sysFile = sysFileService.get(id);
 		return R.ok().put("sysFile", sysFile);
 	}
 
@@ -94,7 +94,7 @@ public class SysFileController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:save")
-	public R save(SysFileDO sysFile) {
+	public R save(FileDO sysFile) {
 		if (sysFileService.save(sysFile) > 0) {
 			return R.ok();
 		}
@@ -106,7 +106,7 @@ public class SysFileController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("common:update")
-	public R update(@RequestBody SysFileDO sysFile) {
+	public R update(@RequestBody FileDO sysFile) {
 		sysFileService.update(sysFile);
 
 		return R.ok();
@@ -156,7 +156,7 @@ public class SysFileController extends BaseController {
 		}
 		String fileName = file.getOriginalFilename();
 		fileName = FileUtil.RenameToUUID(fileName);
-		SysFileDO sysFile = new SysFileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
 		try {
 			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
 		} catch (Exception e) {

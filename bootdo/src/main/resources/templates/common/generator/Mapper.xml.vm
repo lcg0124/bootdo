@@ -3,22 +3,20 @@
 
 <mapper namespace="${package}.dao.${className}Dao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="${package}.entity.${className}Entity" id="${classname}Map">
-#foreach($column in $columns)
-        <result property="${column.attrname}" column="${column.columnName}"/>
-#end
-    </resultMap>
-
-	<select id="queryObject" resultType="${package}.entity.${className}Entity">
-		select * from ${tableName} where ${pk.columnName} = #{value}
+	<select id="get" resultType="${package}.domain.${className}DO">
+		select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName} where ${pk.columnName} = #{value}
 	</select>
 
-	<select id="queryList" resultType="${package}.entity.${className}Entity">
-		select * from ${tableName}
+	<select id="list" resultType="${package}.domain.${className}DO">
+		select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        <where>  
+		  #foreach($column in $columns)
+		  <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname} </if>
+		  #end
+		</where>
         <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
             </when>
 			<otherwise>
                 order by ${pk.columnName} desc
@@ -29,11 +27,16 @@
 		</if>
 	</select>
 	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from ${tableName} 
+ 	<select id="count" resultType="int">
+		select count(*) from ${tableName}
+		 <where>  
+		  #foreach($column in $columns)
+		  <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname} </if>
+		  #end
+		</where>
 	</select>
 	 
-	<insert id="save" parameterType="${package}.entity.${className}Entity"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
+	<insert id="save" parameterType="${package}.domain.${className}DO"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
 		insert into ${tableName}
 		(
 #foreach($column in $columns)
@@ -54,7 +57,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="${package}.entity.${className}Entity">
+	<update id="update" parameterType="${package}.domain.${className}DO">
 		update ${tableName} 
 		<set>
 #foreach($column in $columns)
@@ -66,11 +69,11 @@
 		where ${pk.columnName} = #{${pk.attrname}}
 	</update>
 	
-	<delete id="delete">
+	<delete id="remove">
 		delete from ${tableName} where ${pk.columnName} = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
+	<delete id="batchRemove">
 		delete from ${tableName} where ${pk.columnName} in 
 		<foreach item="${pk.attrname}" collection="array" open="(" separator="," close=")">
 			#{${pk.attrname}}

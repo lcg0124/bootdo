@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class SysLogDO {
+public class LogDO {
 	private Long id;
 
 	private Long userId;

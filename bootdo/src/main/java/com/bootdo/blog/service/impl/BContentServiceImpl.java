@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.bootdo.blog.dao.BContentMapper;
-import com.bootdo.blog.domain.BContentDO;
+import com.bootdo.blog.dao.ContentDao;
+import com.bootdo.blog.domain.ContentDO;
 import com.bootdo.blog.service.BContentService;
 
 
@@ -15,15 +15,15 @@ import com.bootdo.blog.service.BContentService;
 @Service
 public class BContentServiceImpl implements BContentService {
 	@Autowired
-	private BContentMapper bContentMapper;
+	private ContentDao bContentMapper;
 	
 	@Override
-	public BContentDO get(Long cid){
+	public ContentDO get(Long cid){
 		return bContentMapper.get(cid);
 	}
 	
 	@Override
-	public List<BContentDO> list(Map<String, Object> map){
+	public List<ContentDO> list(Map<String, Object> map){
 		return bContentMapper.list(map);
 	}
 	
@@ -33,12 +33,12 @@ public class BContentServiceImpl implements BContentService {
 	}
 	
 	@Override
-	public int save(BContentDO bContent){
+	public int save(ContentDO bContent){
 		return bContentMapper.save(bContent);
 	}
 	
 	@Override
-	public int update(BContentDO bContent){
+	public int update(ContentDO bContent){
 		return bContentMapper.update(bContent);
 	}
 	

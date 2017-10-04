@@ -1,11 +1,8 @@
 package com.bootdo.system.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +21,7 @@ import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.RoleDO;
-import com.bootdo.system.domain.SysUserDO;
+import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.RoleService;
 import com.bootdo.system.service.UserService;
 
@@ -47,7 +44,7 @@ public class UserController extends BaseController {
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<SysUserDO> sysUserList = userService.list(query);
+		List<UserDO> sysUserList = userService.list(query);
 		int total = userService.count(query);
 		PageUtils pageUtil = new PageUtils(sysUserList, total);
 		return pageUtil;
@@ -66,7 +63,7 @@ public class UserController extends BaseController {
 	@Log("编辑用户")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		SysUserDO userDO = userService.get(id);
+		UserDO userDO = userService.get(id);
 		model.addAttribute("user", userDO);
 		List<RoleDO> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
@@ -77,7 +74,7 @@ public class UserController extends BaseController {
 	@Log("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(SysUserDO user) {
+	R save(UserDO user) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -92,7 +89,7 @@ public class UserController extends BaseController {
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(SysUserDO user) {
+	R update(UserDO user) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -124,8 +121,7 @@ public class UserController extends BaseController {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		List<Long> Ids = Arrays.asList(userIds);
-		int r = userService.batchremove(Ids);
+		int r = userService.batchremove(userIds);
 		System.out.println(r);
 		if (r > 0) {
 			return R.ok();
@@ -136,7 +132,6 @@ public class UserController extends BaseController {
 	@PostMapping("/exit")
 	@ResponseBody
 	boolean exit(@RequestParam Map<String, Object> params) {
-		// Query query = new Query(params);
 		return !userService.exit(params);// 存在，不通过，false
 	}
 
@@ -145,7 +140,7 @@ public class UserController extends BaseController {
 	@GetMapping("/resetPwd/{id}")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
 
-		SysUserDO userDO = new SysUserDO();
+		UserDO userDO = new UserDO();
 		userDO.setUserId(userId);
 		model.addAttribute("user", userDO);
 		return "sys/user/reset_pwd";
@@ -154,7 +149,7 @@ public class UserController extends BaseController {
 	@Log("提交更改用户密码")
 	@PostMapping("/resetPwd")
 	@ResponseBody
-	R resetPwd(SysUserDO user) {
+	R resetPwd(UserDO user) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

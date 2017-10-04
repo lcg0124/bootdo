@@ -10,7 +10,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2017-09-19 16:02:20
  */
-public class SysFileDO implements Serializable {
+public class FileDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//
@@ -23,12 +23,12 @@ public class SysFileDO implements Serializable {
 	private Date createDate;
 	
 	
-	public SysFileDO() {
+	public FileDO() {
 		super();
 	}
 
 
-	public SysFileDO(Integer type, String url, Date createDate) {
+	public FileDO(Integer type, String url, Date createDate) {
 		super();
 		this.type = type;
 		this.url = url;

@@ -1,6 +1,6 @@
 package com.bootdo.common.service;
 
-import com.bootdo.common.domain.TaskScheduleJobDO;
+import com.bootdo.common.domain.TaskDO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,15 +16,15 @@ import org.quartz.SchedulerException;
  */
 public interface TaskScheduleJobService {
 	
-	TaskScheduleJobDO get(Long id);
+	TaskDO get(Long id);
 	
-	List<TaskScheduleJobDO> list(Map<String, Object> map);
+	List<TaskDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(TaskScheduleJobDO taskScheduleJob);
+	int save(TaskDO taskScheduleJob);
 	
-	int update(TaskScheduleJobDO taskScheduleJob);
+	int update(TaskDO taskScheduleJob);
 	
 	int remove(Long id);
 	

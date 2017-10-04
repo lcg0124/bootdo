@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <head th:include="blog/index/include_blog::header"></head>
 <body>
-	<div th:include="blog/index/include_blog::nav"></div>
+	<nav th:include="blog/index/include_blog::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
 	<header class="intro-header"
 		style="background-image: url('/img/blog/home-bg.jpg')">
 		<div class="container">
@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div id="incomeNum" ></div>
+				<div id="incomeNum"></div>
 				<div class="clearfix">
 					<p id="flagLoaded" style="display: none; text-align: center;">已全部加载</p>
 					<a id="flagLoad" class="btn btn-secondary float-right"
@@ -31,14 +31,15 @@
 			</div>
 		</div>
 	</div>
+	</body>
 	<div th:include="blog/index/include_blog::footer"></div>
-	<script>
+	<script type="text/javascript">
 		var limit = 10;
 		var currentPage = 0;
 		var total;
-		$(function() {
+		$(function(){
 			bindList(0);
-		});
+		}); 
 		function nextPage() {
 			bindList(currentPage * limit)
 		}
@@ -77,5 +78,6 @@
 				});
 		}
 	</script>
-</body>
+
+
 </html>

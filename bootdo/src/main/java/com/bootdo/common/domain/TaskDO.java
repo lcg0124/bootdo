@@ -10,7 +10,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2017-09-25 15:09:21
  */
-public class TaskScheduleJobDO implements Serializable {
+public class TaskDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//

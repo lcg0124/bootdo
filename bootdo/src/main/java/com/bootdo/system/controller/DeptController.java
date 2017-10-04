@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.system.domain.MenuDO;
-import com.bootdo.system.domain.SysDeptDO;
+import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.service.SysDeptService;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
@@ -32,7 +32,7 @@ import com.bootdo.common.utils.R;
  
 @Controller
 @RequestMapping("/system/sysDept")
-public class SysDeptController extends BaseController{
+public class DeptController extends BaseController{
 	@Autowired
 	private SysDeptService sysDeptService;
 	
@@ -45,11 +45,11 @@ public class SysDeptController extends BaseController{
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<SysDeptDO> list(){
+	public List<DeptDO> list(){
 		//查询列表数据
        // Query query = new Query(params);
 		Map<String, Object> query = new HashMap<>();
-		List<SysDeptDO> sysDeptList = sysDeptService.list(query);
+		List<DeptDO> sysDeptList = sysDeptService.list(query);
 	//	int total = sysDeptService.count(query);
 		//PageUtils pageUtils = new PageUtils(sysDeptList, total);
 		return sysDeptList;
@@ -70,7 +70,7 @@ public class SysDeptController extends BaseController{
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("system:sysDept:edit")
 	String edit(@PathVariable("deptId") Long deptId,Model model){
-		SysDeptDO sysDept = sysDeptService.get(deptId);
+		DeptDO sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
 	    return "system/sysDept/edit";
 	}
@@ -81,7 +81,7 @@ public class SysDeptController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save( SysDeptDO sysDept){
+	public R save( DeptDO sysDept){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -96,7 +96,7 @@ public class SysDeptController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update( SysDeptDO sysDept){
+	public R update( DeptDO sysDept){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -139,8 +139,8 @@ public class SysDeptController extends BaseController{
 	
 	@GetMapping("/tree")
 	@ResponseBody
-	public Tree<SysDeptDO> tree() {
-		Tree<SysDeptDO> tree = new Tree<SysDeptDO>();
+	public Tree<DeptDO> tree() {
+		Tree<DeptDO> tree = new Tree<DeptDO>();
 		tree = sysDeptService.getTree();
 		return tree;
 	}

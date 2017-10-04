@@ -7,18 +7,26 @@
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
-					<div id="exampleToolbar" role="group">
-						<div class="form-group col-sm-6">
-							<input id="searchName" type="text" class="form-control"
-								placeholder="请输入要查询的内容...">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
 						</div>
-						<button class="btn btn-success" onclick="reLoad()">
-							<i class="fa fa-search" aria-hidden="true"></i>查询
-						</button>
-						<button type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
-						</button>
+						<div class="columns pull-right" role="group">
+							<button class="btn btn-success" onclick="reLoad()">
+								<i class="fa fa-search" aria-hidden="true"></i>查询
+							</button>
+						</div>
+						<div class="pull-right search col-md-2">
+							<input id="searchOperation" type="text" class="form-control"
+								placeholder="操作">
+						</div>
+						<div class="pull-right search col-md-2 nopadding">
+							<input id="searchUsername" type="text" class="form-control"
+								placeholder="用户">
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>

@@ -1,6 +1,6 @@
 package com.bootdo.common.service;
 
-import com.bootdo.common.domain.SysDictDO;
+import com.bootdo.common.domain.DictDO;
 
 import java.util.List;
 import java.util.Map;
@@ -14,19 +14,19 @@ import java.util.Map;
  */
 public interface SysDictService {
 	
-	SysDictDO get(Long id);
+	DictDO get(Long id);
 	
-	List<SysDictDO> list(Map<String, Object> map);
+	List<DictDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(SysDictDO sysDict);
+	int save(DictDO sysDict);
 	
-	int update(SysDictDO sysDict);
+	int update(DictDO sysDict);
 	
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
 
-	List<SysDictDO> listType();
+	List<DictDO> listType();
 }

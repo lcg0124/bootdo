@@ -87,3 +87,15 @@ function batchCode() {
 	});
 	location.href = prefix + "/batchCode?tables=" + JSON.stringify(tables);
 }
+
+function edit(){
+	console.log('打开配置页面');
+	layer.open({
+		type : 2,
+		title : '增加',
+		maxmin : true,
+		shadeClose : false, 
+		area : [ '800px', '520px' ],
+		content : prefix + '/edit'
+	});
+}

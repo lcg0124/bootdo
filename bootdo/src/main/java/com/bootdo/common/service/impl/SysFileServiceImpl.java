@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.bootdo.common.dao.SysFileMapper;
-import com.bootdo.common.domain.SysFileDO;
+import com.bootdo.common.dao.FileDao;
+import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.service.SysFileService;
 
 
@@ -15,15 +15,15 @@ import com.bootdo.common.service.SysFileService;
 @Service
 public class SysFileServiceImpl implements SysFileService {
 	@Autowired
-	private SysFileMapper sysFileMapper;
+	private FileDao sysFileMapper;
 	
 	@Override
-	public SysFileDO get(Long id){
+	public FileDO get(Long id){
 		return sysFileMapper.get(id);
 	}
 	
 	@Override
-	public List<SysFileDO> list(Map<String, Object> map){
+	public List<FileDO> list(Map<String, Object> map){
 		return sysFileMapper.list(map);
 	}
 	
@@ -33,12 +33,12 @@ public class SysFileServiceImpl implements SysFileService {
 	}
 	
 	@Override
-	public int save(SysFileDO sysFile){
+	public int save(FileDO sysFile){
 		return sysFileMapper.save(sysFile);
 	}
 	
 	@Override
-	public int update(SysFileDO sysFile){
+	public int update(FileDO sysFile){
 		return sysFileMapper.update(sysFile);
 	}
 	

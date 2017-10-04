@@ -10,7 +10,7 @@
  *	.file-control {
  *  	color: inherit;
  * 	 font-size: 14px;
- *
+ *	add nopadding class
  *
  *
  *
@@ -7352,4 +7352,7 @@ body.skin-3 {
 
 .t-bar {
 	padding-bottom: 10px;
+}
+.nopadding{
+	padding:0;
 }

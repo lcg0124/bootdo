@@ -15,17 +15,17 @@ import org.springframework.stereotype.Service;
 
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
-import com.bootdo.system.dao.MenuMapper;
-import com.bootdo.system.dao.RoleMenuMapper;
+import com.bootdo.system.dao.MenuDao;
+import com.bootdo.system.dao.RoleMenuDao;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
 
 @Service
 public class MenuServiceImpl implements MenuService {
 	@Autowired
-	MenuMapper menuMapper;
+	MenuDao menuMapper;
 	@Autowired
-	RoleMenuMapper roleMenuMapper;
+	RoleMenuDao roleMenuMapper;
 
 	/**
 	 * @param 用户ID
@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public List<MenuDO> list() {
-		List<MenuDO> menus = menuMapper.listMenu();
+		List<MenuDO> menus = menuMapper.list(new HashMap<>());
 		return menus;
 	}
 
@@ -78,14 +78,14 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public MenuDO get(Long id) {
-		MenuDO menuDO = menuMapper.getMenu(id);
+		MenuDO menuDO = menuMapper.get(id);
 		return menuDO;
 	}
 
 	@Override
 	public Tree<MenuDO> getTree() {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenu();
+		List<MenuDO> menuDOs = menuMapper.list(new HashMap<>());
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());
@@ -103,7 +103,7 @@ public class MenuServiceImpl implements MenuService {
 		// 根据roleId查询权限
 		List<Long> menuIds = roleMenuMapper.listMenuIdByRoleId(id);
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenu();
+		List<MenuDO> menuDOs = menuMapper.list(new HashMap<String, Object>());
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());

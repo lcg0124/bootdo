@@ -1,10 +1,10 @@
 package com.bootdo.common.utils;
 
 import com.bootdo.common.domain.ScheduleJob;
-import com.bootdo.common.domain.TaskScheduleJobDO;
+import com.bootdo.common.domain.TaskDO;
 
 public class ScheduleJobUtils {
-	public static ScheduleJob entityToData(TaskScheduleJobDO scheduleJobEntity) {
+	public static ScheduleJob entityToData(TaskDO scheduleJobEntity) {
 		ScheduleJob scheduleJob = new ScheduleJob();
 		scheduleJob.setBeanClass(scheduleJobEntity.getBeanClass());
 		scheduleJob.setCronExpression(scheduleJobEntity.getCronExpression());

@@ -14,19 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bootdo.common.annotation.Log;
-import com.bootdo.common.dao.LogMapper;
-import com.bootdo.common.domain.SysLogDO;
+import com.bootdo.common.dao.LogDao;
+import com.bootdo.common.domain.LogDO;
 import com.bootdo.common.utils.HttpContextUtils;
 import com.bootdo.common.utils.IPUtils;
 import com.bootdo.common.utils.JSONUtils;
 import com.bootdo.common.utils.ShiroUtils;
-import com.bootdo.system.domain.SysUserDO;
+import com.bootdo.system.domain.UserDO;
 
 @Aspect
 @Component
 public class LogAspect {
 	@Autowired
-	LogMapper logMapper;
+	LogDao logMapper;
 
 	@Pointcut("@annotation(com.bootdo.common.annotation.Log)")
 	public void logPointCut() {
@@ -47,7 +47,7 @@ public class LogAspect {
 	private void saveLog(ProceedingJoinPoint joinPoint, long time) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
-		SysLogDO sysLog = new SysLogDO();
+		LogDO sysLog = new LogDO();
 		Log syslog = method.getAnnotation(Log.class);
 		if (syslog != null) {
 			// 注解上的描述
@@ -70,7 +70,7 @@ public class LogAspect {
 		// 设置IP地址
 		sysLog.setIp(IPUtils.getIpAddr(request));
 		// 用户名
-		SysUserDO currUser = ShiroUtils.getUser();
+		UserDO currUser = ShiroUtils.getUser();
 		if (null == currUser) {
 			if (null != sysLog.getParams()) {
 				sysLog.setUserId(-1L);

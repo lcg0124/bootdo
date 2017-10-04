@@ -6,27 +6,28 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import com.bootdo.system.domain.SysUserDO;
+import com.bootdo.system.domain.UserDO;
 
 @Service
 public interface UserService {
-	SysUserDO get(Long id);
+	UserDO get(Long id);
 
-	List<SysUserDO> list(Map<String, Object> map);
+	List<UserDO> list(Map<String, Object> map);
 
 	int count(Map<String, Object> map);
 
-	int save(SysUserDO user);
+	int save(UserDO user);
 
-	int update(SysUserDO user);
+	int update(UserDO user);
 
 	int remove(Long userId);
 
-	int batchremove(List<Long> userIds);
+	int batchremove(Long[] userIds);
 
 	boolean exit(Map<String, Object> params);
 
 	Set<String> listRoles(Long userId);
 
-	int resetPwd(SysUserDO user);
+	int resetPwd(UserDO user);
+
 }

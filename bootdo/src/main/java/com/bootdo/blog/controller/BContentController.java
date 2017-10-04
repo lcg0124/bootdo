@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.blog.domain.BContentDO;
+import com.bootdo.blog.domain.ContentDO;
 import com.bootdo.blog.service.BContentService;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
@@ -48,7 +48,7 @@ public class BContentController extends BaseController {
 	@RequiresPermissions("blog:bContent:bContent")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		List<BContentDO> bContentList = bContentService.list(query);
+		List<ContentDO> bContentList = bContentService.list(query);
 		int total = bContentService.count(query);
 		PageUtils pageUtils = new PageUtils(bContentList, total);
 		return pageUtils;
@@ -63,7 +63,7 @@ public class BContentController extends BaseController {
 	@GetMapping("/edit/{cid}")
 	@RequiresPermissions("blog:bContent:edit")
 	String edit(@PathVariable("cid") Long cid, Model model) {
-		BContentDO bContentDO = bContentService.get(cid);
+		ContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);
 		return "blog/bContent/edit";
 	}
@@ -74,7 +74,7 @@ public class BContentController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("blog:bContent:add")
 	@PostMapping("/save")
-	public R save(BContentDO bContent) {
+	public R save(ContentDO bContent) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -103,7 +103,7 @@ public class BContentController extends BaseController {
 	 */
 	@RequiresPermissions("blog:bContent:edit")
 	@RequestMapping("/update")
-	public R update(@RequestBody BContentDO bContent) {
+	public R update(@RequestBody ContentDO bContent) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

@@ -1,6 +1,6 @@
 package com.bootdo.common.service;
 
-import com.bootdo.common.domain.SysFileDO;
+import com.bootdo.common.domain.FileDO;
 
 import java.util.List;
 import java.util.Map;
@@ -14,15 +14,15 @@ import java.util.Map;
  */
 public interface SysFileService {
 	
-	SysFileDO get(Long id);
+	FileDO get(Long id);
 	
-	List<SysFileDO> list(Map<String, Object> map);
+	List<FileDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(SysFileDO sysFile);
+	int save(FileDO sysFile);
 	
-	int update(SysFileDO sysFile);
+	int update(FileDO sysFile);
 	
 	int remove(Long id);
 	

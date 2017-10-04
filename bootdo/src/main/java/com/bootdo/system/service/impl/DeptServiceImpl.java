@@ -10,25 +10,24 @@ import java.util.Map;
 
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
-import com.bootdo.system.dao.SysDeptMapper;
-import com.bootdo.system.domain.MenuDO;
-import com.bootdo.system.domain.SysDeptDO;
+import com.bootdo.system.dao.DeptDao;
+import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.service.SysDeptService;
 
 
 
 @Service
-public class SysDeptServiceImpl implements SysDeptService {
+public class DeptServiceImpl implements SysDeptService {
 	@Autowired
-	private SysDeptMapper sysDeptMapper;
+	private DeptDao sysDeptMapper;
 	
 	@Override
-	public SysDeptDO get(Long deptId){
+	public DeptDO get(Long deptId){
 		return sysDeptMapper.get(deptId);
 	}
 	
 	@Override
-	public List<SysDeptDO> list(Map<String, Object> map){
+	public List<DeptDO> list(Map<String, Object> map){
 		return sysDeptMapper.list(map);
 	}
 	
@@ -38,12 +37,12 @@ public class SysDeptServiceImpl implements SysDeptService {
 	}
 	
 	@Override
-	public int save(SysDeptDO sysDept){
+	public int save(DeptDO sysDept){
 		return sysDeptMapper.save(sysDept);
 	}
 	
 	@Override
-	public int update(SysDeptDO sysDept){
+	public int update(DeptDO sysDept){
 		return sysDeptMapper.update(sysDept);
 	}
 	
@@ -58,11 +57,11 @@ public class SysDeptServiceImpl implements SysDeptService {
 	}
 	
 	@Override
-	public Tree<SysDeptDO> getTree() {
-		List<Tree<SysDeptDO>> trees = new ArrayList<Tree<SysDeptDO>>();
-		List<SysDeptDO> SysDepts = sysDeptMapper.list(new HashMap<String,Object>());
-		for (SysDeptDO SysDept : SysDepts) {
-			Tree<SysDeptDO> tree = new Tree<SysDeptDO>();
+	public Tree<DeptDO> getTree() {
+		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
+		List<DeptDO> SysDepts = sysDeptMapper.list(new HashMap<String,Object>());
+		for (DeptDO SysDept : SysDepts) {
+			Tree<DeptDO> tree = new Tree<DeptDO>();
 			tree.setId(SysDept.getDeptId().toString());
 			tree.setParentId(SysDept.getParentId().toString());
 			tree.setText(SysDept.getName());
@@ -72,7 +71,7 @@ public class SysDeptServiceImpl implements SysDeptService {
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
-		Tree<SysDeptDO> t = BuildTree.build(trees);
+		Tree<DeptDO> t = BuildTree.build(trees);
 		return t;
 	}
 	

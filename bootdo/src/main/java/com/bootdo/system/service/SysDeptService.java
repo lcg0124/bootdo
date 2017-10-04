@@ -1,7 +1,7 @@
 package com.bootdo.system.service;
 
 import com.bootdo.common.domain.Tree;
-import com.bootdo.system.domain.SysDeptDO;
+import com.bootdo.system.domain.DeptDO;
 
 import java.util.List;
 import java.util.Map;
@@ -15,19 +15,19 @@ import java.util.Map;
  */
 public interface SysDeptService {
 	
-	SysDeptDO get(Long deptId);
+	DeptDO get(Long deptId);
 	
-	List<SysDeptDO> list(Map<String, Object> map);
+	List<DeptDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(SysDeptDO sysDept);
+	int save(DeptDO sysDept);
 	
-	int update(SysDeptDO sysDept);
+	int update(DeptDO sysDept);
 	
 	int remove(Long deptId);
 	
 	int batchRemove(Long[] deptIds);
 
-	Tree<SysDeptDO> getTree();
+	Tree<DeptDO> getTree();
 }

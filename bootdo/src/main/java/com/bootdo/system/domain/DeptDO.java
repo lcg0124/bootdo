@@ -12,7 +12,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:28:36
  */
-public class SysDeptDO implements Serializable {
+public class DeptDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//

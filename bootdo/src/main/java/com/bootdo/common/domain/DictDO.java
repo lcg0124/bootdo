@@ -13,7 +13,7 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2017-09-29 18:28:07
  */
-public class SysDictDO implements Serializable {
+public class DictDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//编号

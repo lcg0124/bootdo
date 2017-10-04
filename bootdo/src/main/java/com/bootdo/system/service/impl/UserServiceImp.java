@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bootdo.system.dao.SysDeptMapper;
-import com.bootdo.system.dao.UserMapper;
-import com.bootdo.system.dao.UserRoleMapper;
-import com.bootdo.system.domain.SysUserDO;
+import com.bootdo.system.dao.DeptDao;
+import com.bootdo.system.dao.UserDao;
+import com.bootdo.system.dao.UserRoleDao;
+import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.domain.UserRoleDO;
 import com.bootdo.system.service.UserService;
 
@@ -22,24 +22,24 @@ import com.bootdo.system.service.UserService;
 @Service
 public class UserServiceImp implements UserService {
 	@Autowired
-	UserMapper userMapper;
+	UserDao userMapper;
 	@Autowired
-	UserRoleMapper userRoleMapper;
+	UserRoleDao userRoleMapper;
 	@Autowired
-	SysDeptMapper sysDeptMapper;
+	DeptDao sysDeptMapper;
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Override
-	public SysUserDO get(Long id) {
+	public UserDO get(Long id) {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
-		SysUserDO user = userMapper.get(id);
+		UserDO user = userMapper.get(id);
 		user.setDeptName(sysDeptMapper.get(user.getDeptId()).getName());
 		user.setroleIds(roleIds);
 		return user;
 	}
 
 	@Override
-	public List<SysUserDO> list(Map<String, Object> map) {
+	public List<UserDO> list(Map<String, Object> map) {
 		return userMapper.list(map);
 	}
 
@@ -50,7 +50,7 @@ public class UserServiceImp implements UserService {
 
 	@Transactional
 	@Override
-	public int save(SysUserDO user) {
+	public int save(UserDO user) {
 		int count = userMapper.save(user);
 		Long userId = user.getUserId();
 		List<Long> roles = user.getroleIds();
@@ -69,7 +69,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public int update(SysUserDO user) {
+	public int update(UserDO user) {
 		int r = userMapper.update(user);
 		Long userId = user.getUserId();
 		List<Long> roles = user.getroleIds();
@@ -106,14 +106,14 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public int resetPwd(SysUserDO user) {
+	public int resetPwd(UserDO user) {
 		int r = userMapper.update(user);
 		return r;
 	}
 
 	@Transactional
 	@Override
-	public int batchremove(List<Long> userIds) {
+	public int batchremove(Long[] userIds) {
 		int count = userMapper.batchRemove(userIds);
 		userRoleMapper.batchRemoveByUserId(userIds);
 		return count;

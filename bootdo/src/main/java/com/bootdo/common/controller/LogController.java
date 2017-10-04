@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.common.domain.SysLogDO;
+import com.bootdo.common.domain.LogDO;
 import com.bootdo.common.domain.PageDO;
 import com.bootdo.common.service.LogService;
 import com.bootdo.common.utils.Query;
@@ -34,9 +34,9 @@ public class LogController {
 
 	@ResponseBody
 	@GetMapping("/list")
-	PageDO<SysLogDO> list(@RequestParam Map<String, Object> params) {
+	PageDO<LogDO> list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		PageDO<SysLogDO> page = logService.queryList(query);
+		PageDO<LogDO> page = logService.queryList(query);
 		return page;
 	}
 	
@@ -51,8 +51,7 @@ public class LogController {
 
 	@ResponseBody
 	@PostMapping("/batchRemove")
-	R batchRemove(@RequestParam("ids[]") Long[] idsArray) {
-		List<Long> ids = Arrays.asList(idsArray);
+	R batchRemove(@RequestParam("ids[]") Long[] ids) {
 		int r = logService.batchRemove(ids);
 		if (r > 0) {
 			return R.ok();

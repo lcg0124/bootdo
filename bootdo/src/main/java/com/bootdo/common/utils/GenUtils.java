@@ -27,11 +27,11 @@ import java.util.zip.ZipOutputStream;
  */
 public class GenUtils {
 
-    static Configuration config = getConfig();
-
+   
 	public static List<String> getTemplates(){
 		List<String> templates = new ArrayList<String>();
 		templates.add("templates/common/generator/domain.java.vm");
+		templates.add("templates/common/generator/Dao.java.vm");
 		templates.add("templates/common/generator/Mapper.java.vm");
 		templates.add("templates/common/generator/Mapper.xml.vm");
 		templates.add("templates/common/generator/Service.java.vm");
@@ -53,16 +53,15 @@ public class GenUtils {
 
 
 	public static void generatorCode(Map<String, String> table,
-			List<Map<String, String>> columns, ZipOutputStream zip){
+		List<Map<String, String>> columns, ZipOutputStream zip){
 		//配置信息
-
-		
+		 Configuration config = getConfig();
 		//表信息
 		TableDO TableDO = new TableDO();
 		TableDO.setTableName(table.get("tableName"));
 		TableDO.setComments(table.get("tableComment"));
 		//表名转换成Java类名
-		String className = tableToJava(TableDO.getTableName(), config.getString("tablePrefix"));
+		String className = tableToJava(TableDO.getTableName(), config.getString("tablePrefix"),config.getString("autoRemovePre"));
 		TableDO.setClassName(className);
 		TableDO.setClassname(StringUtils.uncapitalize(className));
 		
@@ -110,8 +109,7 @@ public class GenUtils {
 		map.put("pk", TableDO.getPk());
 		map.put("className", TableDO.getClassName());
 		map.put("classname", TableDO.getClassname());
-		//map.put("pathName", config.getString("packageName")+"/"+TableDO.getClassname().toLowerCase());
-		map.put("pathName", config.getString("packageName"));
+		map.put("pathName", config.getString("package").substring(config.getString("package").lastIndexOf(".")+1));
 		map.put("columns", TableDO.getColumns());
 		map.put("package", config.getString("package"));
 		map.put("author", config.getString("author"));
@@ -129,7 +127,7 @@ public class GenUtils {
 			
 			try {
 				//添加到zip
-				zip.putNextEntry(new ZipEntry(getFileName(template, TableDO.getClassname(),TableDO.getClassName(), config.getString("package"))));  
+				zip.putNextEntry(new ZipEntry(getFileName(template, TableDO.getClassname(),TableDO.getClassName(), config.getString("package").substring(config.getString("package").lastIndexOf(".")+1))));  
 				IOUtils.write(sw.toString(), zip, "UTF-8");
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
@@ -150,10 +148,14 @@ public class GenUtils {
 	/**
 	 * 表名转换成Java类名
 	 */
-	public static String tableToJava(String tableName, String tablePrefix) {
+	public static String tableToJava(String tableName, String tablePrefix,String autoRemovePre) {
+		if ("true".equals(autoRemovePre)) {
+			tableName = tableName.substring(tableName.indexOf("_")+1);
+		}
 		if(StringUtils.isNotBlank(tablePrefix)){
 			tableName = tableName.replace(tablePrefix, "");
 		}
+		
 		return columnToJava(tableName);
 	}
 	
@@ -173,13 +175,17 @@ public class GenUtils {
 	 */
 	public static String getFileName(String template, String classname,String className, String packageName){
 		String packagePath = "main" + File.separator + "java" + File.separator;
-		String modulesname=config.getString("packageName");
+		//String modulesname=config.getString("packageName");
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath += packageName.replace(".", File.separator) + File.separator;
 		}
 		
 		if(template.contains("domain.java.vm")){
 			return packagePath + "domain" + File.separator + className + "DO.java";
+		}
+		
+		if(template.contains("Dao.java.vm")){
+			return packagePath + "dao" + File.separator + className + "Dao.java";
 		}
 		
 		if(template.contains("Mapper.java.vm")){
@@ -199,35 +205,35 @@ public class GenUtils {
 		}
 
 		if(template.contains("Mapper.xml.vm")){
-			return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + "generator" + File.separator + className + "Mapper.xml";
+			return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + packageName + File.separator + className + "Mapper.xml";
 		}
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ modulesname + File.separator + classname + File.separator + classname + ".html";
+					+ packageName + File.separator + classname + File.separator + classname + ".html";
 	//				+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
 		}
 		if(template.contains("add.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ modulesname + File.separator + classname + File.separator +  "add.html";
+					+ packageName + File.separator + classname + File.separator +  "add.html";
 		}
 		if(template.contains("edit.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-					+ modulesname + File.separator + classname + File.separator +  "edit.html";
+					+ packageName + File.separator + classname + File.separator +  "edit.html";
 		}
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-					+ "appjs" + File.separator + modulesname + File.separator + classname + File.separator + classname+ ".js";
+					+ "appjs" + File.separator + packageName + File.separator + classname + File.separator + classname+ ".js";
 			//		+ "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
 		}
 		if(template.contains("add.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-                    + "appjs" + File.separator+ modulesname + File.separator + classname + File.separator + "add.js";
+                    + "appjs" + File.separator+ packageName + File.separator + classname + File.separator + "add.js";
 		}
 		if(template.contains("edit.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js" + File.separator
-                    + "appjs" + File.separator+ modulesname + File.separator + classname + File.separator + "edit.js";
+                    + "appjs" + File.separator+ packageName + File.separator + classname + File.separator + "edit.js";
 		}
 
 		if(template.contains("menu.sql.vm")){

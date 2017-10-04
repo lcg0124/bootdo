@@ -14,8 +14,8 @@
 <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
 <link href="/css/animate.css" rel="stylesheet">
-<link href="/css/style.css?v=4.1.0" rel="stylesheet">
 <link href="/css/layui.css" rel="stylesheet">
+<link href="/css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content">
@@ -25,7 +25,7 @@
 					<div class="ibox-content">
 						<div class="file-manager">
 							<h3>显示：</h3>
-							<a href="javascript:void(0)" class="file-control active"
+							<a href="javascript:void(0)" class="file-control "
 								onclick="changeType('')">所有</a> <a href="javascript:void(0)"
 								class="file-control" href="javascript:void(0)"
 								onclick="changeType(0)">图片</a> <a href="javascript:void(0)"
@@ -36,7 +36,6 @@
 								href="javascript:void(0)" onclick="changeType(99)"
 								class="file-control">其他</a>
 
-							<div class="hr-line-dashed"></div>
 							<form id="uploadForm" class="form-horizontal m-t hidden">
 								<input type="file" id="file" class="form-control" name="file"
 									style="height: 100px;" />
@@ -81,37 +80,38 @@
 		var type;
 		$(function() {
 			changeType('');
-			
+	
 		});
-		 var clipboard = new Clipboard('button.copy', {
+		var clipboard = new Clipboard('button.copy', {
 			text : function(trigger) {
-				return $(trigger).attr('url');
 				layer.msg('文件路径已复制到粘贴板');
+				return $(trigger).attr('url');
+	
 			}
-		}); 
-		 layui.use('upload', function(){
-			  var upload = layui.upload;
-			  //执行实例
-			  var uploadInst = upload.render({
-			    elem: '#test1' //绑定元素
-			    ,url: '/common/sysFile/upload' //上传接口
-			    ,size: 1000
-			    ,accept:'file'
-			    ,done: function(r){
-			    	layer.msg(r.msg);
+		});
+		layui.use('upload', function() {
+			var upload = layui.upload;
+			//执行实例
+			var uploadInst = upload.render({
+				elem : '#test1', //绑定元素
+				url : '/common/sysFile/upload', //上传接口
+				size : 1000,
+				accept : 'file',
+				done : function(r) {
+					layer.msg(r.msg);
 					bindList(0);
-			    }
-			    ,error: function(r){
-			    	layer.msg(r.msg);
-			    }
-			  });
+				},
+				error : function(r) {
+					layer.msg(r.msg);
+				}
 			});
+		});
 	</script>
 	<script>
-	function changeType(i){
-		type = i;
-		bindList(0)
-	}
+		function changeType(i) {
+			type = i;
+			bindList(0)
+		}
 		function doUpload() {
 			if ($("#file").val() == "") {
 				layer.msg("请要上传的文件");
@@ -135,44 +135,44 @@
 				}
 			});
 		}
-
+	
 		function bindList(offset) {
 			$
-					.ajax({
-						url : '/common/sysFile/list?limit=12&offset=' + offset+'&type='+type,
-						method : 'get',
-						dataType : 'json',
-						async : false,
-						cache : false,
-						success : function(data) {
-							$(".file-box").empty();
-							total = data.total;
-							var rows = data.rows;
-							var htmlText = "";
-							for (i = 0; i < rows.length; i++) {
-								htmlText += '<div class="file-box">';
-								htmlText += '<div class="file">';
-								htmlText += '<a href=""> <span class="corner"></span>';
-								htmlText += '<div class="image">';
-								htmlText += '<img alt="image" class="img-responsive" src="'+ rows[i].url+'">';
-								htmlText += '</div>';
-								htmlText += '<div class="file-name">';
-								htmlText += '<small>'+rows[i].createDate+'</small><br/>' 
-								
-								htmlText += '</div>';
-								htmlText += '</a>'
-								htmlText += '&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-warning btn-xs copy" url="'+rows[i].url+'">复制</button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs" onclick="remove('+ rows[i].id + ')">删除</button>';
-								htmlText += '</div>';
-							
-								htmlText += '</div>';
-							}
-							$("#incomeNum").append(htmlText);
-
+				.ajax({
+					url : '/common/sysFile/list?limit=12&offset=' + offset + '&type=' + type,
+					method : 'get',
+					dataType : 'json',
+					async : false,
+					cache : false,
+					success : function(data) {
+						$(".file-box").empty();
+						total = data.total;
+						var rows = data.rows;
+						var htmlText = "";
+						for (i = 0; i < rows.length; i++) {
+							htmlText += '<div class="file-box">';
+							htmlText += '<div class="file">';
+							htmlText += '<a href=""> <span class="corner"></span>';
+							htmlText += '<div class="image">';
+							htmlText += '<img alt="image" class="img-responsive" src="' + rows[i].url + '">';
+							htmlText += '</div>';
+							htmlText += '<div class="file-name">';
+							htmlText += '<small>' + rows[i].createDate + '</small><br/>'
+	
+							htmlText += '</div>';
+							htmlText += '</a>'
+							htmlText += '&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-warning btn-xs copy" url="' + rows[i].url + '">复制</button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs" onclick="remove(' + rows[i].id + ')">删除</button>';
+							htmlText += '</div>';
+	
+							htmlText += '</div>';
 						}
-					});
-					page();
+						$("#incomeNum").append(htmlText);
+	
+					}
+				});
+			page();
 		}
-		function remove(id){
+		function remove(id) {
 			layer.confirm('确定要删除选中的记录？', {
 				btn : [ '确定', '取消' ]
 			}, function() {
@@ -183,10 +183,10 @@
 						'id' : id
 					},
 					success : function(r) {
-						if (r.code==0) {
+						if (r.code == 0) {
 							layer.msg(r.msg);
 							bindList(0);
-						}else{
+						} else {
 							layer.msg(r.msg);
 							bindList(0);
 						}
@@ -196,13 +196,13 @@
 		}
 		function page() {
 			var options = {
-				currentPage : 1,//当前页
-				totalPages : total/(12+1)+1,//总页数
-				numberofPages : 4,//显示的页数
+				currentPage : 1, //当前页
+				totalPages : total / (12 + 1) + 1, //总页数
+				numberofPages : 4, //显示的页数
 				bootstrapMajorVersion : 3,
-				alignment:'center',
-				size:'large',
-				shouldShowPage:true,
+				alignment : 'center',
+				size : 'large',
+				shouldShowPage : true,
 				itemTexts : function(type, page, current) { //修改显示文字
 					switch (type) {
 					case "first":
@@ -218,12 +218,12 @@
 					}
 				},
 				onPageClicked : function(event, originalEvent, type, page) {
-					var offset = (page-1)*12;
+					var offset = (page - 1) * 12;
 					bindList(offset);
 				}
 			};
 			$('#page').bootstrapPaginator(options);
 		}
-		</script>
+	</script>
 </body>
 </html>

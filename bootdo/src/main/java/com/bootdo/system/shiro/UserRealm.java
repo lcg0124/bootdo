@@ -18,13 +18,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bootdo.common.utils.ShiroUtils;
-import com.bootdo.system.dao.UserMapper;
-import com.bootdo.system.domain.SysUserDO;
+import com.bootdo.system.dao.UserDao;
+import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.MenuService;
 
 public class UserRealm extends AuthorizingRealm {
 	@Autowired
-	UserMapper userMapper;
+	UserDao userMapper;
 	@Autowired
 	MenuService menuService;
 
@@ -45,7 +45,7 @@ public class UserRealm extends AuthorizingRealm {
 		String password = new String((char[]) token.getCredentials());
 
 		// 查询用户信息
-		SysUserDO user = userMapper.list(map).get(0);
+		UserDO user = userMapper.list(map).get(0);
 
 		// 账号不存在
 		if (user == null) {

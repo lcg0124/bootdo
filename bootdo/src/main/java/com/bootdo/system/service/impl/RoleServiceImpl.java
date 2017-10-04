@@ -3,48 +3,39 @@ package com.bootdo.system.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bootdo.system.dao.RoleMapper;
-import com.bootdo.system.dao.RoleMenuMapper;
-import com.bootdo.system.dao.UserMapper;
-import com.bootdo.system.dao.UserRoleMapper;
+import com.bootdo.system.dao.RoleDao;
+import com.bootdo.system.dao.RoleMenuDao;
+import com.bootdo.system.dao.UserDao;
+import com.bootdo.system.dao.UserRoleDao;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.RoleMenuDO;
 import com.bootdo.system.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-	/**
-	 * 缓存的key
-	 */
+
 	public static final String ROLE_ALL_KEY = "\"role_all\"";
-	/**
-	 * value属性表示使用哪个缓存策略，缓存策略在ehcache.xml
-	 */
 
 	public static final String DEMO_CACHE_NAME = "role";
 
 	@Autowired
-	RoleMapper roleMapper;
+	RoleDao roleMapper;
 	@Autowired
-	RoleMenuMapper roleMenuMapper;
+	RoleMenuDao roleMenuMapper;
 	@Autowired
-	UserMapper userMapper;
+	UserDao userMapper;
 	@Autowired
-	UserRoleMapper userRoleMapper;
+	UserRoleDao userRoleMapper;
 
 	@Override
 	public List<RoleDO> list() {
-		List<RoleDO> roles = roleMapper.listRole();
+		List<RoleDO> roles = roleMapper.list(new HashMap<>());
 		return roles;
 	}
 
@@ -52,7 +43,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<RoleDO> list(Long userId) {
 		List<Long> rolesIds = userRoleMapper.listRoleId(userId);
-		List<RoleDO> roles = roleMapper.listRole();
+		List<RoleDO> roles = roleMapper.list(new HashMap<>());
 		for (RoleDO roleDO : roles) {
 			roleDO.setRoleSign("false");
 			for (Long roleId : rolesIds) {
@@ -90,7 +81,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int remove(Long id) {
 		int count = roleMapper.remove(id);
-		roleMenuMapper.remove(id);
+		roleMenuMapper.removeByRoleId(id);
 		return count;
 	}
 
@@ -114,7 +105,7 @@ public class RoleServiceImpl implements RoleService {
 			rmDo.setMenuId(menuId);
 			rms.add(rmDo);
 		}
-		roleMenuMapper.removeByRoleId(roleId);
+		//roleMenuMapper.removeByRoleId(roleId);
 		if (rms.size() > 0) {
 			roleMenuMapper.batchSave(rms);
 		}

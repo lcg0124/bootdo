@@ -4,12 +4,11 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import groovy.lang.MetaClassImpl.Index;
+
 /**
  * 日期处理
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月21日 下午12:53:33
  */
 public class DateUtils {
 	/** 时间格式(yyyy-MM-dd) */
@@ -23,10 +22,10 @@ public class DateUtils {
 
 	public static Date formatDate(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString = formatter.format(date);
-		ParsePosition pos = new ParsePosition(8);
-		Date RDate = formatter.parse(dateString, pos);
-		return RDate;
+		String strDate = formatter.format(date);
+		ParsePosition pos = new ParsePosition(0);
+		Date strtodate = formatter.parse(strDate, pos);
+		return strtodate;
 	}
 
 	public static String format(Date date, String pattern) {

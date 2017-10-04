@@ -7,28 +7,30 @@
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
-					<div id="exampleToolbar" role="group">
-						<div class="form-group col-sm-4">
-							<div class="input-group">
-								<select data-placeholder="选择类别" class="chosen-select"
-									tabindex="2" style="width:150px">
-									<option value="">选择类别</option>
-								</select>
-							</div>
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button shiro:hasPermission="common:sysDict:add" type="button"
+								class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="common:sysDict:batchRemove"
+								type="button" class="btn  btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
 						</div>
-						<div class="form-group col-sm-4">
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2">
 							<input id="searchName" type="text" class="form-control"
-								placeholder="类别如: color">
+								placeholder="">
 						</div>
-						<button class="btn btn-success" onclick="reLoad()">查询</button>
-						<button shiro:hasPermission="common:sysDict:add" type="button"
-							class="btn  btn-primary" onclick="add()">
-							<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
-						</button>
-						<button shiro:hasPermission="common:sysDict:batchRemove"
-							type="button" class="btn  btn-danger" onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
-						</button>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select data-placeholder="选择类别" class="form-control chosen-select"
+								tabindex="2" style="width: 100%">
+								<option value="">选择类别</option>
+							</select>
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -59,10 +61,10 @@
 			var s_add_h = '';
 		</script>
 	</div>
-	
+
 	</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript"
-		src="/js/appjs/common/sysDict/sysDict.js"></script>
+		src="/js/appjs/common/dict/dict.js"></script>
 </body>
 </html>

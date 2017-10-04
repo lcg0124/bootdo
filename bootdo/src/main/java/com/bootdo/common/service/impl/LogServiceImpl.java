@@ -1,11 +1,12 @@
 package com.bootdo.common.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bootdo.common.dao.LogMapper;
-import com.bootdo.common.domain.SysLogDO;
+import com.bootdo.common.dao.LogDao;
+import com.bootdo.common.domain.LogDO;
 import com.bootdo.common.domain.PageDO;
 import com.bootdo.common.service.LogService;
 import com.bootdo.common.utils.Query;
@@ -13,13 +14,13 @@ import com.bootdo.common.utils.Query;
 @Service
 public class LogServiceImpl implements LogService {
 	@Autowired
-	LogMapper logMapper;
+	LogDao logMapper;
 
 	@Override
-	public PageDO<SysLogDO> queryList(Query query) {
-		List<SysLogDO> logs = logMapper.list(query);
-		int total = logMapper.count();
-		PageDO<SysLogDO> page = new PageDO<>();
+	public PageDO<LogDO> queryList(Query query) {
+		List<LogDO> logs = logMapper.list(query);
+		int total = logMapper.count(query);
+		PageDO<LogDO> page = new PageDO<>();
 		page.setTotal(total);
 		page.setRows(logs);
 		return page;
@@ -32,8 +33,7 @@ public class LogServiceImpl implements LogService {
 	}
 
 	@Override
-	public int batchRemove(List<Long> ids) {
-		int count = logMapper.batchRemove(ids);
-		return count;
+	public int batchRemove(Long[] ids){
+		return logMapper.batchRemove(ids);
 	}
 }

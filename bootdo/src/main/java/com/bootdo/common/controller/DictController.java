@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.common.domain.SysDictDO;
+import com.bootdo.common.domain.DictDO;
 import com.bootdo.common.service.SysDictService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -31,7 +31,7 @@ import com.bootdo.common.utils.R;
  
 @Controller
 @RequestMapping("/common/sysDict")
-public class SysDictController extends BaseController{
+public class DictController extends BaseController{
 	@Autowired
 	private SysDictService sysDictService;
 	
@@ -47,7 +47,7 @@ public class SysDictController extends BaseController{
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<SysDictDO> sysDictList = sysDictService.list(query);
+		List<DictDO> sysDictList = sysDictService.list(query);
 		int total = sysDictService.count(query);
 		PageUtils pageUtils = new PageUtils(sysDictList, total);
 		return pageUtils;
@@ -62,7 +62,7 @@ public class SysDictController extends BaseController{
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("common:sysDict:edit")
 	String edit(@PathVariable("id") Long id,Model model){
-		SysDictDO sysDict = sysDictService.get(id);
+		DictDO sysDict = sysDictService.get(id);
 		model.addAttribute("sysDict", sysDict);
 	    return "common/sysDict/edit";
 	}
@@ -73,7 +73,7 @@ public class SysDictController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:sysDict:add")
-	public R save( SysDictDO sysDict){
+	public R save( DictDO sysDict){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -88,7 +88,7 @@ public class SysDictController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("common:sysDict:edit")
-	public R update( SysDictDO sysDict){
+	public R update( DictDO sysDict){
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
@@ -128,7 +128,7 @@ public class SysDictController extends BaseController{
 	
 	@GetMapping( "/type")
 	@ResponseBody
-	public List<SysDictDO> listType(){
+	public List<DictDO> listType(){
 		return sysDictService.listType();
 	};
 	//类别已经指定增加

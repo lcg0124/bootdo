@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <head th:include="blog/index/include_blog::header"></head>
 <body>
-	<div th:include="blog/index/include_blog::nav"></div>
+	<nav th:include="blog/index/include_blog::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
 	<!-- Page Header -->
 	<header class="intro-header"
 		style="background-image: url('/img/blog/post-bg.jpg')">
@@ -14,7 +14,7 @@
 						<h1 th:text="${bContent.title}"></h1>
 						<span class="meta">作者 <a href="#"
 							th:text="${bContent.author}"></a>&nbsp;&nbsp;<a href="#"
-							th:text="${bContent.gtmModified}"></a>
+							th:text="${gtmModified}"></a>
 						</span>
 					</div>
 				</div>
