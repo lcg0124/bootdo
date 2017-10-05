@@ -16,7 +16,7 @@ import com.bootdo.common.service.TaskScheduleJobService;
 import com.bootdo.common.utils.ScheduleJobUtils;
 
 @Service
-public class TaskScheduleJobServiceImpl implements TaskScheduleJobService {
+public class JobServiceImpl implements TaskScheduleJobService {
 	
 	@Autowired
 	private TaskDao taskScheduleJobMapper;

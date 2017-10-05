@@ -25,7 +25,7 @@
 				<div id="incomeNum"></div>
 				<div class="clearfix">
 					<p id="flagLoaded" style="display: none; text-align: center;">已全部加载</p>
-					<a id="flagLoad" class="btn btn-secondary float-right"
+					<a id="flagLoad" style="display: none;" class="btn btn-secondary float-right" 
 						href="javascript:void(0)" onclick="nextPage()">更早 &rarr;</a>
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 		function bindList(offset) {
 			$
 				.ajax({
-					url : 'blog/open/list?limit=10&offset=' + offset,
+					url : 'blog/open/list?type=article&limit=10&offset=' + offset,
 					method : 'get',
 					dataType : 'json',
 					success : function(data) {
@@ -68,7 +68,7 @@
 							htmlText += '<hr>';
 						}
 						$("#incomeNum").append(htmlText);
-	
+						document.getElementById("flagLoad").style.display = "block";
 						currentPage++;
 						if (total <= currentPage * limit) {
 							document.getElementById("flagLoaded").style.display = "block";

@@ -13,7 +13,7 @@ import com.bootdo.common.service.SysDictService;
 
 
 @Service
-public class SysDictServiceImpl implements SysDictService {
+public class DictServiceImpl implements SysDictService {
 	@Autowired
 	private DictDao sysDictMapper;
 	

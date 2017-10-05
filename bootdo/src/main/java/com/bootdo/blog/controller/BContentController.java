@@ -84,6 +84,9 @@ public class BContentController extends BaseController {
 		if (bContent.getAllowFeed() == null) {
 			bContent.setAllowFeed(0);
 		}
+		if(null==bContent.getType()) {
+			bContent.setType("article");
+		}
 		bContent.setGtmCreate(new Date());
 		bContent.setGtmModified(new Date());
 		int count;

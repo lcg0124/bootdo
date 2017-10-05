@@ -23,7 +23,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
-		<mybatis-plus.version>2.1-gamma</mybatis-plus.version>
 		<velocity.version>1.7</velocity.version>
 	</properties>
 
@@ -98,6 +97,12 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.3.2</version>
 		</dependency>
+		<!-- shiro ehcache -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>1.3.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.github.theborakompanioni</groupId>
 			<artifactId>thymeleaf-extras-shiro</artifactId>
@@ -148,7 +153,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<executable>true</executable>
-					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
 				</configuration>
 			</plugin>
 
@@ -188,5 +192,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

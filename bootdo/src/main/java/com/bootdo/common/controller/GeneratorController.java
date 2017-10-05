@@ -12,8 +12,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,12 +27,9 @@ import com.bootdo.common.service.GeneratorService;
 import com.bootdo.common.utils.GenUtils;
 import com.bootdo.common.utils.R;
 
-import sun.tools.tree.ThisExpression;
-
 @RequestMapping("/common/generator")
 @Controller
 public class GeneratorController {
-	private final Logger logger = LoggerFactory.getLogger(ThisExpression.class);
 	String prefix = "common/generator";
 	@Autowired
 	GeneratorService generatorService;
@@ -55,11 +50,7 @@ public class GeneratorController {
 	public void code(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("tableName") String tableName) throws IOException {
 		String[] tableNames = new String[] { tableName };
-		// String tables = request.getParameter("tables");
-		// tableNames = JSON.parseArray(tables).toArray(tableNames);
-
 		byte[] data = generatorService.generatorCode(tableNames);
-
 		response.reset();
 		response.setHeader("Content-Disposition", "attachment; filename=\"bootdo.zip\"");
 		response.addHeader("Content-Length", "" + data.length);
@@ -71,10 +62,8 @@ public class GeneratorController {
 	@RequestMapping("/batchCode")
 	public void batchCode(HttpServletRequest request, HttpServletResponse response, String tables) throws IOException {
 		String[] tableNames = new String[] {};
-		// String tables = request.getParameter("tables");
 		tableNames = JSON.parseArray(tables).toArray(tableNames);
 		byte[] data = generatorService.generatorCode(tableNames);
-
 		response.reset();
 		response.setHeader("Content-Disposition", "attachment; filename=\"bootdo.zip\"");
 		response.addHeader("Content-Length", "" + data.length);
@@ -106,7 +95,6 @@ public class GeneratorController {
 			conf.setProperty("package", map.get("package"));
 			conf.setProperty("autoRemovePre", map.get("autoRemovePre"));
 			conf.setProperty("tablePrefix", map.get("tablePrefix"));
-			System.out.println(map.get("author").toString()+map.get("email")+"");
 			conf.save();
 		} catch (ConfigurationException e) {
 			return R.error("保存配置文件出错");

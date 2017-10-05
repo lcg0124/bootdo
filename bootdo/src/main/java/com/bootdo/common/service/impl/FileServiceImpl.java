@@ -13,7 +13,7 @@ import com.bootdo.common.service.SysFileService;
 
 
 @Service
-public class SysFileServiceImpl implements SysFileService {
+public class FileServiceImpl implements SysFileService {
 	@Autowired
 	private FileDao sysFileMapper;
 	

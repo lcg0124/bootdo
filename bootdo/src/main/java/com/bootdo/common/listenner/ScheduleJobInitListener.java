@@ -16,7 +16,6 @@ public class ScheduleJobInitListener implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		System.out.println("-----启动定时任务------");
 		try {
 			scheduleJobService.initSchedule();
 		} catch (Exception e) {

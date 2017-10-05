@@ -1,6 +1,8 @@
 package com.bootdo.system.config;
 
 import java.util.LinkedHashMap;
+
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -18,22 +20,31 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 @Configuration
 public class ShiroConfig {
 	@Bean
-	UserRealm userRealm() {
+	public EhCacheManager getEhCacheManager() {
+		EhCacheManager em = new EhCacheManager();
+		em.setCacheManagerConfigFile("classpath:config/ehcache.xml");
+		return em;
+	}
+
+	@Bean
+	UserRealm userRealm(EhCacheManager cacheManager) {
 		UserRealm userRealm = new UserRealm();
+		userRealm.setCacheManager(cacheManager);
 		return userRealm;
 	}
 
 	@Bean
-	SecurityManager securityManager() {
+	SecurityManager securityManager(UserRealm userRealm) {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-		manager.setRealm(userRealm());
+		manager.setRealm(userRealm);
+		manager.setCacheManager(getEhCacheManager());
 		return manager;
 	}
 
 	@Bean
-	ShiroFilterFactoryBean shiroFilterFactoryBean() {
+	ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-		shiroFilterFactoryBean.setSecurityManager(securityManager());
+		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		shiroFilterFactoryBean.setSuccessUrl("/index");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
@@ -51,7 +62,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/blog", "anon");
 		filterChainDefinitionMap.put("/blog/open/**", "anon");
 		filterChainDefinitionMap.put("/**", "authc");
-		
+
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}

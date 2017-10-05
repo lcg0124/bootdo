@@ -38,14 +38,12 @@ public class JobController extends BaseController{
 	private TaskScheduleJobService taskScheduleJobService;
 
 	@GetMapping()
-	// @RequiresPermissions("common:taskScheduleJob")
 	String TaskScheduleJob() {
 		return "common/taskScheduleJob/taskScheduleJob";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
-	// @RequiresPermissions("common:list")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -56,13 +54,11 @@ public class JobController extends BaseController{
 	}
 
 	@GetMapping("/add")
-	// @RequiresPermissions("blog:bComments")
 	String add() {
 		return "common/taskScheduleJob/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	// @RequiresPermissions("blog:bComments")
 	String edit(@PathVariable("id") Long id, Model model) {
 		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
 		model.addAttribute("TaskScheduleJob", taskScheduleJob);
@@ -73,7 +69,6 @@ public class JobController extends BaseController{
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	// @RequiresPermissions("common:info")
 	public R info(@PathVariable("id") Long id) {
 		TaskDO taskScheduleJob = taskScheduleJobService.get(id);
 		return R.ok().put("taskScheduleJob", taskScheduleJob);
@@ -84,7 +79,6 @@ public class JobController extends BaseController{
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	// @RequiresPermissions("common:save")
 	public R save(TaskDO taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -99,7 +93,6 @@ public class JobController extends BaseController{
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	// @RequiresPermissions("common:update")
 	public R update(@RequestBody TaskDO taskScheduleJob) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -114,7 +107,6 @@ public class JobController extends BaseController{
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	// @RequiresPermissions("common:remove")
 	public R remove(Long id) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -130,7 +122,6 @@ public class JobController extends BaseController{
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	// @RequiresPermissions("common:remove")
 	public R remove(@RequestParam("ids[]") Long[] ids) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
