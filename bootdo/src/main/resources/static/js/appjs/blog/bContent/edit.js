@@ -1,10 +1,17 @@
 $().ready(function() {
 	$('.summernote').summernote({
 		height : '220px',
-		lang : 'zh-CN'
-	});
+		lang : 'zh-CN',
+        callbacks: {
+            onImageUpload: function(files, editor, $editable) {
+                console.log("onImageUpload");
+                sendFile(files);
+            }
+        }
+    });
 	var content = $("#content").val();
-	$('#content_sn').code(content);
+
+	$('#content_sn').summernote('code', content);
 	validateRule();
 });
 
@@ -15,7 +22,8 @@ $.validator.setDefaults({
 });
 function save(status) {
 	$("#status").val(status);
-	var content_sn = $("#content_sn").code();
+
+	var content_sn = $("#content_sn").summernote('code');
 	$("#content").val(content_sn);
 	$.ajax({
 		cache : true,
@@ -60,3 +68,4 @@ function returnList() {
 	var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 	parent.layer.close(index);
 }
+
