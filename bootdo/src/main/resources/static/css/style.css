@@ -7356,3 +7356,11 @@ body.skin-3 {
 .nopadding{
 	padding:0;
 }
+
+/*编辑器按钮样式冲突*/
+.note-editor .btn-default {
+	color: #333333!important;
+	background-color: #ffffff!important;
+	border-color: #cccccc!important;
+}
+

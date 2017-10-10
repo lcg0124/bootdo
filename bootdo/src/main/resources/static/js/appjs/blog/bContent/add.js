@@ -2,10 +2,16 @@ $().ready(function() {
 
 	$('.summernote').summernote({
 		height : '220px',
-		lang : 'zh-CN'
+		lang : 'zh-CN',
+		callbacks: {
+            onImageUpload: function(files, editor, $editable) {
+                sendFile(files);
+            }
+        }
 	});
 	validateRule();
 });
+
 
 $.validator.setDefaults({
 	submitHandler : function() {
@@ -14,7 +20,7 @@ $.validator.setDefaults({
 });
 function save(status) {
 	$("#status").val(status);
-	var content_sn = $("#content_sn").code();
+	var content_sn = $("#content_sn").summernote('code');
 	$("#content").val(content_sn);
 	$.ajax({
 		cache : true,
