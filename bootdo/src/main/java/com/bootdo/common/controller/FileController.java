@@ -162,8 +162,9 @@ public class FileController extends BaseController {
 		} catch (Exception e) {
 			return R.error();
 		}
+
 		if (sysFileService.save(sysFile) > 0) {
-			return R.ok();
+			return R.ok().put("fileName",sysFile.getUrl());
 		}
 		return R.error();
 	}
