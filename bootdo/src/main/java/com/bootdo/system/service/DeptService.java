@@ -13,7 +13,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:28:36
  */
-public interface SysDeptService {
+public interface DeptService {
 	
 	DeptDO get(Long deptId);
 	

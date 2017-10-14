@@ -24,14 +24,14 @@ import com.bootdo.system.service.MenuService;
 @RequestMapping("/sys/menu")
 @Controller
 public class MenuController extends BaseController {
-	String prefix = "sys/menu";
+	String prefix = "system/menu";
 	@Autowired
 	MenuService menuService;
 
 	@RequiresPermissions("sys:menu:menu")
 	@GetMapping()
 	String menu(Model model) {
-		return "sys/menu/menu";
+		return prefix+"/menu";
 	}
 
 	@RequiresPermissions("sys:menu:menu")
@@ -52,7 +52,7 @@ public class MenuController extends BaseController {
 		} else {
 			model.addAttribute("pName", menuService.get(pId).getName());
 		}
-		return "sys/menu/add";
+		return prefix + "/add";
 	}
 
 	@Log("编辑菜单")
@@ -60,7 +60,7 @@ public class MenuController extends BaseController {
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("menu", menuService.get(id));
-		return "sys/menu/edit";
+		return prefix+"/edit";
 	}
 
 	@Log("保存菜单")

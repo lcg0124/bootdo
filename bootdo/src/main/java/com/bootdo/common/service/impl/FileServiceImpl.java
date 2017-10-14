@@ -8,12 +8,12 @@ import java.util.Map;
 
 import com.bootdo.common.dao.FileDao;
 import com.bootdo.common.domain.FileDO;
-import com.bootdo.common.service.SysFileService;
+import com.bootdo.common.service.FileService;
 
 
 
 @Service
-public class FileServiceImpl implements SysFileService {
+public class FileServiceImpl implements FileService {
 	@Autowired
 	private FileDao sysFileMapper;
 	

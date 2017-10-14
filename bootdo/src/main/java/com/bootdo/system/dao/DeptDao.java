@@ -29,4 +29,6 @@ public interface DeptDao {
 	int remove(Long dept_id);
 	
 	int batchRemove(Long[] deptIds);
+	
+	Long[] listParentDept();
 }

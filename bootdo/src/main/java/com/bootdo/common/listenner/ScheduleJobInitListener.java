@@ -5,14 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.bootdo.common.service.TaskScheduleJobService;
+import com.bootdo.common.service.JobService;
 
 @Component
 @Order(value = 1)
 public class ScheduleJobInitListener implements CommandLineRunner {
 
 	@Autowired
-	TaskScheduleJobService scheduleJobService;
+	JobService scheduleJobService;
 
 	@Override
 	public void run(String... arg0) throws Exception {

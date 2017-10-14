@@ -1,13 +1,20 @@
 package com.bootdo.system.config;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -32,12 +39,28 @@ public class ShiroConfig {
 		userRealm.setCacheManager(cacheManager);
 		return userRealm;
 	}
+	@Bean
+	SessionDAO sessionDAO() {
+		MemorySessionDAO sessionDAO = new MemorySessionDAO();
+		return sessionDAO;
+	}
+
+	@Bean
+	public SessionManager sessionManager() {
+		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+		Collection<SessionListener> listeners = new ArrayList<SessionListener>();
+		listeners.add(new BDSessionListener());
+		sessionManager.setSessionListeners(listeners);
+		sessionManager.setSessionDAO(sessionDAO());
+		return sessionManager;
+	}
 
 	@Bean
 	SecurityManager securityManager(UserRealm userRealm) {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		manager.setRealm(userRealm);
 		manager.setCacheManager(getEhCacheManager());
+		manager.setSessionManager(sessionManager());
 		return manager;
 	}
 

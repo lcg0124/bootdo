@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.common.domain.TaskDO;
-import com.bootdo.common.service.TaskScheduleJobService;
+import com.bootdo.common.service.JobService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -35,7 +35,7 @@ import com.bootdo.common.utils.R;
 @RequestMapping("/common/taskScheduleJob")
 public class JobController extends BaseController{
 	@Autowired
-	private TaskScheduleJobService taskScheduleJobService;
+	private JobService taskScheduleJobService;
 
 	@GetMapping()
 	String TaskScheduleJob() {

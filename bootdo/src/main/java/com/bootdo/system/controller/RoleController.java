@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.common.annotation.Log;
@@ -21,7 +22,7 @@ import com.bootdo.system.service.RoleService;
 @RequestMapping("/sys/role")
 @Controller
 public class RoleController extends BaseController {
-	String prefix = "sys/role";
+	String prefix = "system/role";
 	@Autowired
 	RoleService roleService;
 
@@ -98,5 +99,20 @@ public class RoleController extends BaseController {
 		} else {
 			return R.error(1, "删除失败");
 		}
+	}
+	
+	@RequiresPermissions("sys:role:batchRemove")
+	@Log("批量删除角色")
+	@PostMapping("/batchRemove")
+	@ResponseBody
+	R batchRemove(@RequestParam("ids[]") Long[] ids) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		int r = roleService.batchremove(ids);
+		if (r > 0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 }

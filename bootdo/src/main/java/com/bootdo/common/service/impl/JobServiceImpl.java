@@ -12,11 +12,11 @@ import com.bootdo.common.dao.TaskDao;
 import com.bootdo.common.domain.ScheduleJob;
 import com.bootdo.common.domain.TaskDO;
 import com.bootdo.common.quartz.utils.QuartzManager;
-import com.bootdo.common.service.TaskScheduleJobService;
+import com.bootdo.common.service.JobService;
 import com.bootdo.common.utils.ScheduleJobUtils;
 
 @Service
-public class JobServiceImpl implements TaskScheduleJobService {
+public class JobServiceImpl implements JobService {
 	
 	@Autowired
 	private TaskDao taskScheduleJobMapper;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import ${package}.dao.${className}Mapper;
+import ${package}.dao.${className}Dao;
 import ${package}.domain.${className}DO;
 import ${package}.service.${className}Service;
 
@@ -15,41 +15,41 @@ import ${package}.service.${className}Service;
 @Service
 public class ${className}ServiceImpl implements ${className}Service {
 	@Autowired
-	private ${className}Mapper ${classname}Mapper;
+	private ${className}Dao ${classname}Dao;
 	
 	@Override
 	public ${className}DO get(${pk.attrType} ${pk.attrname}){
-		return ${classname}Mapper.get(${pk.attrname});
+		return ${classname}Dao.get(${pk.attrname});
 	}
 	
 	@Override
 	public List<${className}DO> list(Map<String, Object> map){
-		return ${classname}Mapper.list(map);
+		return ${classname}Dao.list(map);
 	}
 	
 	@Override
 	public int count(Map<String, Object> map){
-		return ${classname}Mapper.count(map);
+		return ${classname}Dao.count(map);
 	}
 	
 	@Override
 	public int save(${className}DO ${classname}){
-		return ${classname}Mapper.save(${classname});
+		return ${classname}Dao.save(${classname});
 	}
 	
 	@Override
 	public int update(${className}DO ${classname}){
-		return ${classname}Mapper.update(${classname});
+		return ${classname}Dao.update(${classname});
 	}
 	
 	@Override
 	public int remove(${pk.attrType} ${pk.attrname}){
-		return ${classname}Mapper.remove(${pk.attrname});
+		return ${classname}Dao.remove(${pk.attrname});
 	}
 	
 	@Override
 	public int batchRemove(${pk.attrType}[] ${pk.attrname}s){
-		return ${classname}Mapper.batchRemove(${pk.attrname}s);
+		return ${classname}Dao.batchRemove(${pk.attrname}s);
 	}
 	
 }

@@ -9,6 +9,7 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
+						<input id="${pk.columnName}" name="${pk.columnName}" th:value="${${classname}.${pk.columnName}}"  type="hidden">
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
 <div class="form-group">	

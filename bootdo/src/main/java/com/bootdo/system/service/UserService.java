@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.bootdo.common.domain.Tree;
+import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.UserDO;
 
 @Service
@@ -29,5 +31,7 @@ public interface UserService {
 	Set<String> listRoles(Long userId);
 
 	int resetPwd(UserDO user);
+
+	Tree<DeptDO> getTree();
 
 }

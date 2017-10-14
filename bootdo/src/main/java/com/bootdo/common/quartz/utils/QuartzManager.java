@@ -49,8 +49,7 @@ public class QuartzManager {
 			return;
 		}
 		Scheduler scheduler = schedulerFactoryBean.getScheduler();
-		log.debug(scheduler
-				+ ".......................................................................................add");
+		
 		TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
 
 		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);

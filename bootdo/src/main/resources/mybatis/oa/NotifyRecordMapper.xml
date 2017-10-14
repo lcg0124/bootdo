@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.oa.dao.NotifyRecordDao">
+
+	<select id="get" resultType="com.bootdo.oa.domain.NotifyRecordDO">
+		select
+		`id`,`notify_id`,`user_id`,`is_read`,`read_date` from oa_notify_record
+		where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.oa.domain.NotifyRecordDO">
+		select `id`,`notify_id`,`user_id`,`is_read`,`read_date` from
+		oa_notify_record
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="notifyId != null and notifyId != ''"> and notify_id = #{notifyId} </if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+			<if test="isRead != null and isRead != ''"> and is_read = #{isRead} </if>
+			<if test="readDate != null and readDate != ''"> and read_date = #{readDate} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from oa_notify_record
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="notifyId != null and notifyId != ''"> and notify_id = #{notifyId} </if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+			<if test="isRead != null and isRead != ''"> and is_read = #{isRead} </if>
+			<if test="readDate != null and readDate != ''"> and read_date = #{readDate} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.oa.domain.NotifyRecordDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into oa_notify_record
+		(
+		`notify_id`,
+		`user_id`,
+		`is_read`,
+		`read_date`
+		)
+		values
+		(
+		#{notifyId},
+		#{userId},
+		#{isRead},
+		#{readDate}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.oa.domain.NotifyRecordDO">
+		update oa_notify_record
+		<set>
+			<if test="notifyId != null">`notify_id` = #{notifyId}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="isRead != null">`is_read` = #{isRead}, </if>
+			<if test="readDate != null">`read_date` = #{readDate}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from oa_notify_record where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from oa_notify_record where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<insert id="batchSave" parameterType="com.bootdo.oa.domain.NotifyRecordDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into oa_notify_record
+		(
+		`notify_id`,
+		`user_id`,
+		`is_read`,
+		`read_date`
+		)
+		values
+		<foreach item="item" index="index" collection="list"
+			separator=",">
+			(
+			#{item.notifyId},
+			#{item.userId},
+			#{item.isRead},
+			#{item.readDate}
+			)
+		</foreach>
+	</insert>
+
+	<select id="listNotifyIds" resultType="long">
+		select distinct notify_id from oa_notify_record
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="notifyId != null and notifyId != ''"> and notify_id = #{notifyId} </if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+			<if test="isRead != null and isRead != ''"> and is_read = #{isRead} </if>
+			<if test="readDate != null and readDate != ''"> and read_date = #{readDate} </if>
+		</where>
+	</select>
+
+	<delete id="removeByNotifbyId">
+		delete from oa_notify_record where notify_id =
+		#{value}
+	</delete>
+
+	<delete id="batchRemoveByNotifbyId">
+		delete from oa_notify_record where notify_id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bootdo.common.config.BootdoConfig;
 import com.bootdo.common.domain.FileDO;
-import com.bootdo.common.service.SysFileService;
+import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.FileType;
 import com.bootdo.common.utils.FileUtil;
 import com.bootdo.common.utils.PageUtils;
@@ -40,7 +40,7 @@ import com.bootdo.common.utils.R;
 public class FileController extends BaseController {
 
 	@Autowired
-	private SysFileService sysFileService;
+	private FileService sysFileService;
 
 	@Autowired
 	private BootdoConfig bootdoConfig;

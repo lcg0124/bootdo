@@ -11,7 +11,7 @@ function load() {
 						url : prefix + "/list", // 服务器数据的加载地址
 						// showRefresh : true,
 						// showToggle : true,
-						// showColumns : true,
+						showColumns : true,
 						iconSize : 'outline',
 						toolbar : '#exampleToolbar',
 						striped : true, // 设置为true会有隔行变色效果
@@ -25,9 +25,10 @@ function load() {
 						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
 						// search : true, // 是否显示搜索框
-						showColumns : false, // 是否显示内容下拉框（选择显示的列）
+						//showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者
 						// "server"
+
 						queryParams : function(params) {
 							return {
 								// 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
@@ -55,8 +56,11 @@ function load() {
 								{
 									field : 'title',
 									title : '标题',
-									width :320
-								},
+									width :320,
+                                    formatter:function (value,row,index) {
+                                        return '<a href="#" onclick="preview(\''+ row.cid+ '\')">'+row.title+'</a>';
+                                    }
+                                },
 								{
 									field : 'author',
 									title : '作者'
@@ -64,7 +68,7 @@ function load() {
 								{
 									visible : false,
 									field : 'slug',
-									title : ''
+									title : 'slug'
 								},
 								{
 									visible : false,

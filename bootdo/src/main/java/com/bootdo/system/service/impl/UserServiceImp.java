@@ -1,19 +1,24 @@
 package com.bootdo.system.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bootdo.common.domain.Tree;
+import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.DeptDao;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.dao.UserRoleDao;
+import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.domain.UserRoleDO;
 import com.bootdo.system.service.UserService;
@@ -26,14 +31,14 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	UserRoleDao userRoleMapper;
 	@Autowired
-	DeptDao sysDeptMapper;
+	DeptDao deptMapper;
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Override
 	public UserDO get(Long id) {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
 		UserDO user = userMapper.get(id);
-		user.setDeptName(sysDeptMapper.get(user.getDeptId()).getName());
+		user.setDeptName(deptMapper.get(user.getDeptId()).getName());
 		user.setroleIds(roleIds);
 		return user;
 	}
@@ -117,6 +122,44 @@ public class UserServiceImp implements UserService {
 		int count = userMapper.batchRemove(userIds);
 		userRoleMapper.batchRemoveByUserId(userIds);
 		return count;
+	}
+
+	@Override
+	public Tree<DeptDO> getTree() {
+		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
+		List<DeptDO> SysDepts = deptMapper.list(new HashMap<String, Object>());
+		Long[] pDepts = deptMapper.listParentDept();
+		Long[] uDepts = userMapper.listAllDept();
+		Long[] allDepts = (Long[]) ArrayUtils.addAll(pDepts, uDepts);
+		for (DeptDO SysDept : SysDepts) {
+			if (!ArrayUtils.contains(allDepts, SysDept.getDeptId())) {
+				continue;
+			}
+			Tree<DeptDO> tree = new Tree<DeptDO>();
+			tree.setId(SysDept.getDeptId().toString());
+			tree.setParentId(SysDept.getParentId().toString());
+			tree.setText(SysDept.getName());
+			Map<String, Object> state = new HashMap<>();
+			state.put("opened", true);
+			state.put("mType", "dept");
+			tree.setState(state);
+			trees.add(tree);
+		}
+		List<UserDO> users = userMapper.list(new HashMap<String, Object>());
+		for (UserDO user : users) {
+			Tree<DeptDO> tree = new Tree<DeptDO>();
+			tree.setId(user.getUserId().toString());
+			tree.setParentId(user.getDeptId().toString());
+			tree.setText(user.getName());
+			Map<String, Object> state = new HashMap<>();
+			state.put("opened", true);
+			state.put("mType", "user");
+			tree.setState(state);
+			trees.add(tree);
+		}
+		// 默认顶级菜单为０，根据数据库实际情况调整
+		Tree<DeptDO> t = BuildTree.build(trees);
+		return t;
 	}
 
 }

@@ -49,7 +49,7 @@ function load() {
 								},
 								{
 									field : 'id',
-									title : ''
+									title : 'id'
 								},
 								{
 									field : 'cronExpression',
@@ -57,7 +57,7 @@ function load() {
 								},
 								{
 									field : 'methodName',
-									title : '任务名称'
+									title : '方法名称'
 								},
 								{
 									visible : false,
@@ -99,12 +99,13 @@ function load() {
 									title : '创建者'
 								},
 								{
+									visible : false,
 									field : 'springBean',
 									title : 'Spring bean'
 								},
 								{
 									field : 'jobName',
-									title : '任务名'
+									title : '任务名称'
 								},
 								{
 									field : 'jobStatus',

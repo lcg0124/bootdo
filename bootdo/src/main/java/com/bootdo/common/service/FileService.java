@@ -12,7 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-19 16:02:20
  */
-public interface SysFileService {
+public interface FileService {
 	
 	FileDO get(Long id);
 	

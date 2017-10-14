@@ -105,10 +105,16 @@ public class RoleServiceImpl implements RoleService {
 			rmDo.setMenuId(menuId);
 			rms.add(rmDo);
 		}
-		//roleMenuMapper.removeByRoleId(roleId);
+		// roleMenuMapper.removeByRoleId(roleId);
 		if (rms.size() > 0) {
 			roleMenuMapper.batchSave(rms);
 		}
+		return r;
+	}
+
+	@Override
+	public int batchremove(Long[] ids) {
+		int r = roleMapper.batchRemove(ids);
 		return r;
 	}
 

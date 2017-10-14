@@ -12,7 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-29 18:28:07
  */
-public interface SysDictService {
+public interface DictService {
 	
 	DictDO get(Long id);
 	
@@ -29,4 +29,6 @@ public interface SysDictService {
 	int batchRemove(Long[] ids);
 
 	List<DictDO> listType();
+	
+	String getName(String type,String value);
 }

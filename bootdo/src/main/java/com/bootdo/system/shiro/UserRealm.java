@@ -40,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String username = (String) token.getPrincipal();
-		Map<String, Object> map  = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		map.put("username", username);
 		String password = new String((char[]) token.getCredentials());
 

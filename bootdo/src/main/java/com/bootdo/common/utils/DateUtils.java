@@ -1,16 +1,17 @@
 package com.bootdo.common.utils;
 
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import groovy.lang.MetaClassImpl.Index;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 日期处理
  * 
  */
 public class DateUtils {
+	private final static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 	/** 时间格式(yyyy-MM-dd) */
 	public final static String DATE_PATTERN = "yyyy-MM-dd";
 	/** 时间格式(yyyy-MM-dd HH:mm:ss) */
@@ -20,19 +21,35 @@ public class DateUtils {
 		return format(date, DATE_PATTERN);
 	}
 
-	public static Date formatDate(Date date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String strDate = formatter.format(date);
-		ParsePosition pos = new ParsePosition(0);
-		Date strtodate = formatter.parse(strDate, pos);
-		return strtodate;
-	}
-
 	public static String format(Date date, String pattern) {
 		if (date != null) {
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
 			return df.format(date);
 		}
 		return null;
+	}
+
+	public static String getTimeBefore(Date date) {
+		Date now = new Date();
+		long l = now.getTime() - date.getTime();
+		long day = l / (24 * 60 * 60 * 1000);
+		long hour = (l / (60 * 60 * 1000) - day * 24);
+		long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+		long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+		String r = "";
+		if (day > 0) {
+			r +=day + "天";
+		}
+		if (hour > 0) {
+			r +=hour + "小时";
+		}
+		if (min > 0) {
+			r +=min + "分";
+		}
+		if (s > 0) {
+			r +=s + "秒";
+		}
+		r += "前";
+		return r;
 	}
 }

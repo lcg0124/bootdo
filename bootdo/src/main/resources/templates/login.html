@@ -31,12 +31,12 @@
 			<div class="col-sm-7">
 				<div class="signin-info">
 					<div class="logopanel m-b">
-						<h1>[ BootDo ]</h1>
+						<h1>BootDo</h1>
 					</div>
 					<div class="m-b"></div>
-					<h4>
+					<h3>
 						欢迎使用 <strong>BootDo管理系统</strong>
-					</h4>
+					</h3>
 					<ul class="m-b">
 						<li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>
 							springBoot</li>
@@ -53,14 +53,34 @@
 			</div>
 			<div class="col-sm-5">
 				<form id="signupForm">
-					<h4 class="no-margins">登录：</h4>
-					<p class="m-t-md">欢迎登录bootdo后台管理系统</p>
+					<h3 class="text-center">用户登录</h3>
+					<p class="m-t-md text-center">欢迎登录bootdo后台管理系统</p>
 					<input type="text" name="username" class="form-control uname"
-						placeholder="用户名" /> <input type="password" name="password"
-						class="form-control pword m-b" placeholder="密码" /> 
-					账号&nbsp; <strong>test</strong>&nbsp;&nbsp;密码&nbsp;<strong>111111</strong>
+						value="test" /> 
+					<input type="password" name="password"
+						class="form-control pword m-b" value="111111" /> 
+					<button class="btn btn-login btn-block">登录</button>
+					<!--按钮模块-->
+					<div class="outside-login">
+						<div class="outside-login-tit">
+							<span>代码链接</span>
+						</div>
+						<div class="outside-login-cot">
+							<a class="outside-login-btn wxoa actived oschina J-btnSwitchLoginType" target="_Blank" href="https://www.oschina.net/p/bootdo"> 
+								 <em><i class="fa fa-home"></i></em>       
+								 <span>oschina主页</span>      
+							</a>
+							<a class="outside-login-btn wxoa actived my J-btnSwitchLoginType" target="_Blank" href="https://gitee.com/lcg0124/bootdo"> 
+								 <em><i class="fa fa-git-square"></i></em>       
+								 <span>码云仓库</span>      
+							</a>
+							<a class="outside-login-btn wxoa actived git J-btnSwitchLoginType" target="_Blank" href="https://github.com/lcg0124/bootdo"> 
+								 <em><i class="fa fa-github"></i></em>       
+								 <span>GitHub仓库</span>      
+							</a>
+						</div>
+					</div>
 					
-					<button class="btn btn-success btn-block">登录</button>
 				</form>
 			</div>
 		</div>

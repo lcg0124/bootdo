@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.codehaus.groovy.ast.expr.PrefixExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.domain.DeptDO;
-import com.bootdo.system.service.SysDeptService;
+import com.bootdo.system.service.DeptService;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.R;
@@ -29,114 +30,111 @@ import com.bootdo.common.utils.R;
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:40:36
  */
- 
+
 @Controller
 @RequestMapping("/system/sysDept")
-public class DeptController extends BaseController{
+public class DeptController extends BaseController {
+	private String prefix = "system/dept";
 	@Autowired
-	private SysDeptService sysDeptService;
-	
+	private DeptService sysDeptService;
+
 	@GetMapping()
 	@RequiresPermissions("system:sysDept:sysDept")
-	String SysDept(){
-	    return "system/sysDept/sysDept";
+	String SysDept() {
+		return prefix + "/dept";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<DeptDO> list(){
-		//查询列表数据
-       // Query query = new Query(params);
+	public List<DeptDO> list() {
 		Map<String, Object> query = new HashMap<>();
 		List<DeptDO> sysDeptList = sysDeptService.list(query);
-	//	int total = sysDeptService.count(query);
-		//PageUtils pageUtils = new PageUtils(sysDeptList, total);
 		return sysDeptList;
 	}
-	
+
 	@GetMapping("/add/{pId}")
 	@RequiresPermissions("system:sysDept:add")
-	String add(@PathVariable("pId") Long pId,Model model){
+	String add(@PathVariable("pId") Long pId, Model model) {
 		model.addAttribute("pId", pId);
 		if (pId == 0) {
 			model.addAttribute("pName", "总部门");
 		} else {
 			model.addAttribute("pName", sysDeptService.get(pId).getName());
 		}
-	    return "system/sysDept/add";
+		return  prefix + "/add";
 	}
 
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("system:sysDept:edit")
-	String edit(@PathVariable("deptId") Long deptId,Model model){
+	String edit(@PathVariable("deptId") Long deptId, Model model) {
 		DeptDO sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
-	    return "system/sysDept/edit";
+		return  prefix + "/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save( DeptDO sysDept){
+	public R save(DeptDO sysDept) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if(sysDeptService.save(sysDept)>0){
+		if (sysDeptService.save(sysDept) > 0) {
 			return R.ok();
 		}
 		return R.error();
 	}
+
 	/**
 	 * 修改
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update( DeptDO sysDept){
+	public R update(DeptDO sysDept) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if(sysDeptService.update(sysDept)>0){
+		if (sysDeptService.update(sysDept) > 0) {
 			return R.ok();
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
-	@PostMapping( "/remove")
+	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("system:sysDept:remove")
-	public R remove( Long deptId){
+	public R remove(Long deptId) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if(sysDeptService.remove(deptId)>0){
-		return R.ok();
+		if (sysDeptService.remove(deptId) > 0) {
+			return R.ok();
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
-	@PostMapping( "/batchRemove")
+	@PostMapping("/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("system:sysDept:batchRemove")
-	public R remove(@RequestParam("ids[]") Long[] deptIds){
+	public R remove(@RequestParam("ids[]") Long[] deptIds) {
 		if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		sysDeptService.batchRemove(deptIds);
 		return R.ok();
 	}
-	
-	
+
 	@GetMapping("/tree")
 	@ResponseBody
 	public Tree<DeptDO> tree() {
@@ -147,7 +145,7 @@ public class DeptController extends BaseController{
 
 	@GetMapping("/treeView")
 	String treeView() {
-		return "system/sysDept/deptTree";
+		return  prefix + "/deptTree";
 	}
-	
+
 }

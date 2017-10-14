@@ -1,4 +1,5 @@
 //var menuTree;
+
 var menuIds;
 $(function() {
 	getMenuTreeData();
@@ -12,15 +13,19 @@ $.validator.setDefaults({
 });
 
 function getAllSelectNodes() {
-	var ref = $('#menuTree').jstree(true);// 获得整个树
+	var ref = $('#menuTree').jstree(true); // 获得整个树
+
 	menuIds = ref.get_selected(); // 获得所有选中节点的，返回值为数组
+
+	$("#menuTree").find(".jstree-undetermined").each(function(i, element) {
+		menuIds.push($(element).closest('.jstree-node').attr("id"));
+	});
 }
 function getMenuTreeData() {
 	$.ajax({
 		type : "GET",
 		url : "/sys/menu/tree",
 		success : function(menuTree) {
-			// menuTree = data;
 			loadMenuTree(menuTree);
 		}
 	});
@@ -31,12 +36,12 @@ function loadMenuTree(menuTree) {
 			'data' : menuTree
 		},
 		"checkbox" : {
-			"three_state" : false,
-			//"cascade" : 'down'
+			"three_state" : true,
 		},
 		"plugins" : [ "wholerow", "checkbox" ]
 	});
 	//$('#menuTree').jstree("open_all");
+
 }
 
 function save() {
@@ -46,7 +51,8 @@ function save() {
 		cache : true,
 		type : "POST",
 		url : "/sys/role/save",
-		data : role,// 你的formid
+		data : role, // 你的formid
+
 		async : false,
 		error : function(request) {
 			alert("Connection error");
@@ -56,6 +62,7 @@ function save() {
 				parent.layer.msg("操作成功");
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+
 				parent.layer.close(index);
 
 			} else {

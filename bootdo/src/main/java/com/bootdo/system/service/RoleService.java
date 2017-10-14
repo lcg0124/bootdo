@@ -20,4 +20,6 @@ public interface RoleService {
 	int remove(Long id);
 
 	List<RoleDO> list(Long userId);
+
+	int batchremove(Long[] ids);
 }

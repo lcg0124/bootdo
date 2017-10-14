@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.codehaus.groovy.ast.expr.PrefixExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootdo.common.annotation.Log;
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.RoleService;
@@ -28,6 +31,7 @@ import com.bootdo.system.service.UserService;
 @RequestMapping("/sys/user")
 @Controller
 public class UserController extends BaseController {
+	private String prefix="system/user"  ;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -36,7 +40,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
 	String user(Model model) {
-		return "sys/user/user";
+		return prefix + "/user";
 	}
 
 	@GetMapping("/list")
@@ -56,7 +60,7 @@ public class UserController extends BaseController {
 	String add(Model model) {
 		List<RoleDO> roles = roleService.list();
 		model.addAttribute("roles", roles);
-		return "sys/user/add";
+		return prefix + "/add";
 	}
 
 	@RequiresPermissions("sys:user:edit")
@@ -67,7 +71,7 @@ public class UserController extends BaseController {
 		model.addAttribute("user", userDO);
 		List<RoleDO> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
-		return "sys/user/edit";
+		return prefix+"/edit";
 	}
 
 	@RequiresPermissions("sys:user:add")
@@ -122,7 +126,6 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		int r = userService.batchremove(userIds);
-		System.out.println(r);
 		if (r > 0) {
 			return R.ok();
 		}
@@ -143,7 +146,7 @@ public class UserController extends BaseController {
 		UserDO userDO = new UserDO();
 		userDO.setUserId(userId);
 		model.addAttribute("user", userDO);
-		return "sys/user/reset_pwd";
+		return prefix + "/reset_pwd";
 	}
 
 	@Log("提交更改用户密码")
@@ -158,6 +161,19 @@ public class UserController extends BaseController {
 			return R.ok();
 		}
 		return R.error();
+	}
+	
+	@GetMapping("/tree")
+	@ResponseBody
+	public Tree<DeptDO> tree() {
+		Tree<DeptDO> tree = new Tree<DeptDO>();
+		tree = userService.getTree();
+		return tree;
+	}
+
+	@GetMapping("/treeView")
+	String treeView() {
+		return  prefix + "/userTree";
 	}
 
 }

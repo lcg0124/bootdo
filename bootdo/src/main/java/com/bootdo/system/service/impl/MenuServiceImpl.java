@@ -20,6 +20,8 @@ import com.bootdo.system.dao.RoleMenuDao;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
 
+import javassist.expr.NewArray;
+
 @Service
 public class MenuServiceImpl implements MenuService {
 	@Autowired
@@ -91,6 +93,9 @@ public class MenuServiceImpl implements MenuService {
 			tree.setId(sysMenuDO.getMenuId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
+			// Map<String, Object> state= new HashMap<>();
+			// state.put("undetermined", true);
+			// tree.setState(state);
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
@@ -101,7 +106,14 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public Tree<MenuDO> getTree(Long id) {
 		// 根据roleId查询权限
+		List<MenuDO> menus = menuMapper.list(new HashMap<String, Object>());
 		List<Long> menuIds = roleMenuMapper.listMenuIdByRoleId(id);
+		List<Long> temp = menuIds;
+		for (MenuDO menu : menus) {
+			if (temp.contains(menu.getParentId())) {
+				menuIds.remove(menu.getParentId());
+			}
+		}
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
 		List<MenuDO> menuDOs = menuMapper.list(new HashMap<String, Object>());
 		for (MenuDO sysMenuDO : menuDOs) {

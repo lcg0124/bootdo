@@ -14,7 +14,7 @@ import org.quartz.SchedulerException;
  * @email 1992lcg@163.com
  * @date 2017-09-26 20:53:48
  */
-public interface TaskScheduleJobService {
+public interface JobService {
 	
 	TaskDO get(Long id);
 	

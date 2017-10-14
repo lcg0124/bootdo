@@ -83,5 +83,9 @@
 			#{deptId}
 		</foreach>
 	</delete>
+	
+	<select id="listParentDept" resultType="long">
+		select DISTINCT parent_id from sys_dept
+	</select>
 
 </mapper>

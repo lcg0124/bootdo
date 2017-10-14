@@ -10,11 +10,14 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
   profiles: 
-    active: dev
+    active: pro
   http:
     multipart:
       max-file-size: 30Mb
       max-request-size: 30Mb
+  devtools:
+    restart:
+      enabled: true    
 mybatis: 
   configuration:
     map-underscore-to-camel-case: true

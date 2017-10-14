@@ -7,18 +7,23 @@
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
-					<div id="exampleToolbar" role="group">
-						<div class="form-group col-sm-6">
-							<input id="searchName" type="text" class="form-control" placeholder="用户名">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
 						</div>
-						<button class="btn btn-success" onclick="reLoad()">查询</button>
-						<button type="button" class="btn  btn-primary" onclick="add()">
-							<i class="fa fa-plus" aria-hidden="true"></i>添加
-						</button>
-						<button type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
-						</button>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="">
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -27,6 +32,7 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/common/taskScheduleJob/taskScheduleJob.js"></script>
+	<script type="text/javascript"
+		src="/js/appjs/common/taskScheduleJob/taskScheduleJob.js"></script>
 </body>
 </html>

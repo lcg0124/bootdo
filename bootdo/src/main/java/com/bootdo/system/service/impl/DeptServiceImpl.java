@@ -12,12 +12,12 @@ import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.DeptDao;
 import com.bootdo.system.domain.DeptDO;
-import com.bootdo.system.service.SysDeptService;
+import com.bootdo.system.service.DeptService;
 
 
 
 @Service
-public class DeptServiceImpl implements SysDeptService {
+public class DeptServiceImpl implements DeptService {
 	@Autowired
 	private DeptDao sysDeptMapper;
 	
