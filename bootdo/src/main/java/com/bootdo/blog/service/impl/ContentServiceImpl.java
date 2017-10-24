@@ -8,12 +8,12 @@ import java.util.Map;
 
 import com.bootdo.blog.dao.ContentDao;
 import com.bootdo.blog.domain.ContentDO;
-import com.bootdo.blog.service.BContentService;
+import com.bootdo.blog.service.ContentService;
 
 
 
 @Service
-public class BContentServiceImpl implements BContentService {
+public class ContentServiceImpl implements ContentService {
 	@Autowired
 	private ContentDao bContentMapper;
 	

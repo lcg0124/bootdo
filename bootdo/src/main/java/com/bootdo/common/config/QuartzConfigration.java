@@ -17,17 +17,16 @@ import com.bootdo.common.quartz.factory.JobFactory;
 public class QuartzConfigration {
 
 	@Autowired
-	private JobFactory jobFactory; // 自定义的factory
+	JobFactory jobFactory;
 
-	// 获取工厂bean
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean() {
 		SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
 		try {
+			schedulerFactoryBean.setOverwriteExistingJobs(true);
 			schedulerFactoryBean.setQuartzProperties(quartzProperties());
 			schedulerFactoryBean.setJobFactory(jobFactory);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return schedulerFactoryBean;

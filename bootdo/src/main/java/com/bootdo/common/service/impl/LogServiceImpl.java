@@ -10,6 +10,7 @@ import com.bootdo.common.domain.PageDO;
 import com.bootdo.common.service.LogService;
 import com.bootdo.common.utils.Query;
 
+@SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
 public class LogServiceImpl implements LogService {
 	@Autowired
@@ -22,7 +23,7 @@ public class LogServiceImpl implements LogService {
 //		
 //		if(total<=query.getOffset()) {
 //			System.out.println(total +"-----"+query.getOffset());
-//			query.setOffset((total/limit-2)*limit);
+//			query.setOffset((total/limit-1)*limit);
 //			System.out.println(query.getOffset());
 //		}
 		List<LogDO> logs = logMapper.list(query);

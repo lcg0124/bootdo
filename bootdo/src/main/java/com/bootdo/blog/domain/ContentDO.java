@@ -3,8 +3,6 @@ package com.bootdo.blog.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 
 
 /**
@@ -269,5 +267,29 @@ public class ContentDO implements Serializable {
 	 */
 	public Date getGtmModified() {
 		return gtmModified;
+	}
+
+	@Override
+	public String toString() {
+		return "ContentDO{" +
+				"cid=" + cid +
+				", title='" + title + '\'' +
+				", slug='" + slug + '\'' +
+				", created=" + created +
+				", modified=" + modified +
+				", content='" + content + '\'' +
+				", type='" + type + '\'' +
+				", tags='" + tags + '\'' +
+				", categories='" + categories + '\'' +
+				", hits=" + hits +
+				", commentsNum=" + commentsNum +
+				", allowComment=" + allowComment +
+				", allowPing=" + allowPing +
+				", allowFeed=" + allowFeed +
+				", status=" + status +
+				", author='" + author + '\'' +
+				", gtmCreate=" + gtmCreate +
+				", gtmModified=" + gtmModified +
+				'}';
 	}
 }

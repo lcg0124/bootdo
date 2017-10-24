@@ -26,7 +26,7 @@ public interface RoleDao {
 	
 	int update(RoleDO role);
 	
-	int remove(Long role_id);
+	int remove(Long roleId);
 	
 	int batchRemove(Long[] roleIds);
 }

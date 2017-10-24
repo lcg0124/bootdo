@@ -3,6 +3,8 @@ package com.bootdo.system.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +19,7 @@ import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.RoleMenuDO;
 import com.bootdo.system.service.RoleService;
 
+@SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -35,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<RoleDO> list() {
-		List<RoleDO> roles = roleMapper.list(new HashMap<>());
+		List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
 		return roles;
 	}
 
@@ -43,11 +46,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<RoleDO> list(Long userId) {
 		List<Long> rolesIds = userRoleMapper.listRoleId(userId);
-		List<RoleDO> roles = roleMapper.list(new HashMap<>());
+		List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
 		for (RoleDO roleDO : roles) {
 			roleDO.setRoleSign("false");
 			for (Long roleId : rolesIds) {
-				if (roleDO.getRoleId() == roleId) {
+				if (Objects.equals(roleDO.getRoleId(), roleId)) {
 					roleDO.setRoleSign("true");
 					break;
 				}

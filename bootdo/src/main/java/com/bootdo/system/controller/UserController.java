@@ -1,21 +1,7 @@
 package com.bootdo.system.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.ast.expr.PrefixExpression;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.bootdo.common.annotation.Log;
+import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.MD5Utils;
@@ -27,6 +13,14 @@ import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.RoleService;
 import com.bootdo.system.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/sys/user")
 @Controller
@@ -79,7 +73,7 @@ public class UserController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(UserDO user) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
@@ -94,7 +88,7 @@ public class UserController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(UserDO user) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (userService.update(user) > 0) {
@@ -108,7 +102,7 @@ public class UserController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (userService.remove(id) > 0) {
@@ -122,7 +116,7 @@ public class UserController extends BaseController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		int r = userService.batchremove(userIds);
@@ -135,7 +129,8 @@ public class UserController extends BaseController {
 	@PostMapping("/exit")
 	@ResponseBody
 	boolean exit(@RequestParam Map<String, Object> params) {
-		return !userService.exit(params);// 存在，不通过，false
+		// 存在，不通过，false
+		return !userService.exit(params);
 	}
 
 	@RequiresPermissions("sys:user:resetPwd")
@@ -153,7 +148,7 @@ public class UserController extends BaseController {
 	@PostMapping("/resetPwd")
 	@ResponseBody
 	R resetPwd(UserDO user) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(userService.get(user.getUserId()).getUsername(), user.getPassword()));

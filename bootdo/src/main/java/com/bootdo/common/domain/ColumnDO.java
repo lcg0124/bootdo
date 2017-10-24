@@ -77,4 +77,17 @@ public class ColumnDO {
 	public void setExtra(String extra) {
 		this.extra = extra;
 	}
+
+	@Override
+	public String toString() {
+		return "ColumnDO{" +
+				"columnName='" + columnName + '\'' +
+				", dataType='" + dataType + '\'' +
+				", comments='" + comments + '\'' +
+				", attrName='" + attrName + '\'' +
+				", attrname='" + attrname + '\'' +
+				", attrType='" + attrType + '\'' +
+				", extra='" + extra + '\'' +
+				'}';
+	}
 }

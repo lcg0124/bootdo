@@ -1,7 +1,6 @@
 package com.bootdo.system.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 
@@ -85,5 +84,16 @@ public class DeptDO implements Serializable {
 	 */
 	public Integer getDelFlag() {
 		return delFlag;
+	}
+
+	@Override
+	public String toString() {
+		return "DeptDO{" +
+				"deptId=" + deptId +
+				", parentId=" + parentId +
+				", name='" + name + '\'' +
+				", orderNum=" + orderNum +
+				", delFlag=" + delFlag +
+				'}';
 	}
 }

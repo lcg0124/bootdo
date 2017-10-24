@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+                            <input id="id" name="id" class="hidden" th:value="${job.id}">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">任务名称：</label>
+								<div class="col-sm-4">
+									<input id="jobName" name="jobName" class="form-control"
+										type="text" th:value="${job.jobName}">
+								</div>
+								<label class="col-sm-2 control-label">任务分组：</label>
+								<div class="col-sm-4">
+									<input id="jobGroup" name="jobGroup" class="form-control"
+										type="text" th:value="${job.jobGroup}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">任务类：</label>
+								<div class="col-sm-4">
+									<input id="beanClass" name="beanClass" class="form-control"
+										type="text" th:value="${job.beanClass}">
+								</div>
+								<label class="col-sm-2 control-label">cron表达式：</label>
+								<div class="col-sm-4">
+									<input id="cronExpression" name="cronExpression"
+										   class="form-control" type="text" th:value="${job.cronExpression}">
+								</div>
+							</div>
+							<div class="form-group hidden">
+
+								<label class="col-sm-2 control-label">是否同步：</label>
+								<div class="col-sm-4">
+									<input id="isConcurrent" name="isConcurrent"
+										class="radio-inline" value="1" type="radio">是
+									<input id="isConcurrent" name="isConcurrent"
+										class="radio-inline" value="0" type="radio">否
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">任务描述：</label>
+								<div class="col-sm-10">
+									<textarea id="description" name="description" class="form-control"
+										></textarea>
+								</div>
+							</div>
+							<input id="jobStatus" name="jobStatus" class="form-control hidden"
+								   type="text" value="0" th:value="${job.jobStatus}">
+
+							<!-- <div class="form-group">
+								<label class="col-sm-3 control-label">Spring bean：</label>
+								<div class="col-sm-8">
+									<input id="springBean" name="springBean" class="form-control"
+										type="text">
+								</div>
+							</div>  -->
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/common/job/edit.js">
+		
+	</script>
+</body>
+</html>

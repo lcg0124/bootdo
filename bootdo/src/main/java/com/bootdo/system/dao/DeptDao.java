@@ -26,7 +26,7 @@ public interface DeptDao {
 	
 	int update(DeptDO dept);
 	
-	int remove(Long dept_id);
+	int remove(Long deptId);
 	
 	int batchRemove(Long[] deptIds);
 	

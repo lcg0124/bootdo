@@ -6,6 +6,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
+import org.quartz.DateBuilder;
+import org.quartz.DateBuilder.IntervalUnit;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -17,26 +19,33 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.bootdo.common.domain.ScheduleJob;
-import com.bootdo.common.utils.SpringContextHolder;
-import com.bootdo.common.quartz.factory.*;;
-
+import com.bootdo.common.quartz.factory.*;
+import com.bootdo.common.utils.SpringContextHolder;;
 
 /**
  * 
  * 
  * @title: QuartzManager.java
- * @package cn.jeeweb.core.quartz
  * @description: 计划任务管理
  *
  */
+@Service
 public class QuartzManager {
 	public final Logger log = Logger.getLogger(this.getClass());
-	private SchedulerFactoryBean schedulerFactoryBean=SpringContextHolder.getBean(SchedulerFactoryBean.class);
+	// private SchedulerFactoryBean schedulerFactoryBean
+	// =SpringContextHolder.getBean(SchedulerFactoryBean.class);
+	// @Autowired
+	// @Qualifier("schedulerFactoryBean")
+	// private SchedulerFactoryBean schedulerFactoryBean;
+	@Autowired
+	private Scheduler scheduler;
 
 	/**
 	 * 添加任务
@@ -44,42 +53,71 @@ public class QuartzManager {
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
-	public void addJob(ScheduleJob job) throws SchedulerException {
-		if (job == null || !ScheduleJob.STATUS_RUNNING.equals(job.getJobStatus())) {
-			return;
-		}
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
-		
-		TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
+	
+	public void addJob(ScheduleJob job) {
+		try {
+			// 创建jobDetail实例，绑定Job实现类
+			// 指明job的名称，所在组的名称，以及绑定job类
 
-		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-
-		// 不存在，创建一个
-		if (null == trigger) {
-			Class<? extends Job> clazz = ScheduleJob.CONCURRENT_IS.equals(job.getIsConcurrent())
-					? QuartzJobFactory.class : QuartzJobFactoryDisallowConcurrentExecution.class;
-
-			JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
-
-			jobDetail.getJobDataMap().put("scheduleJob", job);
-
-			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
-
-			trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
-					.withSchedule(scheduleBuilder).build();
-
+			Class<? extends Job> jobClass = (Class<? extends Job>) (Class.forName(job.getBeanClass()).newInstance()
+					.getClass());
+			JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(job.getJobName(), job.getJobGroup())// 任务名称和组构成任务key
+					.build();
+			// 定义调度触发规则
+			// 使用cornTrigger规则
+			Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())// 触发器key
+					.startAt(DateBuilder.futureDate(1, IntervalUnit.SECOND))
+					.withSchedule(CronScheduleBuilder.cronSchedule(job.getCronExpression())).startNow().build();
+			// 把作业和触发器注册到任务调度中
 			scheduler.scheduleJob(jobDetail, trigger);
-		} else {
-			// Trigger已存在，那么更新相应的定时设置
-			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
-
-			// 按新的cronExpression表达式重新构建trigger
-			trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-
-			// 按新的trigger重新设置job执行
-			scheduler.rescheduleJob(triggerKey, trigger);
+			// 启动
+			if (!scheduler.isShutdown()) {
+				scheduler.start();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+//	public void addJob(ScheduleJob job) throws SchedulerException {
+//		if (job == null || !ScheduleJob.STATUS_RUNNING.equals(job.getJobStatus())) {
+//			return;
+//		}
+//
+//		TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
+//
+//		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+//
+//		// 不存在，创建一个
+//
+//		if (null == trigger) {
+//			Class<? extends Job> clazz = ScheduleJob.CONCURRENT_IS.equals(job.getIsConcurrent())
+//					? QuartzJobFactory.class
+//					: QuartzJobFactoryDisallowConcurrentExecution.class;
+//
+//			JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
+//
+//			jobDetail.getJobDataMap().put("scheduleJob", job);
+//
+//			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+//
+//			trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
+//					.withSchedule(scheduleBuilder).build();
+//
+//			scheduler.scheduleJob(jobDetail, trigger);
+//		} else {
+//			// Trigger已存在，那么更新相应的定时设置
+//
+//			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+//
+//			// 按新的cronExpression表达式重新构建trigger
+//
+//			trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+//
+//			// 按新的trigger重新设置job执行
+//
+//			scheduler.rescheduleJob(triggerKey, trigger);
+//		}
+//	}
 
 	/**
 	 * 获取所有计划中的任务列表
@@ -88,7 +126,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public List<ScheduleJob> getAllJob() throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
 		Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
 		List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
@@ -119,7 +156,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public List<ScheduleJob> getRunningJob() throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
 		List<ScheduleJob> jobList = new ArrayList<ScheduleJob>(executingJobs.size());
 		for (JobExecutionContext executingJob : executingJobs) {
@@ -149,7 +185,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 		scheduler.pauseJob(jobKey);
 	}
@@ -161,7 +196,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 		scheduler.resumeJob(jobKey);
 	}
@@ -173,7 +207,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 		scheduler.deleteJob(jobKey);
 
@@ -186,7 +219,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public void runAJobNow(ScheduleJob scheduleJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 		scheduler.triggerJob(jobKey);
 	}
@@ -198,7 +230,6 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	public void updateJobCron(ScheduleJob scheduleJob) throws SchedulerException {
-		Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
 		TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 

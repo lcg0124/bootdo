@@ -1,9 +1,9 @@
 package com.bootdo.common.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class IPUtils {
 	private static Logger logger = LoggerFactory.getLogger(IPUtils.class);
@@ -26,7 +26,7 @@ public class IPUtils {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
 	}
 
 }

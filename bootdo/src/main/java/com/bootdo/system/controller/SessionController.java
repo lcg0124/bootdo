@@ -1,6 +1,9 @@
 package com.bootdo.system.controller;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +33,22 @@ public class SessionController {
 		return sessionService.list();
 	}
 
-	@RequestMapping("/sys/online/forceLogout/{sessionId}")
+	@ResponseBody
+	@RequestMapping("/forceLogout/{sessionId}")
 	public R forceLogout(@PathVariable("sessionId") String sessionId, RedirectAttributes redirectAttributes) {
-		return R.error();
+		try {
+			sessionService.forceLogout(sessionId);
+			return R.ok();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return R.error();
+		}
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/sessionList")
+	public Collection<Session> sessionList() {
+		return sessionService.sessionList();
 	}
 }

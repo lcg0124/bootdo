@@ -3,8 +3,6 @@ package com.bootdo.system.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 public class RoleDO {
 	
 	private Long roleId;
@@ -80,4 +78,17 @@ public class RoleDO {
 		this.menuIds = menuIds;
 	}
 
+	@Override
+	public String toString() {
+		return "RoleDO{" +
+				"roleId=" + roleId +
+				", roleName='" + roleName + '\'' +
+				", roleSign='" + roleSign + '\'' +
+				", remark='" + remark + '\'' +
+				", userIdCreate=" + userIdCreate +
+				", gmtCreate=" + gmtCreate +
+				", gmtModified=" + gmtModified +
+				", menuIds=" + menuIds +
+				'}';
+	}
 }

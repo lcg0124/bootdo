@@ -1,32 +1,21 @@
 package com.bootdo.common.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.bootdo.common.config.BootdoConfig;
+import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.service.FileService;
+import com.bootdo.common.utils.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bootdo.common.config.BootdoConfig;
-import com.bootdo.common.domain.FileDO;
-import com.bootdo.common.service.FileService;
-import com.bootdo.common.utils.FileType;
-import com.bootdo.common.utils.FileUtil;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 文件上传
@@ -47,8 +36,8 @@ public class FileController extends BaseController {
 
 	@GetMapping()
 	@RequiresPermissions("common:sysFile:sysFile")
-	String SysFile(Model model) {
-		Map<String, Object> params = new HashMap<>();
+	String sysFile(Model model) {
+		Map<String, Object> params = new HashMap<>(16);
 		return "common/file/file";
 	}
 
@@ -155,7 +144,7 @@ public class FileController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		String fileName = file.getOriginalFilename();
-		fileName = FileUtil.RenameToUUID(fileName);
+		fileName = FileUtil.renameToUUID(fileName);
 		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
 		try {
 			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);

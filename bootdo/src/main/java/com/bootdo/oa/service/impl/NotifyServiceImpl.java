@@ -34,8 +34,9 @@ public class NotifyServiceImpl implements NotifyService {
 
 	@Override
 	public NotifyDO get(Long id) {
-		NotifyDO rDo =  notifyDao.get(id);
-		return rDo;
+		NotifyDO rDO =  notifyDao.get(id);
+		rDO.setType(dictService.getName("oa_notify_type", rDO.getType()) );
+		return rDO;
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class NotifyServiceImpl implements NotifyService {
 		return notifyDao.count(map);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int save(NotifyDO notify) {
 		notify.setUpdateDate(new Date());
@@ -94,8 +95,8 @@ public class NotifyServiceImpl implements NotifyService {
 
 	@Override
 	public Map<String, Object> message(Long userId) {
-		Map<String, Object> param = new HashMap<>();
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> param = new HashMap<>(16);
+		Map<String, Object> map = new HashMap<>(16);
 		param.put("userId", userId);
 		param.put("isRead", 0);
 		int messageNum = recordDao.count(param);

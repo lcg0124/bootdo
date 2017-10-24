@@ -1,30 +1,25 @@
 package com.bootdo.oa.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.bootdo.oa.domain.NotifyDO;
-import com.bootdo.oa.service.NotifyService;
+import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.oa.domain.NotifyDO;
+import com.bootdo.oa.service.NotifyService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 通知通告
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2017-10-05 17:11:16
@@ -38,7 +33,7 @@ public class NotifyController extends BaseController {
 
 	@GetMapping()
 	@RequiresPermissions("oa:notify:notify")
-	String Notify() {
+	String oaNotify() {
 		return "oa/notify/notify";
 	}
 
@@ -75,7 +70,7 @@ public class NotifyController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("oa:notify:add")
 	public R save(NotifyDO notify) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notify.setCreateBy(getUserId());
@@ -92,7 +87,7 @@ public class NotifyController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("oa:notify:edit")
 	public R update(NotifyDO notify) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notifyService.update(notify);
@@ -106,7 +101,7 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("oa:notify:remove")
 	public R remove(Long id) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (notifyService.remove(id) > 0) {
@@ -122,7 +117,7 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("oa:notify:batchRemove")
 	public R remove(@RequestParam("ids[]") Long[] ids) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notifyService.batchRemove(ids);
@@ -132,7 +127,7 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@GetMapping("/message")
 	PageUtils message() {
-		Map<String, Object> params = new HashMap<>();
+		Map<String, Object> params = new HashMap<>(16);
 		params.put("offset", 0);
 		params.put("limit", 3);
 		Query query = new Query(params);
@@ -152,7 +147,7 @@ public class NotifyController extends BaseController {
 		query.put("userId", getUserId());
 		return notifyService.selfList(query);
 	}
-	
+
 	@GetMapping("/read/{id}")
 	@RequiresPermissions("oa:notify:edit")
 	String read(@PathVariable("id") Long id, Model model) {

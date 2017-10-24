@@ -1,6 +1,7 @@
 package com.bootdo.oa.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -192,5 +193,23 @@ public class NotifyDO implements Serializable {
 	public void setUserIds(Long[] userIds) {
 		this.userIds = userIds;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "NotifyDO{" +
+				"id=" + id +
+				", type='" + type + '\'' +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", files='" + files + '\'' +
+				", status='" + status + '\'' +
+				", createBy=" + createBy +
+				", createDate=" + createDate +
+				", updateBy='" + updateBy + '\'' +
+				", updateDate=" + updateDate +
+				", remarks='" + remarks + '\'' +
+				", delFlag='" + delFlag + '\'' +
+				", userIds=" + Arrays.toString(userIds) +
+				'}';
+	}
 }

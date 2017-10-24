@@ -61,7 +61,7 @@ public class DictServiceImpl implements DictService {
 
 	@Override
 	public String getName(String type, String value) {
-		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>(16);
 		param.put("type", type);
 		param.put("value", value);
 		String rString = dictDao.list(param).get(0).getName();

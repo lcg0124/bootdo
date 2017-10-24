@@ -1,25 +1,19 @@
 package com.bootdo.system.controller;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.ast.expr.PrefixExpression;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.bootdo.common.annotation.Log;
+import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/sys/menu")
 @Controller
@@ -68,7 +62,7 @@ public class MenuController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(MenuDO menu) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.save(menu) > 0) {
@@ -83,7 +77,7 @@ public class MenuController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(MenuDO menu) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.update(menu) > 0) {
@@ -98,7 +92,7 @@ public class MenuController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	R remove(Long id) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.remove(id) > 0) {

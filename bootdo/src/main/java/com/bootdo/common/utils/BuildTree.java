@@ -1,13 +1,11 @@
 package com.bootdo.common.utils;
 
+import com.bootdo.common.domain.Tree;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bootdo.common.domain.Tree;
-
-import javassist.bytecode.LineNumberAttribute;
 
 public class BuildTree {
 
@@ -50,7 +48,7 @@ public class BuildTree {
 			root.setChecked(true);
 			root.setChildren(topNodes);
 			root.setText("顶级节点");
-			Map<String, Object> state = new HashMap<>();
+			Map<String, Object> state = new HashMap<>(16);
 			state.put("opened", true);
 			root.setState(state);
 		}

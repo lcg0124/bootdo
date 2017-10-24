@@ -1,13 +1,9 @@
 package com.bootdo.common.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSON;
+import com.bootdo.common.service.GeneratorService;
+import com.bootdo.common.utils.GenUtils;
+import com.bootdo.common.utils.R;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -15,17 +11,14 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.alibaba.fastjson.JSON;
-import com.bootdo.common.service.GeneratorService;
-import com.bootdo.common.utils.GenUtils;
-import com.bootdo.common.utils.R;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/common/generator")
 @Controller
@@ -75,7 +68,7 @@ public class GeneratorController {
 	@GetMapping("/edit")
 	public String edit(Model model) {
 		Configuration conf = GenUtils.getConfig();
-		Map<String, Object> property = new HashMap<>();
+		Map<String, Object> property = new HashMap<>(16);
 		property.put("author", conf.getProperty("author"));
 		property.put("email", conf.getProperty("email"));
 		property.put("package", conf.getProperty("package"));

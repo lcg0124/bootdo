@@ -1,23 +1,18 @@
 package com.bootdo.system.controller;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.bootdo.common.annotation.Log;
+import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.service.RoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/sys/role")
 @Controller
@@ -61,7 +56,7 @@ public class RoleController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody()
 	R save(RoleDO role) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.save(role) > 0) {
@@ -76,7 +71,7 @@ public class RoleController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody()
 	R update(RoleDO role) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.update(role) > 0) {
@@ -91,7 +86,7 @@ public class RoleController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody()
 	R save(Long id) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.remove(id) > 0) {
@@ -106,7 +101,7 @@ public class RoleController extends BaseController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	R batchRemove(@RequestParam("ids[]") Long[] ids) {
-		if ("test".equals(getUsername())) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		int r = roleService.batchremove(ids);

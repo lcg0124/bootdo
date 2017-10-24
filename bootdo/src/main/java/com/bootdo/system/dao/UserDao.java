@@ -26,7 +26,7 @@ public interface UserDao {
 	
 	int update(UserDO user);
 	
-	int remove(Long user_id);
+	int remove(Long userId);
 	
 	int batchRemove(Long[] userIds);
 	

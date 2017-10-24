@@ -72,4 +72,15 @@ public class PageDO<T> {
 		this.param = param;
 	}
 
+	@Override
+	public String toString() {
+		return "PageDO{" +
+				"offset=" + offset +
+				", limit=" + limit +
+				", total=" + total +
+				", params=" + params +
+				", param='" + param + '\'' +
+				", rows=" + rows +
+				'}';
+	}
 }

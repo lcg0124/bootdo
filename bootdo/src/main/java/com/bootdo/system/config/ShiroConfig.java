@@ -1,9 +1,7 @@
 package com.bootdo.system.config;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.bootdo.system.shiro.UserRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
@@ -20,9 +18,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.bootdo.system.shiro.UserRealm;
-
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 @Configuration
 public class ShiroConfig {

@@ -165,4 +165,20 @@ public class MenuDO implements Serializable {
 	public Date getGmtModified() {
 		return gmtModified;
 	}
+
+	@Override
+	public String toString() {
+		return "MenuDO{" +
+				"menuId=" + menuId +
+				", parentId=" + parentId +
+				", name='" + name + '\'' +
+				", url='" + url + '\'' +
+				", perms='" + perms + '\'' +
+				", type=" + type +
+				", icon='" + icon + '\'' +
+				", orderNum=" + orderNum +
+				", gmtCreate=" + gmtCreate +
+				", gmtModified=" + gmtModified +
+				'}';
+	}
 }

@@ -13,6 +13,7 @@
 <link rel="shortcut icon" href="favicon.ico">
 <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+<link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <link href="/css/animate.css" rel="stylesheet">
 <link href="/css/style.css?v=4.1.0" rel="stylesheet">
 </head>
@@ -87,8 +88,8 @@
 							<ul class="dropdown-menu dropdown-messages">
 								<li v-for="row in rows" class="m-t-xs">
 									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <i
-											class="fa fa-user-o"></i>
+										<a  class="pull-left"> <i
+											class="fa fa-server"></i>
 										</a>
 										<div class="media-body">
 											<small class="pull-right">{{row.before}}</small> <strong>{{row.sender}}</strong>
@@ -267,15 +268,48 @@
 	<script src="/js/plugins/pace/pace.min.js"></script>
 	<!-- vue -->
 	<script type="text/javascript"
-		src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js">
+		src="js/vue.min.js">
 		
 	</script>
+	<script src="/js/appjs/oa/webSocket/sockjs.min.js"></script>
+	<script src="/js/appjs/oa/webSocket/stomp.min.js"></script>
+	<!-- Toastr script -->
+	<script src="/js/plugins/toastr/toastr.min.js"></script>
 	<script type="text/javascript">
+		var stompClient = null;
+		$(function() {
+			connect();
+		});
+		function connect() {
+			var socket = new SockJS('/endpointWisely'); //链接SockJS 的endpoint 名称为"/endpointWisely"
+			stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
+			stompClient.connect({}, function(frame) {//链接Web Socket的服务端。
+				console.log('Connected: ' + frame);
+				stompClient.subscribe('/topic/getResponse', function(response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+					toastr.options = {
+						"closeButton" : true,
+						"debug" : false,
+						"progressBar" : true,
+						"positionClass" : "toast-bottom-right",
+						"onclick" : null,
+						"showDuration" : "400",
+						"hideDuration" : "1000",
+						"timeOut" : "7000",
+						"extendedTimeOut" : "1000",
+						"showEasing" : "swing",
+						"hideEasing" : "linear",
+						"showMethod" : "fadeIn",
+						"hideMethod" : "fadeOut"
+					}
+					toastr.info(JSON.parse(response.body).responseMessage);
+				});
+			});
+		}
 		var wrapper = new Vue({
 			el : '#page-wrapper',
 			data : {
 				total : '',
-				rows : ''
+				rows : '',
 			},
 			methods : {
 				notify : function() {
@@ -283,7 +317,7 @@
 						wrapper.total = r.total;
 						wrapper.rows = r.rows;
 					});
-				}
+				},
 			},
 			created : function() {
 				this.notify()

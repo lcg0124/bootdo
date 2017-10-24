@@ -28,7 +28,7 @@ public class Query extends LinkedHashMap<String, Object> {
 	}
 
 	public void setOffset(int offset) {
-		this.offset = offset;
+		this.put("offset", offset);
 	}
 
 	public int getLimit() {

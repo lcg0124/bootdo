@@ -17,6 +17,7 @@ import java.sql.SQLException;
 /**
  * Created by PrimaryKey on 17/2/4.
  */
+@SuppressWarnings("AlibabaRemoveCommentedCode")
 @Configuration
 public class DruidDBConfig {
     private Logger logger = LoggerFactory.getLogger(DruidDBConfig.class);
@@ -113,9 +114,6 @@ public class DruidDBConfig {
         reg.setServlet(new StatViewServlet());
         reg.addUrlMappings("/druid/*");
         reg.addInitParameter("allow", ""); //白名单
-      //  reg.addInitParameter("deny",""); //黑名单
-       // reg.addInitParameter("loginUsername", "admin");
-      //  reg.addInitParameter("loginPassword", "admin");
         return reg;
     }
 

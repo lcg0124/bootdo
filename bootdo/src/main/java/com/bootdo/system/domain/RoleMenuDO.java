@@ -23,5 +23,13 @@ public class RoleMenuDO {
 	public void setMenuId(Long menuId) {
 		this.menuId = menuId;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "RoleMenuDO{" +
+				"id=" + id +
+				", roleId=" + roleId +
+				", menuId=" + menuId +
+				'}';
+	}
 }

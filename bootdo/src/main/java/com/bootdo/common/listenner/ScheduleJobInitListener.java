@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.bootdo.common.quartz.utils.QuartzManager;
 import com.bootdo.common.service.JobService;
 
 @Component
@@ -13,6 +14,9 @@ public class ScheduleJobInitListener implements CommandLineRunner {
 
 	@Autowired
 	JobService scheduleJobService;
+
+	@Autowired
+	QuartzManager quartzManager;
 
 	@Override
 	public void run(String... arg0) throws Exception {

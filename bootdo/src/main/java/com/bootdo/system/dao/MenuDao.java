@@ -26,7 +26,7 @@ public interface MenuDao {
 	
 	int update(MenuDO menu);
 	
-	int remove(Long menu_id);
+	int remove(Long menuId);
 	
 	int batchRemove(Long[] menuIds);
 	

@@ -2,36 +2,44 @@ package com.bootdo.oa.domain;
 
 public class NotifyDTO extends NotifyDO {
 
-	private static final long serialVersionUID = 1L;
-	
-	private String isRead;
-	
-	private String before;
-	
-	private String sender;
+    private static final long serialVersionUID = 1L;
 
-	public String getIsRead() {
-		return isRead;
-	}
+    private String isRead;
 
-	public void setIsRead(String isRead) {
-		this.isRead = isRead;
-	}
+    private String before;
 
-	public String getBefore() {
-		return before;
-	}
+    private String sender;
 
-	public void setBefore(String before) {
-		this.before = before;
-	}
+    public String getIsRead() {
+        return isRead;
+    }
 
-	public String getSender() {
-		return sender;
-	}
+    public void setIsRead(String isRead) {
+        this.isRead = isRead;
+    }
 
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
-	
+    public String getBefore() {
+        return before;
+    }
+
+    public void setBefore(String before) {
+        this.before = before;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    @Override
+    public String toString() {
+        return "NotifyDTO{" +
+                "isRead='" + isRead + '\'' +
+                ", before='" + before + '\'' +
+                ", sender='" + sender + '\'' +
+                '}';
+    }
 }

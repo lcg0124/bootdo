@@ -1,10 +1,8 @@
 package com.bootdo.common.domain;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class LogDO {
 	private Long id;
@@ -95,5 +93,20 @@ public class LogDO {
 
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
+	}
+
+	@Override
+	public String toString() {
+		return "LogDO{" +
+				"id=" + id +
+				", userId=" + userId +
+				", username='" + username + '\'' +
+				", operation='" + operation + '\'' +
+				", time=" + time +
+				", method='" + method + '\'' +
+				", params='" + params + '\'' +
+				", ip='" + ip + '\'' +
+				", gmtCreate=" + gmtCreate +
+				'}';
 	}
 }

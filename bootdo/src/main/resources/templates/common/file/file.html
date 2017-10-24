@@ -1,229 +1,199 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<title>bootdo - 文件管理器</title>
-<meta name="keywords" content="">
-<meta name="description" content="">
-<link rel="shortcut icon" href="favicon.ico">
-<link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-<link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-<link href="/css/animate.css" rel="stylesheet">
-<link href="/css/layui.css" rel="stylesheet">
-<link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bootdo - 文件管理器</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/layui.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content">
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="ibox float-e-margins">
-					<div class="ibox-content">
-						<div class="file-manager">
-							<h3>显示：</h3>
-							<a href="javascript:void(0)" class="file-control "
-								onclick="changeType('')">所有</a> <a href="javascript:void(0)"
-								class="file-control" href="javascript:void(0)"
-								onclick="changeType(0)">图片</a> <a href="javascript:void(0)"
-								onclick="changeType(1)" class="file-control">文档</a> <a
-								href="javascript:void(0)" onclick="changeType(2)"
-								class="file-control">视频</a><a href="javascript:void(0)"
-								onclick="changeType(3)" class="file-control">音乐</a> <a
-								href="javascript:void(0)" onclick="changeType(99)"
-								class="file-control">其他</a>
+<div class="wrapper wrapper-content" id="app">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="file-manager">
+                        <button type="button" class="layui-btn" id="test1" style="width: 100%;">
+                            <i class="fa fa-cloud"></i>上传文件
+                        </button>
+                        <div class="hr-line-dashed"></div>
+                        <ul class="folder-list" style="padding: 0">
+                            <li><a href="#" class="file-control "
+                                   onclick="changeType('')"><i class="fa fa-folder"></i>所有文件</a></li>
+                            <li><a href="javascript:void(0)"
+                                   class="file-control" href="javascript:void(0)"
+                                   onclick="changeType(0)"><i class="fa fa-folder"></i>图片</a></li>
+                            <li><a href="javascript:void(0)"
+                                   onclick="changeType(1)" class="file-control"><i class="fa fa-folder"></i>文档</a></li>
+                            <li><a href="javascript:void(0)" onclick="changeType(2)"
+                                   class="file-control"><i class="fa fa-folder"></i>视频</a></li>
+                            <li><a href="javascript:void(0)"
+                                   onclick="changeType(3)" class="file-control"><i class="fa fa-folder"></i>音乐</a>
+                            <li><a href="javascript:void(0)" onclick="changeType(99)"
+                                   class="file-control"><i class="fa fa-folder"></i>其他</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="file-box" v-for="row in rows">
+                        <div class="file">
+                            <a href="#">
+                                <span class="corner"></span>
+                                <div class="image">
+                                    <img alt="image" class="img-responsive" :src="row.url">
+                                </div>
+                                <div class="file-name">
+                                    <br/>
+                                    <small>{{row.createDate}}</small>
+                                </div>
+                                &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button
+                                    class="btn btn-warning btn-xs copy" url="' + rows[i].url + '">复制
+                            </button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs"
+                                                                        @click="remove(row.id)">删除
+                            </button>
+                            </a>
+                        </div>
+                    </div>
+                    <dvi id="incomeNum"></dvi>
+                </div>
+            </div>
+            <div>
+                <ul id="page"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/bootstrap-paginator.min.js"></script>
 
-							<form id="uploadForm" class="form-horizontal m-t hidden">
-								<input type="file" id="file" class="form-control" name="file"
-									style="height: 100px;" />
-							</form>
-							<button class="btn btn-primary btn-block hidden"
-								onclick="doUpload()">上传文件</button>
-							<div class="hr-line-dashed"></div>
+<script src="/js/content.js?v=1.0.0"></script>
+<script src="/js/layui.js"></script>
+<script src="/js/plugins/clipboard/clipboard.min.js"></script>
+<script src="/js/plugins/layer/layer.min.js"></script>
+<script src="/js/vue.min.js"></script>
 
-							<button type="button" class="layui-btn" id="test1">
-								<i class="fa fa-cloud"></i>上传文件
-							</button>
-							<div class="clearfix"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-9 animated fadeInRight">
-				<div class="row">
-					<div class="col-sm-12">
-						<div id="incomeNum"></div>
-					</div>
-				</div>
-				<div>
-					<ul id="page"></ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 全局js -->
-	<script src="/js/jquery.min.js?v=2.1.4"></script>
-	<script src="/js/bootstrap.min.js?v=3.3.6"></script>
-	<script src="/js/bootstrap-paginator.min.js"></script>
-
-	<script src="/js/content.js?v=1.0.0"></script>
-	<script src="/js/layui.js"></script>
-	<script src="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
-	<script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
-	<script src="/js/plugins/layer/layer.min.js"></script>
-
-	<script type="text/javascript">
-		var total;
-		var type;
-		$(function() {
-			changeType('');
-	
-		});
-		var clipboard = new Clipboard('button.copy', {
-			text : function(trigger) {
-				layer.msg('文件路径已复制到粘贴板');
-				return $(trigger).attr('url');
-	
-			}
-		});
-		layui.use('upload', function() {
-			var upload = layui.upload;
-			//执行实例
-			var uploadInst = upload.render({
-				elem : '#test1', //绑定元素
-				url : '/common/sysFile/upload', //上传接口
-				size : 1000,
-				accept : 'file',
-				done : function(r) {
-					layer.msg(r.msg);
-					bindList(0);
-				},
-				error : function(r) {
-					layer.msg(r.msg);
-				}
-			});
-		});
-	</script>
-	<script>
-		function changeType(i) {
-			type = i;
-			bindList(0)
-		}
-		function doUpload() {
-			if ($("#file").val() == "") {
-				layer.msg("请要上传的文件");
-				return;
-			}
-			var formData = new FormData($("#uploadForm")[0]);
-			$.ajax({
-				url : '/common/sysFile/upload',
-				type : 'POST',
-				data : formData,
-				async : false,
-				cache : false,
-				contentType : false,
-				processData : false,
-				success : function(r) {
-					layer.msg(r.msg);
-					bindList(0);
-				},
-				error : function(r) {
-					layer.alert("文件大小超限,最大支持30MB");
-				}
-			});
-		}
-	
-		function bindList(offset) {
-			$
-				.ajax({
-					url : '/common/sysFile/list?limit=12&offset=' + offset + '&type=' + type,
-					method : 'get',
-					dataType : 'json',
-					async : false,
-					cache : false,
-					success : function(data) {
-						$(".file-box").empty();
-						total = data.total;
-						var rows = data.rows;
-						var htmlText = "";
-						for (i = 0; i < rows.length; i++) {
-							htmlText += '<div class="file-box">';
-							htmlText += '<div class="file">';
-							htmlText += '<a href=""> <span class="corner"></span>';
-							htmlText += '<div class="image">';
-							htmlText += '<img alt="image" class="img-responsive" src="' + rows[i].url + '">';
-							htmlText += '</div>';
-							htmlText += '<div class="file-name">';
-							htmlText += '<small>' + rows[i].createDate + '</small><br/>'
-	
-							htmlText += '</div>';
-							htmlText += '</a>'
-							htmlText += '&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-warning btn-xs copy" url="' + rows[i].url + '">复制</button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs" onclick="remove(' + rows[i].id + ')">删除</button>';
-							htmlText += '</div>';
-	
-							htmlText += '</div>';
-						}
-						$("#incomeNum").append(htmlText);
-	
-					}
-				});
-			page();
-		}
-		function remove(id) {
-			layer.confirm('确定要删除选中的记录？', {
-				btn : [ '确定', '取消' ]
-			}, function() {
-				$.ajax({
-					url : "/common/sysFile/remove",
-					type : "post",
-					data : {
-						'id' : id
-					},
-					success : function(r) {
-						if (r.code == 0) {
-							layer.msg(r.msg);
-							bindList(0);
-						} else {
-							layer.msg(r.msg);
-							bindList(0);
-						}
-					}
-				});
-			})
-		}
-		function page() {
-			var options = {
-				currentPage : 1, //当前页
-				totalPages : total / (12 + 1) + 1, //总页数
-				numberofPages : 4, //显示的页数
-				bootstrapMajorVersion : 3,
-				alignment : 'center',
-				size : 'large',
-				shouldShowPage : true,
-				itemTexts : function(type, page, current) { //修改显示文字
-					switch (type) {
-					case "first":
-						return "首页";
-					case "prev":
-						return "上一页";
-					case "next":
-						return "下一页";
-					case "last":
-						return "尾页";
-					case "page":
-						return page;
-					}
-				},
-				onPageClicked : function(event, originalEvent, type, page) {
-					var offset = (page - 1) * 12;
-					bindList(offset);
-				}
-			};
-			$('#page').bootstrapPaginator(options);
-		}
-	</script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            limit: 12,
+            offset: 0,
+            total: 0,
+            file: '',
+            type: '',
+            rows: '',
+        },
+        methods: {
+            getData: function () {
+                $.getJSON("/common/sysFile/list", {
+                    limit: this.limit,
+                    offset: this.offset,
+                    type: this.type
+                }, function (r) {
+                    app.total = r.total;
+                    app.rows = r.rows;
+                    app.page();
+                });
+            },
+            page: function () {
+                var options = {
+                    currentPage: app.offset / 12 + 1, //当前页
+                    totalPages: app.total / (12 + 1) + 1, //总页数
+                    numberofPages: 4, //显示的页数
+                    bootstrapMajorVersion: 3,
+                    alignment: 'center',
+                    size: 'large',
+                    shouldShowPage: true,
+                    itemTexts: function (type, page, current) { //修改显示文字
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "尾页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {
+                        app.offset = (page - 1) * 12;
+                        app.getData();
+                    }
+                };
+                $('#page').bootstrapPaginator(options);
+            },
+            remove: function (id) {
+                layer.confirm('确定要删除选中的记录？', {
+                    btn: ['确定', '取消']
+                }, function () {
+                    $.ajax({
+                        url: "/common/sysFile/remove",
+                        type: "post",
+                        data: {
+                            'id': id
+                        },
+                        success: function (r) {
+                            if (r.code == 0) {
+                                layer.msg(r.msg);
+                                app.getData();
+                            } else {
+                                layer.msg(r.msg);
+                            }
+                        }
+                    });
+                })
+            }
+        },
+        created: function () {
+            this.getData();
+        }
+    });
+</script>
+<script type="text/javascript">
+    var clipboard = new Clipboard('button.copy', {
+        text: function (trigger) {
+            layer.msg('文件路径已复制到粘贴板');
+            return $(trigger).attr('url');
+        }
+    });
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1', //绑定元素
+            url: '/common/sysFile/upload', //上传接口
+            size: 1000,
+            accept: 'file',
+            done: function (r) {
+                layer.msg(r.msg);
+                app.getData();
+            },
+            error: function (r) {
+                layer.msg(r.msg);
+            }
+        });
+    });
+    function changeType(i) {
+        app.type = i;
+        app.offset = 0;
+        app.getData();
+    }
+</script>
 </body>
 </html>
