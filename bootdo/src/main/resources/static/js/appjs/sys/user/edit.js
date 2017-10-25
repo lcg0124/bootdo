@@ -48,7 +48,7 @@ function getCheckedRoles() {
 }
 function setCheckedRoles() {
 	var roleIds = $("#roleIds").val();
-
+	alert(roleIds);
 	var adIds = "";
 	$("input:checkbox[name=role]:checked").each(function(i) {
 		if (0 == i) {

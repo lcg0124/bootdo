@@ -8,6 +8,75 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/blog/clean-blog.css" rel="stylesheet">
 <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	@media (max-width:768px){
+		.side{ display:none;  }
+		}
+	@media (min-width:768px){
+		.side{ display:block;  }
+		}
+	.side{
+		position: fixed;
+	    width: 50px;
+	    right: 5%;
+	    bottom: 15%;
+	    z-index: 100;
+	}
+	.side ul{
+		list-style:none;
+	}
+	.side ul li {
+	    width: 35px;
+	    height: 35px;
+	    float: left;
+	    position: relative;
+	    margin-top: 9px;
+	}
+	.side ul li .qqbdimg {
+	    padding: 7px;
+	    margin-top: 5px;
+	    margin-bottom: 1px;
+	    /* margin-left: 22px; */
+	    position: absolute;
+	    width: 53px;
+	    height: 54px;
+	    /* margin-left: 9px; */
+	    bottom: 0;
+	    right: -7px;
+	    transition: all 0.3s;
+	    background: #fff;
+	    opacity: 0;
+	    filter: Alpha(opacity=80);
+	    color: #fff;
+	    font: 14px/54px "微软雅黑";
+	    overflow: hidden;
+	}
+	.side ul li .qqbdimg:hover{
+		overflow:hidden;
+		padding: 7px;
+	    margin-top: 5px;
+	    width:124px;
+	    height:124px;
+	    opacity:1;
+	    z-index:100;
+	    right:0;
+	    background:rgb(142, 142, 142);
+	}
+	.side ul li img {
+	    width: 100%;
+	    height: 100%;
+	}
+	.side ul li .sidetop {
+	    height: 100%;
+	    display: block;
+	    background: #2f4050;
+	    padding: 2px 0px;
+	    text-align: center;
+	    color: #fff;
+	    border-radius: 50%;
+	    opacity: .5;
+	}
+</style>
 </head>
 <nav th:fragment="nav">
 	<div class="container">
@@ -64,12 +133,23 @@
 			</div>
 		</div>
 	</footer>
-	<div
-		style="position: fixed; bottom: 25%; right: 20px; z-index: 100; width: 32px; height: 32px;">
-		<a
-			style="height: 100%; display: block; background: #2f4050; padding: 2px 0px; text-align: center; color: #fff; border-radius: 50%; opacity: .5;"
-			href="javascript:scroll(0,0)" title="返回顶部"><i
-			class="fa fa-arrow-up"></i></a>
+	<div class="side" >
+		<ul>
+			<li>
+				<div class="qqbdimg">
+					<img src="img/blog/qqbootdo.png" title="学习交流"/>
+				</div>
+				<a class="sidetop" id="qqbd" href="javascript:scroll(0,0)" title="学习交流"><i
+					class="fa fa-qq"></i></a>
+					
+			</li>
+			<li>
+				<a class="sidetop" href="javascript:scroll(0,0)" title="返回顶部"><i
+					class="fa fa-arrow-up"></i></a>
+					
+			</li>
+		</ul>
+		
 	</div>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>

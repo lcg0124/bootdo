@@ -1,26 +1,17 @@
 package com.bootdo.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.MenuDao;
 import com.bootdo.system.dao.RoleMenuDao;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
-import javassist.expr.NewArray;
+import java.util.*;
 
 @SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
@@ -57,7 +48,7 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public List<MenuDO> list() {
-		List<MenuDO> menus = menuMapper.list(new HashMap<>(16));
+		List<MenuDO> menus = menuMapper.list(new HashMap<String,Object>(16));
 		return menus;
 	}
 
@@ -94,9 +85,6 @@ public class MenuServiceImpl implements MenuService {
 			tree.setId(sysMenuDO.getMenuId().toString());
 			tree.setParentId(sysMenuDO.getParentId().toString());
 			tree.setText(sysMenuDO.getName());
-			// Map<String, Object> state= new HashMap<>();
-			// state.put("undetermined", true);
-			// tree.setState(state);
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整
