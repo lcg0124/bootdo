@@ -6,7 +6,6 @@ $(function() {
 });
 
 function load(deptId) {
-	console.log("数据加载");
 	$('#exampleTable')
 		.bootstrapTable(
 			{
@@ -137,7 +136,7 @@ function edit(id) {
 		type : 2,
 		title : '用户修改',
 		maxmin : true,
-		shadeClose : true, // 点击遮罩关闭层
+		shadeClose : false,
 		area : [ '800px', '520px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});

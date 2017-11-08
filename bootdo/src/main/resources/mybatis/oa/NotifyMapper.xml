@@ -136,18 +136,19 @@
 		from
 		oa_notify_record r right JOIN oa_notify n on r.notify_id
 		= n.id where
-		r.user_id =#{userId}
+		r.user_id =#{userId} and
+		r.is_read = #{isRead}
 	</select>
 
 	<select id="listDTO" resultType="com.bootdo.oa.domain.NotifyDTO">
-		select
+		select DISTINCT
 		n.id ,`type`,`title`,`content`,`files`,r.is_read,`status`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
 		from oa_notify_record r right JOIN oa_notify n on r.notify_id = n.id
 		<where>
 			<if test="id != null and id != ''"> and r.id = #{id} </if>
 			<if test="notifyId != null and notifyId != ''"> and r.notify_id = #{notifyId} </if>
-			<if test="userId != null and userId != ''"> and r.user_id = #{userId} </if>
 			<if test="isRead != null and isRead != ''"> and r.is_read = #{isRead} </if>
+			<if test="userId != null and userId != ''"> and r.user_id = #{userId} </if>
 			<if test="readDate != null and readDate != ''"> and r.read_date = #{readDate} </if>
 		</where>
 		order by is_read ASC, create_date DESC
