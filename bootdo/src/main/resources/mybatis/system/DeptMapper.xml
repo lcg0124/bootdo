@@ -88,4 +88,7 @@
 		select DISTINCT parent_id from sys_dept
 	</select>
 
+    <select id="getDeptUserNumber" resultType="int">
+		select count(*) from sys_user where dept_id = #{value}
+	</select>
 </mapper>

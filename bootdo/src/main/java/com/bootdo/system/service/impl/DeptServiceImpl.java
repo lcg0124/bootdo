@@ -75,4 +75,12 @@ public class DeptServiceImpl implements DeptService {
 		return t;
 	}
 
+	@Override
+	public boolean checkDeptHasUser(Long deptId) {
+		// TODO Auto-generated method stub
+		//查询部门以及此部门的下级部门
+		int result = sysDeptMapper.getDeptUserNumber(deptId);
+		return result==0?true:false;
+	}
+
 }
