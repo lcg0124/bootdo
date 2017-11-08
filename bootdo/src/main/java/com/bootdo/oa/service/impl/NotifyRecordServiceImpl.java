@@ -51,5 +51,10 @@ public class NotifyRecordServiceImpl implements NotifyRecordService {
 	public int batchRemove(Long[] ids){
 		return notifyRecordDao.batchRemove(ids);
 	}
-	
+
+	@Override
+	public int changeRead(NotifyRecordDO notifyRecord) {
+		return notifyRecordDao.changeRead(notifyRecord);
+	}
+
 }

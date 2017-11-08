@@ -29,7 +29,7 @@ public interface NotifyService {
 
 	int batchRemove(Long[] ids);
 
-	Map<String, Object> message(Long userId);
+//	Map<String, Object> message(Long userId);
 
 	PageUtils selfList(Map<String, Object> map);
 }

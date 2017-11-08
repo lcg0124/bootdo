@@ -129,4 +129,16 @@
 			#{id}
 		</foreach>
 	</delete>
+
+	<update id="changeRead" parameterType="com.bootdo.oa.domain.NotifyRecordDO">
+		update oa_notify_record
+		<set>
+			<if test="isRead != null">`is_read` = #{isRead}, </if>
+			<if test="readDate != null">`read_date` = #{readDate}</if>
+		</set>
+		where notify_id = #{notifyId} and user_id = #{userId}
+	</update>
+
+
+
 </mapper>

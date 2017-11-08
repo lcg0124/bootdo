@@ -27,4 +27,10 @@ public interface NotifyRecordService {
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
+
+	/**
+	 * 更改阅读状态
+	 * @return
+	 */
+	int changeRead(NotifyRecordDO notifyRecord);
 }

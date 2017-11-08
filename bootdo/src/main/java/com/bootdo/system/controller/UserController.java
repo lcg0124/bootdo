@@ -171,4 +171,9 @@ public class UserController extends BaseController {
 		return  prefix + "/userTree";
 	}
 
+	@GetMapping("/personal")
+	String personal(Model model) {
+		return prefix + "/personal";
+	}
+
 }

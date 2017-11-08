@@ -93,19 +93,19 @@ public class NotifyServiceImpl implements NotifyService {
 		return notifyDao.batchRemove(ids);
 	}
 
-	@Override
-	public Map<String, Object> message(Long userId) {
-		Map<String, Object> param = new HashMap<>(16);
-		Map<String, Object> map = new HashMap<>(16);
-		param.put("userId", userId);
-		param.put("isRead", 0);
-		int messageNum = recordDao.count(param);
-		Long[] notifyIds = recordDao.listNotifyIds(param);
-		List<NotifyDO> messages = notifyDao.listByIds(notifyIds);
-		map.put("messageNum", messageNum);
-		map.put("messages", messages);
-		return map;
-	}
+//	@Override
+//	public Map<String, Object> message(Long userId) {
+//		Map<String, Object> param = new HashMap<>(16);
+//		Map<String, Object> map = new HashMap<>(16);
+//		param.put("userId", userId);
+//		param.put("isRead", 0);
+//		int messageNum = recordDao.count(param);
+//		Long[] notifyIds = recordDao.listNotifyIds(param);
+//		List<NotifyDO> messages = notifyDao.listByIds(notifyIds);
+//		map.put("messageNum", messageNum);
+//		map.put("messages", messages);
+//		return map;
+//	}
 
 	@Override
 	public PageUtils selfList(Map<String, Object> map) {
