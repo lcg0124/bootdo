@@ -13,4 +13,7 @@ public class Constant {
     public static String OA_NOTIFY_READ_NO = "0";
     //通知公告阅读状态-已读
     public static int OA_NOTIFY_READ_YES = 1;
+    //部门根节点id
+    public static Long DEPT_ROOT_ID = 0l;
+    
 }

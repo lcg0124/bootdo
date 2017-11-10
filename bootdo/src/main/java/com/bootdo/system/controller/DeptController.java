@@ -63,6 +63,12 @@ public class DeptController extends BaseController {
 	String edit(@PathVariable("deptId") Long deptId, Model model) {
 		DeptDO sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
+		if(Constant.DEPT_ROOT_ID.equals(sysDept.getParentId())) {
+			model.addAttribute("parentDeptName", "无");
+		}else {
+			DeptDO parDept = sysDeptService.get(sysDept.getParentId());
+			model.addAttribute("parentDeptName", parDept.getName());
+		}
 		return  prefix + "/edit";
 	}
 
