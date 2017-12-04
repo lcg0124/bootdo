@@ -1,10 +1,9 @@
-var prefix = "/act/process"
+var prefix = "/activiti/process"
 $(function() {
 	load();
 });
 
 function load() {
-	console.log("数据加载");
 	$('#exampleTable')
 		.bootstrapTable(
 			{
@@ -49,41 +48,33 @@ function load() {
 					},
                     {
                         field : 'id', // 列字段名
-                        title : '流程分类' // 列标题
+                        title : '编号' // 列标题
                     },
-					{
-						field : 'id',
-						title : '序号'
-					},
                     {
-                        field : 'key',
-                        title : '流程标识'
+                        field : 'deploymentId', // 列字段名
+                        title : '部署编号' // 列标题
                     },
+
                     {
                         field : 'name',
                         title : '流程名称'
                     },
-                    {
-                        field : 'version',
-                        title : '流程版本'
-                    },
-                    {
-                        field : 'id',
-                        title : '部署时间'
-                    },
+
                     {
                         field : 'id',
                         title : '流程XML',
 						formatter:function (value,row,index) {
-                            var e = '<a  class="btn btn-primary btn-sm " href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + row.id
-                                + '\')"><i class="fa fa-edit "></i></a> ';
+                            var e = '<a   href="/act/process/resource/read/xml/'+row.id+'"  title="xml" target="_blank">xml</a> ';
                             return e;
                         }
                     },
                     {
                         field : 'id',
-                        title : '流程图片'
+                        title : '流程XML',
+                        formatter:function (value,row,index) {
+                            var e = '<a   href="/act/process/resource/read/image/'+row.id+'"  title="图片" target="_blank">图片</a> ';
+                            return e;
+                        }
                     },
 					{
 						title : '操作',
@@ -94,12 +85,12 @@ function load() {
 								+ row.id
 								+ '\')"><i class="fa fa-edit "></i></a> ';
 							var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-								+ row.id
+								+ row.deploymentId
 								+ '\')"><i class="fa fa-remove"></i></a> ';
-							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="部署流程"  mce_href="#" onclick="deploy(\''
+							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="转为模型"  mce_href="#" onclick="covertToModel(\''
 								+ row.id
-								+ '\')"><i class="fa fa-key"></i></a> ';
-							return e + d + f;
+								+ '\')"><i class="fa fa-cube"></i></a> ';
+							return d + f;
 						}
 					} ]
 			});
@@ -124,8 +115,8 @@ function remove(id) {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
-			url : prefix+"/"+id,
-			type : "delete",
+			url : prefix+"/remove",
+			type : "post",
 			data : {
 				'id' : id
 			},
@@ -152,16 +143,13 @@ function edit(id) {
 	layer.full(page);
 }
 
-function deploy(id) {
-    layer.confirm('确定要部署选中的模型吗？', {
+function covertToModel(id) {
+    layer.confirm('确定要把流程转转换成流程吗吗？', {
         btn : [ '确定', '取消' ]
     }, function() {
         $.ajax({
-            url : prefix+"/deploy/"+id,
+            url : prefix+"/convertToModel/"+id,
             type : "get",
-            data : {
-                'id' : id
-            },
             success : function(r) {
                 if (r.code == 0) {
                     layer.msg(r.msg);

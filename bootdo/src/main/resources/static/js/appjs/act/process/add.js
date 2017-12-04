@@ -19,11 +19,10 @@ function getCheckedRoles() {
 	return adIds;
 }
 function save() {
-	$("#roleIds").val(getCheckedRoles());
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/sys/user/save",
+		url : "/act/process/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -37,7 +36,7 @@ function save() {
 				parent.layer.close(index);
 
 			} else {
-				parent.layer.alert(data.msg)
+				parent.layer.alert("操作失败")
 			}
 
 		}

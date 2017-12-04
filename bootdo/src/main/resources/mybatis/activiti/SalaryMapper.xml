@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.SalaryDao">
+
+	<select id="get" resultType="com.bootdo.activiti.domain.SalaryDO">
+		select `id`,`PROC_INS_ID`,`USER_ID`,`OFFICE_ID`,`POST`,`AGE`,`EDU`,`CONTENT`,`OLDA`,`OLDB`,`OLDC`,`NEWA`,`NEWB`,`NEWC`,`ADD_NUM`,`EXE_DATE`,`HR_TEXT`,`LEAD_TEXT`,`MAIN_LEAD_TEXT`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from salary where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.activiti.domain.SalaryDO">
+		select `id`,`PROC_INS_ID`,`USER_ID`,`OFFICE_ID`,`POST`,`AGE`,`EDU`,`CONTENT`,`OLDA`,`OLDB`,`OLDC`,`NEWA`,`NEWB`,`NEWC`,`ADD_NUM`,`EXE_DATE`,`HR_TEXT`,`LEAD_TEXT`,`MAIN_LEAD_TEXT`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from salary
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+		  		  <if test="officeId != null and officeId != ''"> and OFFICE_ID = #{officeId} </if>
+		  		  <if test="post != null and post != ''"> and POST = #{post} </if>
+		  		  <if test="age != null and age != ''"> and AGE = #{age} </if>
+		  		  <if test="edu != null and edu != ''"> and EDU = #{edu} </if>
+		  		  <if test="content != null and content != ''"> and CONTENT = #{content} </if>
+		  		  <if test="olda != null and olda != ''"> and OLDA = #{olda} </if>
+		  		  <if test="oldb != null and oldb != ''"> and OLDB = #{oldb} </if>
+		  		  <if test="oldc != null and oldc != ''"> and OLDC = #{oldc} </if>
+		  		  <if test="newa != null and newa != ''"> and NEWA = #{newa} </if>
+		  		  <if test="newb != null and newb != ''"> and NEWB = #{newb} </if>
+		  		  <if test="newc != null and newc != ''"> and NEWC = #{newc} </if>
+		  		  <if test="addNum != null and addNum != ''"> and ADD_NUM = #{addNum} </if>
+		  		  <if test="exeDate != null and exeDate != ''"> and EXE_DATE = #{exeDate} </if>
+		  		  <if test="hrText != null and hrText != ''"> and HR_TEXT = #{hrText} </if>
+		  		  <if test="leadText != null and leadText != ''"> and LEAD_TEXT = #{leadText} </if>
+		  		  <if test="mainLeadText != null and mainLeadText != ''"> and MAIN_LEAD_TEXT = #{mainLeadText} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from salary
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+		  		  <if test="officeId != null and officeId != ''"> and OFFICE_ID = #{officeId} </if>
+		  		  <if test="post != null and post != ''"> and POST = #{post} </if>
+		  		  <if test="age != null and age != ''"> and AGE = #{age} </if>
+		  		  <if test="edu != null and edu != ''"> and EDU = #{edu} </if>
+		  		  <if test="content != null and content != ''"> and CONTENT = #{content} </if>
+		  		  <if test="olda != null and olda != ''"> and OLDA = #{olda} </if>
+		  		  <if test="oldb != null and oldb != ''"> and OLDB = #{oldb} </if>
+		  		  <if test="oldc != null and oldc != ''"> and OLDC = #{oldc} </if>
+		  		  <if test="newa != null and newa != ''"> and NEWA = #{newa} </if>
+		  		  <if test="newb != null and newb != ''"> and NEWB = #{newb} </if>
+		  		  <if test="newc != null and newc != ''"> and NEWC = #{newc} </if>
+		  		  <if test="addNum != null and addNum != ''"> and ADD_NUM = #{addNum} </if>
+		  		  <if test="exeDate != null and exeDate != ''"> and EXE_DATE = #{exeDate} </if>
+		  		  <if test="hrText != null and hrText != ''"> and HR_TEXT = #{hrText} </if>
+		  		  <if test="leadText != null and leadText != ''"> and LEAD_TEXT = #{leadText} </if>
+		  		  <if test="mainLeadText != null and mainLeadText != ''"> and MAIN_LEAD_TEXT = #{mainLeadText} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.activiti.domain.SalaryDO">
+		insert into salary
+		(
+			`id`, 
+			`PROC_INS_ID`, 
+			`USER_ID`, 
+			`OFFICE_ID`, 
+			`POST`, 
+			`AGE`, 
+			`EDU`, 
+			`CONTENT`, 
+			`OLDA`, 
+			`OLDB`, 
+			`OLDC`, 
+			`NEWA`, 
+			`NEWB`, 
+			`NEWC`, 
+			`ADD_NUM`, 
+			`EXE_DATE`, 
+			`HR_TEXT`, 
+			`LEAD_TEXT`, 
+			`MAIN_LEAD_TEXT`, 
+			`create_by`, 
+			`create_date`, 
+			`update_by`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`
+		)
+		values
+		(
+			#{id}, 
+			#{procInsId}, 
+			#{userId}, 
+			#{officeId}, 
+			#{post}, 
+			#{age}, 
+			#{edu}, 
+			#{content}, 
+			#{olda}, 
+			#{oldb}, 
+			#{oldc}, 
+			#{newa}, 
+			#{newb}, 
+			#{newc}, 
+			#{addNum}, 
+			#{exeDate}, 
+			#{hrText}, 
+			#{leadText}, 
+			#{mainLeadText}, 
+			#{createBy}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.activiti.domain.SalaryDO">
+		update salary 
+		<set>
+			<if test="procInsId != null">`PROC_INS_ID` = #{procInsId}, </if>
+			<if test="userId != null">`USER_ID` = #{userId}, </if>
+			<if test="officeId != null">`OFFICE_ID` = #{officeId}, </if>
+			<if test="post != null">`POST` = #{post}, </if>
+			<if test="age != null">`AGE` = #{age}, </if>
+			<if test="edu != null">`EDU` = #{edu}, </if>
+			<if test="content != null">`CONTENT` = #{content}, </if>
+			<if test="olda != null">`OLDA` = #{olda}, </if>
+			<if test="oldb != null">`OLDB` = #{oldb}, </if>
+			<if test="oldc != null">`OLDC` = #{oldc}, </if>
+			<if test="newa != null">`NEWA` = #{newa}, </if>
+			<if test="newb != null">`NEWB` = #{newb}, </if>
+			<if test="newc != null">`NEWC` = #{newc}, </if>
+			<if test="addNum != null">`ADD_NUM` = #{addNum}, </if>
+			<if test="exeDate != null">`EXE_DATE` = #{exeDate}, </if>
+			<if test="hrText != null">`HR_TEXT` = #{hrText}, </if>
+			<if test="leadText != null">`LEAD_TEXT` = #{leadText}, </if>
+			<if test="mainLeadText != null">`MAIN_LEAD_TEXT` = #{mainLeadText}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from salary where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from salary where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

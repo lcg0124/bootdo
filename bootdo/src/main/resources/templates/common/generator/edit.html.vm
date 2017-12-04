@@ -32,7 +32,7 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/add.js">
+	<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/edit.js">
 	</script>
 </body>
 </html>

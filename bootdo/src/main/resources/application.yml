@@ -1,7 +1,10 @@
 server:
-  port: 80
+  port: 8083
   tomcat:
     uri-encoding: utf-8
+security:
+  basic:
+    enabled: false
 spring:
   thymeleaf:
     mode: LEGACYHTML5

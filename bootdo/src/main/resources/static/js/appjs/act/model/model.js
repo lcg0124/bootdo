@@ -1,12 +1,9 @@
-var prefix = "/act/model"
+var prefix = "/activiti/model"
 $(function() {
-	var deptId = '';
-	getTreeData();
-	load(deptId);
+	load();
 });
 
-function load(deptId) {
-	console.log("数据加载");
+function load() {
 	$('#exampleTable')
 		.bootstrapTable(
 			{
@@ -37,7 +34,6 @@ function load(deptId) {
 						limit : params.limit,
 						offset : params.offset,
 						name : $('#searchName').val(),
-						deptId : deptId
 					};
 				},
 				// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -52,15 +48,34 @@ function load(deptId) {
 					},
 					{
 						field : 'id', // 列字段名
-						title : '序号' // 列标题
+						title : '模型id' // 列标题
 					},
+                    {
+                        field : 'key', // 列字段名
+                        title : '模型标识' // 列标题
+                    },
 					{
 						field : 'name',
-						title : '名称'
+						title : '模型名称'
 					},
 					{
-						field : 'deploymentTime',
-						title : '部署时间'
+						field : 'version',
+						title : '版本号'
+					},
+                    {
+                        field : 'createTime',
+                        title : '创建时间'
+                    },
+                    {
+                        field : 'lastUpdateTime',
+                        title : '最后更新时间'
+                    },
+					{
+						field:'is',
+						title:'导出xml',
+						formatter:function(value, row, index){
+							return '<a href="/activiti/model/export/'+row.id+'">xml</a>';
+						}
 					},
 					{
 						title : '操作',
@@ -75,7 +90,7 @@ function load(deptId) {
 								+ '\')"><i class="fa fa-remove"></i></a> ';
 							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="部署流程"  mce_href="#" onclick="deploy(\''
 								+ row.id
-								+ '\')"><i class="fa fa-key"></i></a> ';
+								+ '\')"><i class="fa fa-plug"></i></a> ';
 							return e + d + f;
 						}
 					} ]
@@ -86,12 +101,13 @@ function reLoad() {
 }
 function add() {
 	// iframe层
-	var page = layer.open({
+    // window.open(prefix + '/add');
+    var page = parent.layer.open({
 		type : 2,
 		title : '新建模型',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		area : [ '100%', '100%' ],
 		content : prefix + '/add'
 	});
     layer.full(page);
@@ -135,7 +151,7 @@ function deploy(id) {
     }, function() {
         $.ajax({
             url : prefix+"/deploy/"+id,
-            type : "get",
+            type : "post",
             data : {
                 'id' : id
             },
@@ -164,7 +180,7 @@ function batchRemove() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['userId'];
+			ids[i] = row['id'];
 		});
 		$.ajax({
 			type : 'POST',
@@ -183,39 +199,3 @@ function batchRemove() {
 		});
 	}, function() {});
 }
-function getTreeData() {
-	$.ajax({
-		type : "GET",
-		url : "/system/sysDept/tree",
-		success : function(tree) {
-			loadTree(tree);
-		}
-	});
-}
-function loadTree(tree) {
-	$('#jstree').jstree({
-		'core' : {
-			'data' : tree
-		},
-		"plugins" : [ "search" ]
-	});
-	$('#jstree').jstree().open_all();
-}
-$('#jstree').on("changed.jstree", function(e, data) {
-	if (data.selected == -1) {
-		var opt = {
-			query : {
-				deptId : '',
-			}
-		}
-		$('#exampleTable').bootstrapTable('refresh', opt);
-	} else {
-		var opt = {
-			query : {
-				deptId : data.selected[0],
-			}
-		}
-		$('#exampleTable').bootstrapTable('refresh',opt);
-	}
-
-});
