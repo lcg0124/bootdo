@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 80
   tomcat:
     uri-encoding: utf-8
 security:
