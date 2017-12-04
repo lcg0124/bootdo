@@ -63,6 +63,12 @@ public class DeptController extends BaseController {
 	String edit(@PathVariable("deptId") Long deptId, Model model) {
 		DeptDO sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
+		if(Constant.DEPT_ROOT_ID.equals(sysDept.getParentId())) {
+			model.addAttribute("parentDeptName", "无");
+		}else {
+			DeptDO parDept = sysDeptService.get(sysDept.getParentId());
+			model.addAttribute("parentDeptName", parDept.getName());
+		}
 		return  prefix + "/edit";
 	}
 
@@ -108,8 +114,17 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (sysDeptService.remove(deptId) > 0) {
-			return R.ok();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("parentId", deptId);
+		if(sysDeptService.count(map)>0) {
+			return R.error(1, "包含下级部门,不允许修改");
+		}
+		if(sysDeptService.checkDeptHasUser(deptId)) {
+			if (sysDeptService.remove(deptId) > 0) {
+				return R.ok();
+			}
+		}else {
+			return R.error(1, "部门包含用户,不允许修改");
 		}
 		return R.error();
 	}

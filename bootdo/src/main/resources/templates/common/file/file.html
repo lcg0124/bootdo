@@ -58,14 +58,14 @@
                                     <small>{{row.createDate}}</small>
                                 </div>
                                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button
-                                    class="btn btn-warning btn-xs copy" url="' + rows[i].url + '">复制
+                                    class="btn btn-warning btn-xs copy" :url="row.url">复制
                             </button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs"
                                                                         @click="remove(row.id)">删除
                             </button>
                             </a>
                         </div>
                     </div>
-                    <dvi id="incomeNum"></dvi>
+                    <div id="incomeNum"></div>
                 </div>
             </div>
             <div>

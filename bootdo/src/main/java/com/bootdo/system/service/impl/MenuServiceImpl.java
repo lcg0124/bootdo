@@ -10,11 +10,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class MenuServiceImpl implements MenuService {
 	@Autowired
 	MenuDao menuMapper;
@@ -22,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
 	RoleMenuDao roleMenuMapper;
 
 	/**
-	 * @param 用户ID
+	 * @param
 	 * @return 树形菜单
 	 */
 	@Cacheable
@@ -52,18 +54,20 @@ public class MenuServiceImpl implements MenuService {
 		return menus;
 	}
 
+	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int remove(Long id) {
 		int result = menuMapper.remove(id);
 		return result;
 	}
-
+	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int save(MenuDO menu) {
 		int r = menuMapper.save(menu);
 		return r;
 	}
 
+	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@Override
 	public int update(MenuDO menu) {
 		int r = menuMapper.update(menu);
