@@ -32,7 +32,7 @@ public class LoginController extends BaseController {
 
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
-		return "redirect:/login";
+		return "redirect:/blog";
 	}
 
 	@Log("请求访问主页")
