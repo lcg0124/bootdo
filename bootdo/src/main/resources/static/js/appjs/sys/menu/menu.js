@@ -7,7 +7,8 @@ var load = function() {
 			.bootstrapTreeTable(
 					{
 						id : 'menuId',
-						parentColumn : 'parentId',
+                        code :'menuId',
+                        parentCode : 'parentId',
 						type : "GET", // 请求数据的ajax类型
 						url : prefix + '/list', // 请求数据的ajax的url
 						ajaxParams : {}, // 请求数据的ajax的data属性
