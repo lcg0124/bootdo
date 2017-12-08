@@ -1,6 +1,10 @@
 server:
-  port: 80
-  tomcat:
+    # context-path: /myboot 
+    session-timeout: 60 
+    tomcat:
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8088
     uri-encoding: utf-8
 security:
   basic:
