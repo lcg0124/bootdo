@@ -19,6 +19,7 @@ public class QuartzConfigration {
 	@Autowired
 	JobFactory jobFactory;
 
+
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean() {
 		SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();

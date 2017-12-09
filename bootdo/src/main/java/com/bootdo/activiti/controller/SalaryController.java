@@ -6,6 +6,7 @@ import com.bootdo.activiti.utils.ActivitiUtils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,6 +74,9 @@ public class SalaryController {
 	public R saveOrUpdate( SalaryDO salary){
 		salary.setCreateDate(new Date());
 		salary.setUpdateDate(new Date());
+		salary.setCreateBy(ShiroUtils.getUserId().toString());
+		salary.setUpdateBy(ShiroUtils.getUserId().toString());
+		salary.setDelFlag("1");
 		if(salaryService.save(salary)>0){
 			return R.ok();
 		}

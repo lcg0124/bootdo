@@ -5,14 +5,14 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 异常处理器
  * 
  */
-@ControllerAdvice
+@RestControllerAdvice
 public class BDExceptionHandler {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -41,14 +41,14 @@ public class BDExceptionHandler {
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
-	public String handleAuthorizationException(AuthorizationException e) {
+	public R handleAuthorizationException(AuthorizationException e) {
 		logger.error(e.getMessage(), e);
-		return "error/403";
+		return R.error("未授权");
 	}
 
 	@ExceptionHandler(Exception.class)
-	public String handleException(Exception e) {
+	public R handleException(Exception e) {
 		logger.error(e.getMessage(), e);
-		return "error/500";
+		return R.error("服务器错误，请联系管理员");
 	}
 }

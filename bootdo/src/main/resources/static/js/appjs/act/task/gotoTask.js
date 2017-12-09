@@ -61,7 +61,7 @@ function load() {
                         field : 'id',
                         title : '流程图',
                         formatter:function (value,row,index) {
-                            var e = '<a   href="/act/process/resource/read/image/'+row.id+'"  title="图片" target="_blank">图片</a> ';
+                            var e = '<a   href="/activiti/process/resource/read/image/'+row.id+'"  title="图片" target="_blank">图片</a> ';
                             return e;
                         }
                     },

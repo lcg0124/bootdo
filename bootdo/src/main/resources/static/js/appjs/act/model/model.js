@@ -74,7 +74,7 @@ function load() {
 						field:'is',
 						title:'导出xml',
 						formatter:function(value, row, index){
-							return '<a href="/activiti/model/export/'+row.id+'">xml</a>';
+							return '<a href="/activiti/model/export/'+row.id+'" target="_blank">xml</a>';
 						}
 					},
 					{

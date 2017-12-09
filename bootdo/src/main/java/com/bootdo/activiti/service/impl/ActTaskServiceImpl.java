@@ -4,15 +4,16 @@ import com.bootdo.activiti.domain.ActivitiDO;
 import com.bootdo.activiti.service.ActTaskService;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.StringUtils;
-import org.activiti.engine.FormService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.engine.*;
+import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.spring.ProcessEngineFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,16 @@ public class ActTaskServiceImpl implements ActTaskService {
     RuntimeService runtimeService;
     @Autowired
     FormService formService;
+
+    @Autowired
+    RepositoryService repositoryService;
+
+    @Autowired
+    private ProcessEngineFactoryBean processEngineFactory;
+
+    @Autowired
+    private ProcessEngine processEngine;
+
     @Override
     public List<ActivitiDO> listTodo(ActivitiDO act) {
         String userId = String.valueOf(ShiroUtils.getUserId());
@@ -137,5 +148,26 @@ public class ActTaskServiceImpl implements ActTaskService {
             }
         }
         return formKey;
+    }
+
+    @Override
+    public InputStream tracePhoto(String processDefinitionId, String executionId) {
+//		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(executionId).singleResult();
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+
+        List<String> activeActivityIds = new ArrayList();
+        if (runtimeService.createExecutionQuery().executionId(executionId).count() > 0){
+            activeActivityIds = runtimeService.getActiveActivityIds(executionId);
+        }
+
+        // 不使用spring请使用下面的两行代码
+        // ProcessEngineImpl defaultProcessEngine = (ProcessEngineImpl)ProcessEngines.getDefaultProcessEngine();
+        // Context.setProcessEngineConfiguration(defaultProcessEngine.getProcessEngineConfiguration());
+
+        // 使用spring注入引擎请使用下面的这行代码
+        Context.setProcessEngineConfiguration(processEngineFactory.getProcessEngineConfiguration());
+//		return ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
+        return processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
+                .generateDiagram(bpmnModel, "png", activeActivityIds);
     }
 }

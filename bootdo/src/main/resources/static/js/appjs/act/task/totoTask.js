@@ -66,7 +66,13 @@ function load() {
                         field : 'name',
                         title : '任务名称'
                     },
-
+                    {
+                        field : 'executionId',
+                        title : '跟踪',
+						formatter:function(value,row,index){
+                        	return '<a href="/activiti/task/trace/photo/'+row.processDefinitionId+'/'+row.executionId+'">跟踪</a>';
+						}
+                    },
 					{
 						title : '操作',
 						field : 'id',

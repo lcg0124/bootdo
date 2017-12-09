@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +86,22 @@ public class TaskController {
         }
         return taskVOS;
     }
+
+
+    /**
+     * 读取带跟踪的图片
+     */
+    @RequestMapping(value = "/trace/photo/{procDefId}/{execId}")
+    public void tracePhoto(@PathVariable("procDefId") String procDefId, @PathVariable("execId") String execId, HttpServletResponse response) throws Exception {
+        InputStream imageStream = actTaskService.tracePhoto(procDefId, execId);
+
+        // 输出资源内容到相应对象
+        byte[] b = new byte[1024];
+        int len;
+        while ((len = imageStream.read(b, 0, 1024)) != -1) {
+            response.getOutputStream().write(b, 0, len);
+        }
+    }
+
 
 }

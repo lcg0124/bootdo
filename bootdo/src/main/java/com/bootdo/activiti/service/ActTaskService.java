@@ -2,6 +2,7 @@ package com.bootdo.activiti.service;
 
 import com.bootdo.activiti.domain.ActivitiDO;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,6 @@ public interface ActTaskService {
     String startProcess(String procDefKey, String businessTable, String businessId, String title, Map<String, Object> vars);
 
     String getFormKey(String procDefId, String taskDefKey);
+
+    InputStream tracePhoto(String processDefinitionId, String executionId);
 }

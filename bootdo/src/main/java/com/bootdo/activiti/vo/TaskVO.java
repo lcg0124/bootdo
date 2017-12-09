@@ -17,7 +17,7 @@ public class TaskVO  {
         this.setFormKey(task.getFormKey());
         this.setProcessId(task.getProcessInstanceId());
         this.setProcessDefinitionId(task.getProcessDefinitionId());
-
+        this.setExecutionId(task.getExecutionId());
     }
     private  String id;
     private String name;
@@ -27,6 +27,7 @@ public class TaskVO  {
     private  String assignee;
     private String processId;
     private String processDefinitionId;
+    private String executionId;
 
     public String getId() {
         return id;
@@ -90,5 +91,13 @@ public class TaskVO  {
 
     public void setProcessDefinitionId(String processDefinitionId) {
         this.processDefinitionId = processDefinitionId;
+    }
+
+    public String getExecutionId() {
+        return executionId;
+    }
+
+    public void setExecutionId(String executionId) {
+        this.executionId = executionId;
     }
 }
