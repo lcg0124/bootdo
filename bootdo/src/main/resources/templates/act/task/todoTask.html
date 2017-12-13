@@ -9,28 +9,26 @@
 			<div class="col-sm-11">
 				<div class="ibox">
 					<div class="ibox-body">
-						<div class="fixed-table-toolbar">
-							<div class="columns pull-left">
-								<button shiro:hasPermission="sys:user:add" type="button"
-									class="btn  btn-primary" onclick="add()">
-									<i class="fa fa-plus " aria-hidden="true"></i>添加
-								</button>
-								<button shiro:hasPermission="sys:user:batchRemove" type="button"
-									class="btn  btn-danger" onclick="batchRemove()">
-									<i class="fa fa-trash " aria-hidden="true"></i>删除
-								</button>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-text"></i>待办工作</a>
+							</li>
+							<li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i>已办工作</a>
+							</li>
+							<li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-briefcase"></i>发起任务</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane active">
+								<table id="exampleTable" data-mobile-responsive="true">
+								</table>
 							</div>
-							<div class="columns pull-right">
-								<button class="btn btn-success" onclick="reLoad()">查询</button>
+							<div id="tab-2" class="tab-pane ">
+								<table id="exampleTable2" data-mobile-responsive="true"></table>
 							</div>
-
-							<div class="columns pull-right col-md-2 nopadding">
-								<input id="searchName" type="text" class="form-control"
-									placeholder="姓名">
+							<div id="tab-3" class="tab-pane ">
+								<table id="exampleTable3" data-mobile-responsive="true"></table>
 							</div>
 						</div>
-						<table id="exampleTable" data-mobile-responsive="true">
-						</table>
 					</div>
 				</div>
 			</div>
@@ -61,5 +59,6 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/js/appjs/act/task/totoTask.js"></script>
+	<script type="text/javascript" src="/js/appjs/act/task/gotoTask.js"></script>
 </body>
 </html>

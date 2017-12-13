@@ -86,6 +86,5 @@ var openUser = function(){
 
 function loadUser(userIds,userNames){
 	$("#userIds").val(userIds);
-	console.log($("#userIds").val());
 	$("#userNames").val(userNames);
 }

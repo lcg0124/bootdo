@@ -1,10 +1,10 @@
 var prefix = "/activiti/task"
 $(function() {
-	load();
+	load3();
 });
 
-function load() {
-	$('#exampleTable')
+function load3() {
+	$('#exampleTable3')
 		.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
@@ -70,7 +70,7 @@ function load() {
 						field : 'id',
 						align : 'center',
 						formatter : function(value, row, index) {
-							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="发起任务"  mce_href="#" onclick="form(\''
+							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="发起任务"  mce_href="#" onclick="form3(\''
 								+ row.id
 								+ '\')"><i class="fa  fa-paper-plane"></i></a> ';
 							return f;
@@ -78,12 +78,8 @@ function load() {
 					} ]
 			});
 }
-function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
-}
 
-
-function form(id) {
+function form3(id) {
     layer.open({
         type : 2,
         title : '发起流程',
