@@ -1,5 +1,7 @@
 package com.bootdo.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +34,22 @@ public class UserDO implements Serializable {
     private Date gmtModified;
     //角色
     private List<Long> roleIds;
-
+    //性别
+    private Long sex;
+    //出身日期
+    private Date birth;
+    //图片ID
+    private Long picId;
+    //现居住地
+    private String liveAddress;
+    //爱好
+    private String hobby;
+    //省份
+    private String province;
+    //所在城市
+    private String city;
+    //所在地区
+    private String district;
     /**
      * 设置：
      */
@@ -192,6 +209,70 @@ public class UserDO implements Serializable {
         this.roleIds = roleIds;
     }
 
+    public Long getSex() {
+        return sex;
+    }
+
+    public void setSex(Long sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public Long getPicId() {
+        return picId;
+    }
+
+    public void setPicId(Long picId) {
+        this.picId = picId;
+    }
+
+    public String getLiveAddress() {
+        return liveAddress;
+    }
+
+    public void setLiveAddress(String liveAddress) {
+        this.liveAddress = liveAddress;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     @Override
     public String toString() {
         return "UserDO{" +
@@ -208,6 +289,14 @@ public class UserDO implements Serializable {
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
                 ", roleIds=" + roleIds +
+                ", sex=" + sex +
+                ", birth=" + birth +
+                ", picId=" + picId +
+                ", liveAddress='" + liveAddress + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
                 '}';
     }
 }

@@ -1,11 +1,9 @@
 package com.bootdo.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import com.bootdo.common.utils.MD5Utils;
+import com.bootdo.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,9 +109,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int resetPwd(UserDO user) {
-		int r = userMapper.update(user);
-		return r;
+	public int resetPwd(UserVO userVO,UserDO userDO) throws Exception {
+		if(Objects.equals(userVO.getUserDO().getUserId(),userDO.getUserId())){
+			if(Objects.equals(MD5Utils.encrypt(userDO.getUsername(),userVO.getPwdOld()),userDO.getPassword())){
+				userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(),userVO.getPwdNew()));
+				return userMapper.update(userDO);
+			}else{
+				throw new Exception("输入的旧密码有误！");
+			}
+		}else{
+			throw new Exception("你修改的不是你登录的账号！");
+		}
 	}
 
 	@Transactional
@@ -160,6 +166,11 @@ public class UserServiceImpl implements UserService {
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<DeptDO> t = BuildTree.build(trees);
 		return t;
+	}
+
+	@Override
+	public int updatePersonal(UserDO userDO) {
+		return userMapper.update(userDO);
 	}
 
 }

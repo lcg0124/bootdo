@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.bootdo.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 import com.bootdo.common.domain.Tree;
@@ -30,8 +31,15 @@ public interface UserService {
 
 	Set<String> listRoles(Long userId);
 
-	int resetPwd(UserDO user);
+	int resetPwd(UserVO userVO,UserDO userDO) throws Exception;
 
 	Tree<DeptDO> getTree();
+
+	/**
+	 * 更新个人信息
+	 * @param userDO
+	 * @return
+	 */
+	int updatePersonal(UserDO userDO);
 
 }

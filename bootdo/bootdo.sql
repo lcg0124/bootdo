@@ -1388,16 +1388,23 @@ CREATE TABLE `sys_user` (
   `username` varchar(50) DEFAULT NULL COMMENT '用户名',
   `name` varchar(100) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL COMMENT '密码',
-  `dept_id` int(20) DEFAULT NULL,
+  `dept_id` bigint(20) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(100) DEFAULT NULL COMMENT '手机号',
   `status` tinyint(255) DEFAULT NULL COMMENT '状态 0:禁用，1:正常',
   `user_id_create` bigint(255) DEFAULT NULL COMMENT '创建用户id',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime DEFAULT NULL COMMENT '修改时间',
+  `sex` bigint(32) DEFAULT NULL COMMENT '性别',
+  `birth` datetime DEFAULT NULL COMMENT '出身日期',
+  `pic_id` bigint(32) DEFAULT NULL,
+  `live_address` varchar(500) DEFAULT NULL COMMENT '现居住地',
+  `hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
+  `province` varchar(255) DEFAULT NULL COMMENT '省份',
+  `city` varchar(255) DEFAULT NULL COMMENT '所在城市',
+  `district` varchar(255) DEFAULT NULL COMMENT '所在地区',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------

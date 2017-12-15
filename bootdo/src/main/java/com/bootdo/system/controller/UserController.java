@@ -4,6 +4,7 @@ import com.bootdo.common.annotation.Log;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
+import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -13,6 +14,7 @@ import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.RoleService;
 import com.bootdo.system.service.UserService;
+import com.bootdo.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,8 @@ public class UserController extends BaseController {
 	UserService userService;
 	@Autowired
 	RoleService roleService;
-
+	@Autowired
+	DictService dictService;
 	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
 	String user(Model model) {
@@ -97,6 +100,22 @@ public class UserController extends BaseController {
 		return R.error();
 	}
 
+
+	@RequiresPermissions("sys:user:edit")
+	@Log("更新用户")
+	@PostMapping("/updatePeronal")
+	@ResponseBody
+	R updatePeronal(UserDO user) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		if (userService.updatePersonal(user) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+
+
 	@RequiresPermissions("sys:user:remove")
 	@Log("删除用户")
 	@PostMapping("/remove")
@@ -147,15 +166,17 @@ public class UserController extends BaseController {
 	@Log("提交更改用户密码")
 	@PostMapping("/resetPwd")
 	@ResponseBody
-	R resetPwd(UserDO user) {
+	R resetPwd(UserVO userVO) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		user.setPassword(MD5Utils.encrypt(userService.get(user.getUserId()).getUsername(), user.getPassword()));
-		if (userService.resetPwd(user) > 0) {
+		try{
+			userService.resetPwd(userVO,getUser());
 			return R.ok();
+		}catch (Exception e){
+			return R.error(1,e.getMessage());
 		}
-		return R.error();
+
 	}
 	
 	@GetMapping("/tree")
@@ -173,6 +194,10 @@ public class UserController extends BaseController {
 
 	@GetMapping("/personal")
 	String personal(Model model) {
+		UserDO userDO  = userService.get(getUserId());
+		model.addAttribute("user",userDO);
+		model.addAttribute("hobbyList",dictService.getHobbyList(userDO));
+		model.addAttribute("sexList",dictService.getSexList());
 		return prefix + "/personal";
 	}
 
