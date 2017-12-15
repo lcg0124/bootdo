@@ -6,8 +6,6 @@ import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.service.DeptService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class DeptController extends BaseController {
 	}
 
 	@ApiOperation(value="获取部门列表", notes="")
-	@RequestMapping(value={""})
+//	@RequestMapping(value={""})
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")

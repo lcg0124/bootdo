@@ -1,6 +1,6 @@
 package com.bootdo.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -37,6 +37,7 @@ public class UserDO implements Serializable {
     //性别
     private Long sex;
     //出身日期
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     //图片ID
     private Long picId;
@@ -50,6 +51,7 @@ public class UserDO implements Serializable {
     private String city;
     //所在地区
     private String district;
+
     /**
      * 设置：
      */
