@@ -137,10 +137,12 @@ $(function(){
 
           if (this.isImageFile(file)) {
             if (this.url) {
-              URL.revokeObjectURL(this.url); // Revoke the old one
+              URL.revokeObjectURL(this.url);// Revoke the old one
+                console.log(this.url);
             }
 
             this.url = URL.createObjectURL(file);
+            console.log(this.url);
             this.startCropper();
           }
         }
@@ -186,24 +188,26 @@ $(function(){
 
     startCropper: function () {
       var _this = this;
-
+      console.log(this.active);
       if (this.active) {
         this.$img.cropper('replace', this.url);
       } else {
         this.$img = $('<img src="' + this.url + '">');
+        console.log(this.$img);
         this.$avatarWrapper.empty().html(this.$img);
         this.$img.cropper({
           aspectRatio: 1,
           preview: this.$avatarPreview.selector,
           strict: false,
           crop: function (data) {
-            var json = [
+            console.log(data);
+              var json = [
                   '{"x":' + data.x,
                   '"y":' + data.y,
                   '"height":' + data.height,
                   '"width":' + data.width,
                   '"rotate":' + data.rotate + '}'
-                ].join();
+              ].join();
 
             _this.$avatarData.val(json);
           }
@@ -262,9 +266,9 @@ $(function(){
     submitDone: function (data) {
       console.log(data);
 
-      if ($.isPlainObject(data) && data.state === 200) {
-        if (data.result) {
-          this.url = data.result;
+      if ($.isPlainObject(data) && data.code === 0) {
+        if (data.url) {
+          this.url = data.url;
 
           if (this.support.datauri || this.uploaded) {
             this.uploaded = false;
@@ -276,8 +280,9 @@ $(function(){
           }
 
           this.$avatarInput.val('');
-        } else if (data.message) {
-          this.alert(data.message);
+          this.alert(data.msg);
+        } else if (data.msg) {
+          this.alert(data.msg);
         }
       } else {
         this.alert('Failed to response');
