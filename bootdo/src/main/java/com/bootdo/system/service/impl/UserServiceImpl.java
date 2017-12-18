@@ -203,8 +203,7 @@ public class UserServiceImpl implements UserService {
 		//获取旋转的角度
 		int r = Integer.parseInt(str[4].split(":")[1].replaceAll("}", ""));
 		try {
-			String dest = bootdoConfig.getUploadPath();
-			BufferedImage cutImage = ImageUtils.cutImage(file,x,y,w,h,prefix,dest);
+			BufferedImage cutImage = ImageUtils.cutImage(file,x,y,w,h,prefix);
 			BufferedImage rotateImage = ImageUtils.rotateImage(cutImage, r);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			boolean flag = ImageIO.write(rotateImage, prefix, out);

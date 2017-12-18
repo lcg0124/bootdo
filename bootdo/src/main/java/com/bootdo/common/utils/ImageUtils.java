@@ -28,20 +28,19 @@ public class ImageUtils {
      * @throws IOException
      * @date
      */
-    public static BufferedImage cutImage(MultipartFile file, int x, int y, int w, int h,String prefix, String dest) {
+    public static BufferedImage cutImage(MultipartFile file, int x, int y, int w, int h,String prefix) {
 
         Iterator iterator = ImageIO.getImageReadersByFormatName(prefix);
-        dest=dest+"/"+file.getName();
         try {
             ImageReader reader = (ImageReader)iterator.next();
-            InputStream in = file.getInputStream();//转换成输入流
+            //转换成输入流
+            InputStream in = file.getInputStream();
             ImageInputStream iis = ImageIO.createImageInputStream(in);
             reader.setInput(iis, true);
             ImageReadParam param = reader.getDefaultReadParam();
             Rectangle rect = new Rectangle(x, y, w,h);
             param.setSourceRegion(rect);
             BufferedImage bi = reader.read(0,param);
-            ImageIO.write(bi, prefix, new File(dest));
             return bi;
         } catch (Exception ignored) {
         }

@@ -188,19 +188,16 @@ $(function(){
 
     startCropper: function () {
       var _this = this;
-      console.log(this.active);
       if (this.active) {
         this.$img.cropper('replace', this.url);
       } else {
         this.$img = $('<img src="' + this.url + '">');
-        console.log(this.$img);
         this.$avatarWrapper.empty().html(this.$img);
         this.$img.cropper({
           aspectRatio: 1,
           preview: this.$avatarPreview.selector,
           strict: false,
           crop: function (data) {
-            console.log(data);
               var json = [
                   '{"x":' + data.x,
                   '"y":' + data.y,
