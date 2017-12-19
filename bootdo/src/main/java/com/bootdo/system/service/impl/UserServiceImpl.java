@@ -121,6 +121,17 @@ public class UserServiceImpl implements UserService {
 			throw new Exception("你修改的不是你登录的账号！");
 		}
 	}
+	@Override
+	public int adminResetPwd(UserVO userVO) throws Exception {
+		UserDO userDO =get(userVO.getUserDO().getUserId());
+		if("admin".equals(userDO.getUsername())){
+			throw new Exception("超级管理员的账号不允许直接重置！");
+		}
+		userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdNew()));
+		return userMapper.update(userDO);
+
+
+	}
 
 	@Transactional
 	@Override
