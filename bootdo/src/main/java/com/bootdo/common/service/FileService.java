@@ -27,4 +27,11 @@ public interface FileService {
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
+
+	/**
+	 * 判断一个文件是否存在
+	 * @param url FileDO中存的路径
+	 * @return
+	 */
+    Boolean isExist(String url);
 }

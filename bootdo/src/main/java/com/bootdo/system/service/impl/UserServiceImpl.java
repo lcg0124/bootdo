@@ -1,8 +1,13 @@
 package com.bootdo.system.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.*;
 
-import com.bootdo.common.utils.MD5Utils;
+import com.bootdo.common.config.BootdoConfig;
+import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.service.FileService;
+import com.bootdo.common.utils.*;
 import com.bootdo.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -12,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bootdo.common.domain.Tree;
-import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.DeptDao;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.dao.UserRoleDao;
@@ -20,6 +24,9 @@ import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.domain.UserRoleDO;
 import com.bootdo.system.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
 
 @Transactional
 @Service
@@ -30,6 +37,10 @@ public class UserServiceImpl implements UserService {
 	UserRoleDao userRoleMapper;
 	@Autowired
 	DeptDao deptMapper;
+	@Autowired
+	private FileService sysFileService;
+	@Autowired
+	private BootdoConfig bootdoConfig;
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Override
@@ -172,5 +183,46 @@ public class UserServiceImpl implements UserService {
 	public int updatePersonal(UserDO userDO) {
 		return userMapper.update(userDO);
 	}
+
+    @Override
+    public Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception {
+		String fileName = file.getOriginalFilename();
+		fileName = FileUtil.renameToUUID(fileName);
+		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+		//获取图片后缀
+		String prefix = fileName.substring((fileName.lastIndexOf(".")+1));
+		String[] str=avatar_data.split(",");
+		//获取截取的x坐标
+		int x = (int)Math.floor(Double.parseDouble(str[0].split(":")[1]));
+		//获取截取的y坐标
+		int y = (int)Math.floor(Double.parseDouble(str[1].split(":")[1]));
+		//获取截取的高度
+		int h = (int)Math.floor(Double.parseDouble(str[2].split(":")[1]));
+		//获取截取的宽度
+		int w = (int)Math.floor(Double.parseDouble(str[3].split(":")[1]));
+		//获取旋转的角度
+		int r = Integer.parseInt(str[4].split(":")[1].replaceAll("}", ""));
+		try {
+			BufferedImage cutImage = ImageUtils.cutImage(file,x,y,w,h,prefix);
+			BufferedImage rotateImage = ImageUtils.rotateImage(cutImage, r);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			boolean flag = ImageIO.write(rotateImage, prefix, out);
+			//转换后存入数据库
+			byte[] b = out.toByteArray();
+			FileUtil.uploadFile(b, bootdoConfig.getUploadPath(), fileName);
+		} catch (Exception e) {
+			throw  new Exception("图片裁剪错误！！");
+		}
+		Map<String, Object> result = new HashMap<>();
+		if(sysFileService.save(sysFile)>0){
+			UserDO userDO = new UserDO();
+			userDO.setUserId(userId);
+			userDO.setPicId(sysFile.getId());
+			if(userMapper.update(userDO)>0){
+				result.put("url",sysFile.getUrl());
+			}
+		}
+		return result;
+    }
 
 }

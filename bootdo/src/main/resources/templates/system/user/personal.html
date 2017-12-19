@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <head th:include="system/user/include :: header"></head>
 
 <body class="gray-bg">
@@ -124,12 +125,12 @@
                     <!--photo_info-->
                     <div class="ibox-content tab-pane fade gg" id="photo_info">
                         <div class="ggcontainer" id="crop-avatar">
-                            <form class="avatar-form" action="/common/sysFile/upload" enctype="multipart/form-data" method="post">
+                            <form class="avatar-form" action="/sys/user/uploadImg" enctype="multipart/form-data" method="post">
                                 <div class="avatar-body">
                                     <div class="avatar-upload">
                                         <input class="avatar-src" name="avatar_src" type="hidden">
                                         <input class="avatar-data" name="avatar_data" type="hidden">
-                                        <label for="avatarInput">上传图片</label>
+                                        <label for="avatarInput">选取文件</label>
                                         <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
                                     </div>
                                     <!-- Crop and preview -->
