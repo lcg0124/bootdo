@@ -52,7 +52,7 @@
                                     <span>出生年月:</span>
                                 </div>
                                 <div class="gg-formDetail">
-                                    <input type="text" class="laydate-icon layer-date form-control" id="birth" name="birth" th:value="${#dates.format(user.birth,'yyyy-MM-dd')}" placeholder="请选择出生年月"
+                                    <input type="text" class="laydate-icon layer-date form-control" id="birth" name="birth" th:value="${user.birth}==null?null:${#dates.format(user.birth,'yyyy-MM-dd')}" placeholder="请选择出生年月"
                                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
                                 </div>
                             </div>
