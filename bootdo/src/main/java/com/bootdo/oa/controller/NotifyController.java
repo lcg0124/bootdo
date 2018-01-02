@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -169,4 +170,7 @@ public class NotifyController extends BaseController {
 		model.addAttribute("notify", notify);
 		return "oa/notify/read";
 	}
+
+
+
 }
