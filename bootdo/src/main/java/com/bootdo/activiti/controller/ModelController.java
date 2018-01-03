@@ -99,7 +99,6 @@ public class ModelController {
 
     @GetMapping(value = "/model/{modelId}/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {
-        System.out.println("------------------------------------+++++++++++++++++++++");
         ObjectNode modelNode = null;
 
         Model model = repositoryService.getModel(modelId);

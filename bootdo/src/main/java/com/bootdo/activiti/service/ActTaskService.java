@@ -13,7 +13,7 @@ public interface ActTaskService {
 
     void complete(String taskId, String procInsId, String comment, String title, Map<String, Object> vars);
 
-    void complete(String taskId);
+    void complete(String taskId,Map<String,Object> vars);
 
     String startProcess(String procDefKey, String businessTable, String businessId, String title, Map<String, Object> vars);
 

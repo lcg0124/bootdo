@@ -64,14 +64,8 @@ public class ProcessController {
     @PostMapping("/save")
     @Transactional(readOnly = false)
     public R deploy(String exportDir, String category, MultipartFile file) {
-
-
         String message = "";
-
-        System.out.println(file.getSize());
-
         String fileName = file.getOriginalFilename();
-
         try {
             InputStream fileInputStream = file.getInputStream();
             Deployment deployment = null;

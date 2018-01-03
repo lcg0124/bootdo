@@ -49,8 +49,10 @@ public class SalaryServiceImpl implements SalaryService {
 	@Transactional(rollbackFor=Exception.class)
 	@Override
 	public int update(SalaryDO salary){
-		System.out.println(salary.getTaskId());
-		actTaskService.complete(salary.getTaskId());
+		Map<String,Object> vars = new HashMap<>(16);
+		vars.put("pass",  salary.getTaskPass() );
+		vars.put("title","");
+		actTaskService.complete(salary.getTaskId(),vars);
 		return salaryDao.update(salary);
 	}
 	

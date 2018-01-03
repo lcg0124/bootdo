@@ -306,29 +306,6 @@
     });
 
     function connect() {
-//        var socket = new SockJS('/endpointWisely'); //链接SockJS 的endpoint 名称为"/endpointWisely"
-//        stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
-//        stompClient.connect({}, function (frame) {//链接Web Socket的服务端。
-//            stompClient.subscribe('/topic/getResponse', function (response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
-//                toastr.options = {
-//                    "closeButton": true,
-//                    "debug": false,
-//                    "progressBar": true,
-//                    "positionClass": "toast-bottom-right",
-//                    "onclick": null,
-//                    "showDuration": "400",
-//                    "hideDuration": "1000",
-//                    "timeOut": "7000",
-//                    "extendedTimeOut": "1000",
-//                    "showEasing": "swing",
-//                    "hideEasing": "linear",
-//                    "showMethod": "fadeIn",
-//                    "hideMethod": "fadeOut"
-//                }
-//                toastr.info(JSON.parse(response.body).responseMessage);
-//            });
-//        });
-        //链接endpoint名称为 "/endpointChat" 的endpoint。
         var sock = new SockJS("/endpointChat");
         var stomp = Stomp.over(sock);
         stomp.connect('guest', 'guest', function(frame) {
