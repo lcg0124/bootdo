@@ -19,7 +19,7 @@ public class XssConfig{
 		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
 		filterRegistrationBean.setFilter(new XssFilter());
 		filterRegistrationBean.setOrder(1);
-		filterRegistrationBean.setEnabled(true);
+		filterRegistrationBean.setEnabled(false);
 		filterRegistrationBean.addUrlPatterns("/*");
 		Map<String, String> initParameters = Maps.newHashMap();
 		initParameters.put("excludes", "/favicon.ico,/img/*,/js/*,/css/*");
