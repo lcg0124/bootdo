@@ -2,6 +2,7 @@ package com.bootdo.system.service.impl;
 
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.domain.UserOnline;
+import com.bootdo.system.domain.UserToken;
 import com.bootdo.system.service.SessionService;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -35,14 +36,12 @@ public class SessionServiceImpl implements SessionService {
         Collection<Session> sessions = sessionDAO.getActiveSessions();
         for (Session session : sessions) {
             UserOnline userOnline = new UserOnline();
-            UserDO userDO = new UserDO();
-            SimplePrincipalCollection principalCollection = new SimplePrincipalCollection();
             if (session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY) == null) {
                 continue;
             } else {
-                principalCollection = (SimplePrincipalCollection) session
+                SimplePrincipalCollection principalCollection = (SimplePrincipalCollection) session
                         .getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-                userDO = (UserDO) principalCollection.getPrimaryPrincipal();
+                UserDO userDO = (UserDO) principalCollection.getPrimaryPrincipal();
                 userOnline.setUsername(userDO.getUsername());
             }
             userOnline.setId((String) session.getId());

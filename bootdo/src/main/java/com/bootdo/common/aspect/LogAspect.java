@@ -2,9 +2,13 @@ package com.bootdo.common.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bootdo.system.domain.UserToken;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,8 +43,9 @@ public class LogAspect {
 		Object result = point.proceed();
 		// 执行时长(毫秒)
 		long time = System.currentTimeMillis() - beginTime;
-		// 保存日志
+		//异步保存日志
 		saveLog(point, time);
+
 		return result;
 	}
 

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		List<Long> roleIds = userRoleMapper.listRoleId(id);
 		UserDO user = userMapper.get(id);
 		user.setDeptName(deptMapper.get(user.getDeptId()).getName());
-		user.setroleIds(roleIds);
+		user.setRoleIds(roleIds);
 		return user;
 	}
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 	public int save(UserDO user) {
 		int count = userMapper.save(user);
 		Long userId = user.getUserId();
-		List<Long> roles = user.getroleIds();
+		List<Long> roles = user.getRoleIds();
 		userRoleMapper.removeByUserId(userId);
 		List<UserRoleDO> list = new ArrayList<>();
 		for (Long roleId : roles) {
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 	public int update(UserDO user) {
 		int r = userMapper.update(user);
 		Long userId = user.getUserId();
-		List<Long> roles = user.getroleIds();
+		List<Long> roles = user.getRoleIds();
 		userRoleMapper.removeByUserId(userId);
 		List<UserRoleDO> list = new ArrayList<>();
 		for (Long roleId : roles) {

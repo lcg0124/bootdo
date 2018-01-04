@@ -36,7 +36,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     UserRoleDao userRoleMapper;
 
-    @Cacheable(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
     @Override
     public List<RoleDO> list() {
         List<RoleDO> roles = roleMapper.list(new HashMap<>(16));
@@ -59,7 +58,6 @@ public class RoleServiceImpl implements RoleService {
         }
         return roles;
     }
-    @CacheEvict(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
     @Transactional
     @Override
     public int save(RoleDO role) {
@@ -80,7 +78,6 @@ public class RoleServiceImpl implements RoleService {
         return count;
     }
 
-    @CacheEvict(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
     @Transactional
     @Override
     public int remove(Long id) {
@@ -95,7 +92,6 @@ public class RoleServiceImpl implements RoleService {
         return roleDO;
     }
 
-    @CacheEvict(value = DEMO_CACHE_NAME, key = ROLE_ALL_KEY)
     @Override
     public int update(RoleDO role) {
         int r = roleMapper.update(role);
