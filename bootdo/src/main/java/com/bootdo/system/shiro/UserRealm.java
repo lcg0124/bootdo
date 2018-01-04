@@ -51,11 +51,6 @@ public class UserRealm extends AuthorizingRealm {
 		// 查询用户信息
 		UserDO user = userMapper.list(map).get(0);
 
-		UserDO userToken = new UserDO();
-		userToken.setUserId(user.getUserId());
-		userToken.setUsername(user.getUsername());
-		userToken.setDeptId(user.getDeptId());
-
 		// 账号不存在
 		if (user == null) {
 			throw new UnknownAccountException("账号或密码不正确");
@@ -70,7 +65,7 @@ public class UserRealm extends AuthorizingRealm {
 		if (user.getStatus() == 0) {
 			throw new LockedAccountException("账号已被锁定,请联系管理员");
 		}
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userToken, password, getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 		return info;
 	}
 
