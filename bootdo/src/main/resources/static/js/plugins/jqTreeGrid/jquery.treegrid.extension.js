@@ -82,7 +82,7 @@
                     }
                     tr.append(td);
                 }else{
-                    var td = $('<td style="'+((column.width)?('width:'+column.width):'')+'"></td>');
+                    var td = $('<td style="text-align:'+column.align+';'+((column.width)?('width:'+column.width):'')+'"></td>');
                     // 增加formatter渲染
                     if (column.formatter) {
                         td.html(column.formatter.call(this, item, index));
@@ -104,9 +104,9 @@
                 // 判断有没有选择列
                 if(i==0&&item.field=='selectItem'){
                     hasSelectItem = true;
-                    th = $('<th style="width:36px"></th>');
+                    th = $('<th style="text-align:'+item.valign+';width:36px"></th>');
                 }else{
-                    th = $('<th style="padding:10px;'+((item.width)?('width:'+item.width):'')+'"></th>');
+                    th = $('<th style="text-align:'+item.valign+';padding:10px;'+((item.width)?('width:'+item.width):'')+'"></th>');
                 }
                 th.text(item.title);
                 thr.append(th);
