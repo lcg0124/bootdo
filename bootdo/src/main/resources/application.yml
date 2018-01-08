@@ -30,3 +30,5 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mybatis/**/*Mapper.xml
   typeAliasesPackage: com.bootdo.**.domain
+#配置缓存和session存储方式，默认ehcache,可选redis
+cacheType: ehcache
