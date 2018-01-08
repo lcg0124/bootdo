@@ -277,17 +277,17 @@ $(function(){
           }
 
           this.$avatarInput.val('');
-          this.alert(data.msg);
+          this.alert(1,data.msg);
         } else if (data.msg) {
-          this.alert(data.msg);
+          this.alert(2,data.msg);
         }
       } else {
-        this.alert('Failed to response');
+        this.alert(2,'Failed to response');
       }
     },
 
     submitFail: function (msg) {
-      this.alert(msg);
+      this.alert(2,msg);
     },
 
     submitEnd: function () {
@@ -300,9 +300,15 @@ $(function(){
       this.stopCropper();
     },
 
-    alert: function (msg) {
+    alert: function (code,msg) {
+        var alertClass="";
+      if(code==1){
+        alertClass="alert-success";
+      }else if(code==2){
+          alertClass="alert-danger";
+      }
       var $alert = [
-            '<div class="alert alert-danger avater-alert">',
+            '<div class="alert '+alertClass+' avater-alert">',
               '<button type="button" class="close" data-dismiss="alert">&times;</button>',
               msg,
             '</div>'
