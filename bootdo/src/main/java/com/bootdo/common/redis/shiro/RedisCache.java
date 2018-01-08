@@ -14,8 +14,7 @@ import java.util.Set;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.util.CollectionUtils;
-import org.crazycake.shiro.RedisManager;
-import org.crazycake.shiro.SerializeUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

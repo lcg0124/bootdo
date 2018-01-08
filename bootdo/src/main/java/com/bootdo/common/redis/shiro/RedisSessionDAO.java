@@ -3,7 +3,6 @@ package com.bootdo.common.redis.shiro;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
-import org.crazycake.shiro.SerializeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
