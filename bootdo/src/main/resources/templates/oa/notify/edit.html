@@ -14,10 +14,10 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">类型：</label>
 								<div class="col-sm-8">
-									<select data-placeholder="选择类别" name="type" id="type" 
-										class="form-control chosen-select" tabindex="2"
-										style="width: 100%">
-										<option value="">选择类别</option>
+									<select data-placeholder="--选择类别--" name="type" id="type"
+										class="form-control chosen-select" tabindex="2">
+										<option value="">-- 选择类别 --</option>
+										<option th:each="oaNotifyType : ${oaNotifyTypes}" th:value="${oaNotifyType.value}" th:text="${oaNotifyType.name}" th:if="${oaNotifyType.remarks ==checked}" th:selected="selected"></option>
 									</select>
 								</div>
 							</div>

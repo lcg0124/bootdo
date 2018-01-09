@@ -33,16 +33,13 @@ public class SalaryController {
     ActivitiUtils activitiUtils;
 
     @GetMapping()
-        //@RequiresPermissions("activiti:salary:salary")
     String Salary() {
         return "activiti/salary/salary";
     }
 
     @ResponseBody
     @GetMapping("/list")
-    //@RequiresPermissions("activiti:salary:salary")
     public PageUtils list(@RequestParam Map<String, Object> params) {
-        //查询列表数据
         Query query = new Query(params);
         List<SalaryDO> salaryList = salaryService.list(query);
         int total = salaryService.count(query);
@@ -51,14 +48,11 @@ public class SalaryController {
     }
 
     @GetMapping("/form")
-        //@RequiresPermissions("activiti:salary:add")
     String add() {
-
         return "act/salary/add";
     }
 
     @GetMapping("/form/{taskId}")
-        //@RequiresPermissions("activiti:salary:edit")
     String edit(@PathVariable("taskId") String taskId, Model model) {
         SalaryDO salary = salaryService.get(activitiUtils.getBusinessKeyByTaskId(taskId));
         salary.setTaskId(taskId);
@@ -71,7 +65,6 @@ public class SalaryController {
      */
     @ResponseBody
     @PostMapping("/save")
-    //@RequiresPermissions("activiti:salary:add")
     public R saveOrUpdate(SalaryDO salary) {
         salary.setCreateDate(new Date());
         salary.setUpdateDate(new Date());
@@ -89,7 +82,6 @@ public class SalaryController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    //@RequiresPermissions("activiti:salary:edit")
     public R update(SalaryDO salary) {
         String taskKey = activitiUtils.getTaskByTaskId(salary.getTaskId()).getTaskDefinitionKey();
         if ("audit2".equals(taskKey)) {
@@ -110,7 +102,6 @@ public class SalaryController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    //@RequiresPermissions("activiti:salary:remove")
     public R remove(String id) {
         if (salaryService.remove(id) > 0) {
             return R.ok();
@@ -123,7 +114,6 @@ public class SalaryController {
      */
     @PostMapping("/batchRemove")
     @ResponseBody
-    //@RequiresPermissions("activiti:salary:batchRemove")
     public R remove(@RequestParam("ids[]") String[] ids) {
         salaryService.batchRemove(ids);
         return R.ok();

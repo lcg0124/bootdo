@@ -151,7 +151,7 @@
 			<if test="userId != null and userId != ''"> and r.user_id = #{userId} </if>
 			<if test="readDate != null and readDate != ''"> and r.read_date = #{readDate} </if>
 		</where>
-		order by is_read ASC, create_date DESC
+		order by is_read ASC, update_date DESC
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

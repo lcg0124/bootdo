@@ -73,7 +73,7 @@ public class TaskController {
 
     @GetMapping("/todo")
     ModelAndView todo(){
-        return new ModelAndView("/act/task/todoTask");
+        return new ModelAndView("act/task/todoTask");
     }
 
     @GetMapping("/todoList")

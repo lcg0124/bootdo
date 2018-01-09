@@ -137,10 +137,9 @@ function edit(id) {
 		title : '修改模型',
 		maxmin : true,
 		shadeClose : false,
-		area : [ '800px', '520px' ],
+		area : [ '100%', '100%' ],
 		content : prefix + '/edit/' + id
 	});
-	layer.full(page);
 }
 
 function covertToModel(id) {

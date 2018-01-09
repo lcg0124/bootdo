@@ -46,4 +46,11 @@ public interface DictService {
 	 */
 	List<DictDO> getSexList();
 
+	/**
+	 * 根据type获取数据
+	 * @param map
+	 * @return
+	 */
+	List<DictDO> listByType(String type);
+
 }

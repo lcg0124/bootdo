@@ -100,17 +100,15 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-	// iframe层
-    // window.open(prefix + '/add');
-    var page = parent.layer.open({
+    var page = layer.open({
 		type : 2,
 		title : '新建模型',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '100%', '100%' ],
-		content : prefix + '/add'
+		content : prefix + '/add',
+        closeBtn: 0, //不显示关闭按钮
 	});
-    layer.full(page);
 }
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {

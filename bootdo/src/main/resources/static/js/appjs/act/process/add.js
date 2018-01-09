@@ -7,24 +7,17 @@ $.validator.setDefaults({
 		save();
 	}
 });
-function getCheckedRoles() {
-	var adIds = "";
-	$("input:checkbox[name=role]:checked").each(function(i) {
-		if (0 == i) {
-			adIds = $(this).val();
-		} else {
-			adIds += ("," + $(this).val());
-		}
-	});
-	return adIds;
-}
+
 function save() {
-	$.ajax({
-		cache : true,
+    var formData = new FormData($("#signupForm")[0]);
+    $.ajax({
 		type : "POST",
-		url : "/act/process/save",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
+		url : "/activiti/process/save",
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
 		error : function(request) {
 			parent.layer.alert("Connection error");
 		},

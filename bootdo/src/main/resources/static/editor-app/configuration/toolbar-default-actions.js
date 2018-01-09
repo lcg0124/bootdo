@@ -264,6 +264,7 @@ KISBPM.TOOLBAR = {
         	//window.location.href = "./";
             var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
             parent.layer.close(index);
+            parent.reLoad();
         },
         
         /**
@@ -331,6 +332,7 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
     		//window.location.href = "./";
             var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
             parent.layer.close(index);
+            parent.reLoad();
     	});
     };
     $scope.save = function (successCallback) {

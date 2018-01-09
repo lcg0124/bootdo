@@ -1,5 +1,7 @@
 package com.bootdo.activiti.controller;
 
+import com.bootdo.common.config.Constant;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.R;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,9 +34,12 @@ import java.util.List;
 
 import static org.activiti.editor.constants.ModelDataJsonConstants.*;
 
+/**
+ * @author bootdo 1992lcg@163.com
+ */
 @RequestMapping("/activiti")
 @RestController
-public class ModelController {
+public class ModelController extends BaseController{
     protected static final Logger LOGGER = LoggerFactory.getLogger(ModelEditorJsonRestResource.class);
 
     @Autowired
@@ -50,7 +55,6 @@ public class ModelController {
 
     @GetMapping("/model/list")
     PageUtils list(int offset, int limit) {
-
         List<Model> list = repositoryService.createModelQuery().listPage(offset
                 , limit);
         int total = (int) repositoryService.createModelQuery().count();
@@ -60,9 +64,9 @@ public class ModelController {
 
     @RequestMapping("/model/add")
     public void newModel(HttpServletResponse response) throws UnsupportedEncodingException {
+
         //初始化一个空模型
         Model model = repositoryService.newModel();
-
         //设置一些默认信息
         String name = "new-process";
         String description = "";
@@ -99,11 +103,8 @@ public class ModelController {
 
     @GetMapping(value = "/model/{modelId}/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {
-        System.out.println("------------------------------------+++++++++++++++++++++");
         ObjectNode modelNode = null;
-
         Model model = repositoryService.getModel(modelId);
-
         if (model != null) {
             try {
                 if (StringUtils.isNotEmpty(model.getMetaInfo())) {
@@ -151,8 +152,10 @@ public class ModelController {
     }
 
     @PostMapping("/model/deploy/{id}")
-    public Object deploy(@PathVariable("id") String id) throws Exception {
-
+    public R deploy(@PathVariable("id") String id) throws Exception {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         //获取模型
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
@@ -228,8 +231,9 @@ public class ModelController {
             throw new ActivitiException("Error saving model", e);
         }
     }
+
     @GetMapping("/model/export/{id}")
-    public void exportToXml(@PathVariable("id") String id, HttpServletResponse response){
+    public void exportToXml(@PathVariable("id") String id, HttpServletResponse response) {
         try {
             org.activiti.engine.repository.Model modelData = repositoryService.getModel(id);
             BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
@@ -244,7 +248,7 @@ public class ModelController {
             response.setHeader("Content-Disposition", "attachment; filename=" + filename);
             response.flushBuffer();
         } catch (Exception e) {
-            throw new ActivitiException("导出model的xml文件失败，模型ID="+id, e);
+            throw new ActivitiException("导出model的xml文件失败，模型ID=" + id, e);
         }
     }
 }

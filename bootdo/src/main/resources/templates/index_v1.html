@@ -306,11 +306,15 @@
     });
 
     function connect() {
-        var socket = new SockJS('/endpointWisely'); //链接SockJS 的endpoint 名称为"/endpointWisely"
-        stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
-        stompClient.connect({}, function (frame) {//链接Web Socket的服务端。
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/getResponse', function (response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+        var sock = new SockJS("/endpointChat");
+        var stomp = Stomp.over(sock);
+        stomp.connect('guest', 'guest', function(frame) {
+
+            /**  订阅了/user/queue/notifications 发送的消息,这里雨在控制器的 convertAndSendToUser 定义的地址保持一致, 
+             *  这里多用了一个/user,并且这个user 是必须的,使用user 才会发送消息到指定的用户。 
+             *  */
+            stomp.subscribe("/user/queue/notifications", handleNotification);
+            stomp.subscribe('/topic/getResponse', function (response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
                 toastr.options = {
                     "closeButton": true,
                     "debug": false,
@@ -329,6 +333,10 @@
                 toastr.info(JSON.parse(response.body).responseMessage);
             });
         });
+        function handleNotification(message) {
+            wrapper.notify();
+            toastr.info(message.body);
+        }
     }
 
     var wrapper = new Vue({
@@ -350,7 +358,7 @@
                     title: '个人设置',
                     maxmin: true,
                     shadeClose: false,
-                    area: ['1024px', '720px'],
+                    area: ['800px', '600px'],
                     content: '/sys/user/personal'
                 });
             }

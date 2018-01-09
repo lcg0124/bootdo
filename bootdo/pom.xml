@@ -5,7 +5,7 @@
 
     <groupId>com.bootdo</groupId>
     <artifactId>bootdo</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.3</version>
     <packaging>jar</packaging>
 
     <name>bootdo</name>
@@ -136,6 +136,10 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
         <!-- quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -157,11 +161,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
         <!--activiti-->
         <dependency>
             <groupId>org.activiti</groupId>
@@ -197,12 +201,24 @@
             <version>2.6.1</version>
         </dependency>
 
+        <!-- 添加redis支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!-- xss过滤组件 -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.9.2</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.crazycake</groupId>-->
+            <!--<artifactId>shiro-redis</artifactId>-->
+            <!--<version>2.4.2.1-RELEASE</version>-->
+        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>

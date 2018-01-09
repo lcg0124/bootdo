@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bootdo.common.config.ApplicationContextRegister;
+import com.bootdo.system.domain.UserToken;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

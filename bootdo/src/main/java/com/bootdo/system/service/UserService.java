@@ -33,7 +33,7 @@ public interface UserService {
 	Set<String> listRoles(Long userId);
 
 	int resetPwd(UserVO userVO,UserDO userDO) throws Exception;
-
+	int adminResetPwd(UserVO userVO) throws Exception;
 	Tree<DeptDO> getTree();
 
 	/**

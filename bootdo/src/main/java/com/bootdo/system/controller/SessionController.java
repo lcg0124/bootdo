@@ -1,5 +1,6 @@
 package com.bootdo.system.controller;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,4 +52,6 @@ public class SessionController {
 	public Collection<Session> sessionList() {
 		return sessionService.sessionList();
 	}
+
+
 }

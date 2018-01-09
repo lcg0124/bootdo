@@ -7,7 +7,7 @@
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="col-sm-12">
@@ -15,7 +15,7 @@
                     </div>
                     <form class="form-horizontal m-t" id="signupForm">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">导入流程：</label>
+                            <label class="col-sm-1 control-label">类别：</label>
                             <div class="col-sm-4">
                                 <input id="category" name="category" type="input">
                             </div>
@@ -42,12 +42,6 @@
     </div>
 </div>
 
-测试代码
-
-<form action="/act/process/save" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <input type="submit" value="上传文件" />
-</form>
 <div th:include="include::footer"></div>
 <script type="text/javascript" src="/js/appjs/act/process/add.js">
 </script>

@@ -1,6 +1,6 @@
 package com.bootdo.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +8,6 @@ import java.util.List;
 
 public class UserDO implements Serializable {
     private static final long serialVersionUID = 1L;
-
     //
     private Long userId;
     // 用户名
@@ -37,6 +36,7 @@ public class UserDO implements Serializable {
     //性别
     private Long sex;
     //出身日期
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     //图片ID
     private Long picId;
@@ -50,34 +50,22 @@ public class UserDO implements Serializable {
     private String city;
     //所在地区
     private String district;
-    /**
-     * 设置：
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
-    /**
-     * 获取：
-     */
     public Long getUserId() {
         return userId;
     }
 
-    /**
-     * 设置：用户名
-     */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    /**
-     * 获取：用户名
-     */
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getName() {
         return name;
@@ -87,18 +75,12 @@ public class UserDO implements Serializable {
         this.name = name;
     }
 
-    /**
-     * 设置：密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 获取：密码
-     */
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getDeptId() {
@@ -117,95 +99,59 @@ public class UserDO implements Serializable {
         this.deptName = deptName;
     }
 
-    /**
-     * 设置：邮箱
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * 获取：邮箱
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * 设置：手机号
-     */
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    /**
-     * 获取：手机号
-     */
     public String getMobile() {
         return mobile;
     }
 
-    /**
-     * 设置：状态 0:禁用，1:正常
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    /**
-     * 获取：状态 0:禁用，1:正常
-     */
     public Integer getStatus() {
         return status;
     }
 
-    /**
-     * 设置：创建用户id
-     */
-    public void setUserIdCreate(Long userIdCreate) {
-        this.userIdCreate = userIdCreate;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    /**
-     * 获取：创建用户id
-     */
     public Long getUserIdCreate() {
         return userIdCreate;
     }
 
-    /**
-     * 设置：创建时间
-     */
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setUserIdCreate(Long userIdCreate) {
+        this.userIdCreate = userIdCreate;
     }
 
-    /**
-     * 获取：创建时间
-     */
     public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    /**
-     * 设置：修改时间
-     */
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 
-    /**
-     * 获取：修改时间
-     */
     public Date getGmtModified() {
         return gmtModified;
     }
 
-    public List<Long> getroleIds() {
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public List<Long> getRoleIds() {
         return roleIds;
     }
 
-    public void setroleIds(List<Long> roleIds) {
+    public void setRoleIds(List<Long> roleIds) {
         this.roleIds = roleIds;
     }
 

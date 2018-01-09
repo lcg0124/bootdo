@@ -1,5 +1,5 @@
 $().ready(function() {
-	loadType();
+	//loadType();
 	validateRule();
 });
 

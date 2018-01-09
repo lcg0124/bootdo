@@ -44,14 +44,13 @@ BootDo 提供了常用工具进行封装，包括日志工具、缓存工具、�
 * 数据库连接池：Alibaba Druid 
 * 缓存框架：Ehcache 、Redis
 * 日志管理：SLF4J 
-* 工具类：Apache Commons、Jackson 、Xstream 1.4、Dozer 5.3、POI 3.9
+* 工具类：Apache Commons、Jackson 
 
 2、前端
 
 * JS框架：jQuery
 * 客户端验证：JQuery Validation 
 * 富文本在线编辑：summernote
-* 在线文件管理：CKFinder
 * 数据表格：bootstrapTable
 * 弹出层：layer
 * 树结构控件：jsTree
@@ -59,8 +58,7 @@ BootDo 提供了常用工具进行封装，包括日志工具、缓存工具、�
 4、平台
 
 * 服务器中间件：SpringBoot内置
-* 数据库支持：目前仅提供MySql数据库的支持，但不限于数据库，平台留有其它数据库支持接口，
-你可以很方便的更改为其它数据库，如：SqlServer 2008、MySql 5.5、H2等
+* 数据库支持：目前仅提供MySql数据库的支持，但不限于数据库
 * 开发环境：Java、Eclipse Java EE 、Maven 、Git
 
 ## 安全考虑

@@ -25,21 +25,27 @@ function load() {
 						field : 'deptId',
 						visible : false,
 						align : 'center',
-						valign : 'middle',
-						width : '50px'
+						valign : 'center',
+						width : '50px',
+						checkbox : true
 					},
 					{
 						field : 'name',
-						title : '部门名称'
+						title : '部门名称',
+                        valign : 'center',
+						witth :20
 					},
 					{
 						field : 'orderNum',
-						title : '排序'
+						title : '排序',
+                        align : 'center',
+                        valign : 'center',
 					},
 					{
 						field : 'delFlag',
 						title : '状态',
 						align : 'center',
+                        valign : 'center',
 						formatter : function(item, index) {
 							if (item.delFlag == '0') {
 								return '<span class="label label-danger">禁用</span>';
@@ -52,6 +58,7 @@ function load() {
 						title : '操作',
 						field : 'id',
 						align : 'center',
+                        valign : 'center',
 						formatter : function(item, index) {
 							var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
 								+ item.deptId

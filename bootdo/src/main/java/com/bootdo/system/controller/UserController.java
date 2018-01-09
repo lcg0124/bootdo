@@ -184,7 +184,22 @@ public class UserController extends BaseController {
 		}
 
 	}
-	
+	@RequiresPermissions("sys:user:resetPwd")
+	@Log("admin提交更改用户密码")
+	@PostMapping("/adminResetPwd")
+	@ResponseBody
+	R adminResetPwd(UserVO userVO) {
+		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		try{
+			userService.adminResetPwd(userVO);
+			return R.ok();
+		}catch (Exception e){
+			return R.error(1,e.getMessage());
+		}
+
+	}
 	@GetMapping("/tree")
 	@ResponseBody
 	public Tree<DeptDO> tree() {

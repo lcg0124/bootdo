@@ -99,5 +99,11 @@ public class DictServiceImpl implements DictService {
         return dictDao.list(param);
     }
 
+    @Override
+    public List<DictDO> listByType(String type) {
+        Map<String, Object> param = new HashMap<>(16);
+        param.put("type", type);
+        return dictDao.list(param);
+    }
 
 }
