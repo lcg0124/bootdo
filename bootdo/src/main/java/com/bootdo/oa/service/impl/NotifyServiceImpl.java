@@ -79,20 +79,20 @@ public class NotifyServiceImpl implements NotifyService {
         }
         recordDao.batchSave(records);
         //给在线用户发送通知
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,1,0, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                for (UserDO userDO : sessionService.listOnlineUser()) {
-                    for (Long userId : userIds) {
-                        if (userId.equals(userDO.getUserId())) {
-                            template.convertAndSendToUser(userDO.toString(), "/queue/notifications", "新消息：" + notify.getTitle());
-                        }
-                    }
-                }
-            }
-        });
-        executor.shutdown();
+//        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,1,0, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (UserDO userDO : sessionService.listOnlineUser()) {
+//                    for (Long userId : userIds) {
+//                        if (userId.equals(userDO.getUserId())) {
+//                            template.convertAndSendToUser(userDO.toString(), "/queue/notifications", "新消息：" + notify.getTitle());
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//        executor.shutdown();
         return r;
     }
 

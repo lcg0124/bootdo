@@ -147,6 +147,9 @@ public class ModelController extends BaseController{
 
     @DeleteMapping("/model/{id}")
     public R remove(@PathVariable("id") String id) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         repositoryService.deleteModel(id);
         return R.ok();
     }
@@ -186,6 +189,9 @@ public class ModelController extends BaseController{
 
     @PostMapping("/model/batchRemove")
     public R batchRemove(@RequestParam("ids[]") String[] ids) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         for (String id : ids) {
             repositoryService.deleteModel(id);
         }

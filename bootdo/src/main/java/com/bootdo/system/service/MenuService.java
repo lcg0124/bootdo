@@ -1,6 +1,7 @@
 package com.bootdo.system.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public interface MenuService {
 
 	Tree<MenuDO> getTree(Long id);
 
-	List<MenuDO> list();
+	List<MenuDO> list(Map<String, Object> params);
 
 	int remove(Long id);
 

@@ -73,6 +73,7 @@ function load() {
 					{
 						field:'is',
 						title:'导出xml',
+						visible:false,
 						formatter:function(value, row, index){
 							return '<a href="/activiti/model/export/'+row.id+'" target="_blank">xml</a>';
 						}

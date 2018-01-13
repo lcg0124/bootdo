@@ -3,6 +3,8 @@ package com.bootdo.activiti.controller;
 import com.bootdo.activiti.domain.SalaryDO;
 import com.bootdo.activiti.service.SalaryService;
 import com.bootdo.activiti.utils.ActivitiUtils;
+import com.bootdo.common.config.Constant;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -26,7 +28,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/act/salary")
-public class SalaryController {
+public class SalaryController extends BaseController{
     @Autowired
     private SalaryService salaryService;
     @Autowired
@@ -66,6 +68,9 @@ public class SalaryController {
     @ResponseBody
     @PostMapping("/save")
     public R saveOrUpdate(SalaryDO salary) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         salary.setCreateDate(new Date());
         salary.setUpdateDate(new Date());
         salary.setCreateBy(ShiroUtils.getUserId().toString());
@@ -83,6 +88,9 @@ public class SalaryController {
     @ResponseBody
     @RequestMapping("/update")
     public R update(SalaryDO salary) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         String taskKey = activitiUtils.getTaskByTaskId(salary.getTaskId()).getTaskDefinitionKey();
         if ("audit2".equals(taskKey)) {
             salary.setHrText(salary.getTaskComment());
@@ -103,6 +111,9 @@ public class SalaryController {
     @PostMapping("/remove")
     @ResponseBody
     public R remove(String id) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         if (salaryService.remove(id) > 0) {
             return R.ok();
         }
@@ -115,6 +126,9 @@ public class SalaryController {
     @PostMapping("/batchRemove")
     @ResponseBody
     public R remove(@RequestParam("ids[]") String[] ids) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         salaryService.batchRemove(ids);
         return R.ok();
     }

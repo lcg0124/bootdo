@@ -1,165 +1,66 @@
-/**
- * Created by liuruijie on 2016/9/28.
- * 前端控制
- */
-    //状态码
-web_status = {
-    SUCCESS : "000",
-    FAIL : "001",
-    NO_LOGIN : "003",
-    NO_PRIVILEGE : "004"
-};
+(function($) {
+    // 首先备份下jquery的ajax方法
+    var _ajax = $.ajax;
 
-function getQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
-}
-
-function simpleSuccess(result) {
-    //如果成功，则读取后端返回的操作指令
-    if (result.status == web_status.SUCCESS) {
-        if(result['msg']){
-            alert(result.msg);
-        }
-        //刷新
-        if(result['refresh']){
-            window.location.reload();
-            return;
-        }
-        //返回
-        if(result['back']){
-            window.location.href = document.referrer;
-        }
-        //跳转
-        if(result['redirectUrl']!=null){
-            window.location.href = result.redirectUrl;
-            return;
-        }
-        return result.data;
-    }
-    //未登录
-    if (result.status == web_status.NO_LOGIN) {
-        alert("您还未登陆！");
-        window.location.href =
-            "http://127.0.0.1:8081/login.html?backToUrl="+encodeURIComponent(btoa(window.location.href));
-    }else{
-        //其他错误情况，直接弹出提示框
-        if(result.msg!=null){
-            alert(result.msg);
-        }
-    }
-    return null;
-}
-
-//对jquery的ajax方法再次封装
-__ajax = function(url, data, success, type ,contentType){
-    success = success||function(data){};
-    data = data||{};
-    var config = {
-        url:url,
-        type:type,
-        dataType:"json",
-        data:data,
-        success:function(result){
-            success(simpleSuccess(result));
-        }
-    };
-    //如果需要token校验
-    if(contentType){
-        config.contentType = contentType;
-    }
-
-    var token = $.cookie("token");
-    if(token){
-        config.beforeSend = function (xhr) {
-            xhr.setRequestHeader("Authorization", "Basic " + btoa(token));
-        }
-    }
-    $.ajax(config)
-};
-
-//再再次封装
-AJAX = {
-  GET:function(url, data, success){
-      __ajax(url, data, success, "get");
-    },
-    POST_JSON: function(url, data, success){
-        __ajax(url, data, success, "post", "application/json");
-    },
-    POST:function(url, data, success){
-        __ajax(url, data, success, "post");
-    },
-    DELETE: function(url, data, success){
-        __ajax(url, data, success, "delete");
-    },
-    PUT:function(url, data, success){
-        __ajax(url, data, success, "put", "application/json");
-    },
-    PATCH: function (url, data, success) {
-        __ajax(url, data, success, "patch", "application/json");
-    },
-    INCLUDE: function (url, id) {
-        $.ajax({
-            url:url,
-            type:"get",
-            dataType:"html",
-            error: function (code) {
-                $("#"+id).html("加载失败");
+    // 重写jquery的ajax方法
+    $.ajax = function(options) {
+        // 备份opt中error和success方法
+        var callback = {
+            "beforeSend" : function(XHR) {
             },
-            success: function (result) {
-                $("#"+id).html(result);
+            "complete" : function(XHR, TS) {
+            },
+            "error" : function(XMLHttpRequest, textStatus, errorThrown) {
+            },
+            "success" : function(data, textStatus) {
             }
-        })
-    }
-};
+        }
 
-//
-//
-// function __act_ajax(url, data, success, type, contentType){
-//     if(!success&&type == 'get'){
-//         success = function(data){
-//         }
-//     }
-//     else if(!success){
-//         success = function(data){
-//             window.location.reload();
-//         }
-//     }
-//     var config = {
-//         url: url,
-//         data: data,
-//         type: type,
-//         dataType: "json",
-//         error: function(code){
-//             alert("失败! code = "+code.status);
-//         },
-//         success: function(result){
-//             success(result);
-//         }
-//     };
-//
-//     if(contentType){
-//         config.contentType = contentType;
-//     }
-//     $.ajax(config);
-// }
-//
-// ACT_AJAX = {
-//     GET:function(url, data, success){
-//         __act_ajax(url, data, success, "get");
-//     },
-//     POST:function(url, data, success){
-//         __act_ajax(url, data, success, "post");
-//     },
-//     PUT:function(url, data, success){
-//         __act_ajax(url, data, success, "put", "application/json");
-//     },
-//     DELETE:function(url, data, success){
-//         __act_ajax(url, data, success, "delete");
-//     },
-//     PATCH: function (url, data, success) {
-//         __act_ajax(url, data, success, "patch", "application/json");
-//     }
-// };
+        // 判断参数中是否有beforeSend回调函数
+        if (options.beforeSend) {
+            callback.beforeSend = options.beforeSend;
+        }
+
+        // 判断参数中是否有complete回调函数
+        if (options.complete) {
+            callback.complete = options.complete;
+        }
+
+        // 判断参数中是否有error回调函数
+        if (options.error) {
+            callback.error = options.error;
+        }
+
+        // 判断参数中是否有success回调函数
+        if (options.success) {
+            callback.success = options.success;
+        }
+
+        // 扩展增强处理
+        var _opt = $.extend(options, {
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                // 错误方法增强处理
+                callback.error(XMLHttpRequest, textStatus, errorThrown);
+            },
+            success : function(data, textStatus) {
+                // 成功回调方法增强处理
+                callback.success(data, textStatus);
+            },
+            beforeSend : function(XHR) {
+                // 提交前回调方法
+                var index = layer.load(1, {
+                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
+                callback.beforeSend(XHR);
+            },
+            complete : function(XHR, TS) {
+                // 请求完成后回调函数 (请求成功或失败之后均调用)。
+                layer.closeAll('loading');
+                callback.complete(XHR, TS);
+            }
+        });
+
+        // 返回重写的ajax
+        return _ajax(_opt);
+    };
+})(jQuery);
