@@ -49,8 +49,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<MenuDO> list() {
-		List<MenuDO> menus = menuMapper.list(new HashMap<String,Object>(16));
+	public List<MenuDO> list(Map<String, Object> params) {
+		List<MenuDO> menus = menuMapper.list(params);
 		return menus;
 	}
 

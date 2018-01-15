@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
     <title>BootDo</title>
     <meta name="keywords" content="BootDo管理系统">
     <meta name="description" content="BootDo管理系统">
@@ -104,15 +103,13 @@
 <script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
 
 <!-- jQuery Validation plugin javascript-->
+<script src="/js/ajax-util.js"></script>
 <script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
 <script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
-        console.log(ctx);
         validateRule();
-
     });
 
     $.validator.setDefaults({

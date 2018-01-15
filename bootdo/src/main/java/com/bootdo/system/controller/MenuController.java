@@ -14,7 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author bootdo 1992lcg@163.com
+ */
 @RequestMapping("/sys/menu")
 @Controller
 public class MenuController extends BaseController {
@@ -31,8 +35,8 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:menu")
 	@RequestMapping("/list")
 	@ResponseBody
-	List<MenuDO> list() {
-		List<MenuDO> menus = menuService.list();
+	List<MenuDO> list(@RequestParam Map<String, Object> params) {
+		List<MenuDO> menus = menuService.list(params);
 		return menus;
 	}
 

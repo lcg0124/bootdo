@@ -66,6 +66,9 @@ public class ProcessController extends BaseController{
     @PostMapping("/save")
     @Transactional(readOnly = false)
     public R deploy(String exportDir, String category, MultipartFile file) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
         String message = "";
         String fileName = file.getOriginalFilename();
         try {
@@ -146,6 +149,16 @@ public class ProcessController extends BaseController{
             return R.error(1, "演示系统不允许修改,完整体验请部署程序");
         }
         repositoryService.deleteDeployment(id,true);
+        return R.ok();
+    }
+    @PostMapping("/batchRemove")
+    public R batchRemove(@RequestParam("ids[]") String[] ids) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
+        for (String id : ids) {
+            repositoryService.deleteDeployment(id,true);
+        }
         return R.ok();
     }
 }
