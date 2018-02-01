@@ -72,7 +72,7 @@ BootDo 提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 ## 演示地址
 
-###### 布嘟开源[www.bootdo.com](http://www.bootdo.com./blog)
+## [www.bootdo.com](http://www.bootdo.com)
 
 ## 交流反馈
 
