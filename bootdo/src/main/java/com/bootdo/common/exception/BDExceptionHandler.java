@@ -37,13 +37,13 @@ public class BDExceptionHandler {
 	@ExceptionHandler(org.springframework.web.servlet.NoHandlerFoundException.class)
 	public R noHandlerFoundException(org.springframework.web.servlet.NoHandlerFoundException e) {
 		logger.error(e.getMessage(), e);
-		return R.error("没找找到页面");
+		return R.error(404,"没找找到页面");
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
 	public R handleAuthorizationException(AuthorizationException e) {
 		logger.error(e.getMessage(), e);
-		return R.error("未授权");
+		return R.error(403,"未授权");
 	}
 
 	@ExceptionHandler(Exception.class)

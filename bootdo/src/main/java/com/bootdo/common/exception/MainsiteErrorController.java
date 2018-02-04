@@ -13,7 +13,7 @@ public class MainsiteErrorController implements ErrorController {
 
 	@RequestMapping(value = ERROR_PATH)
 	public String handleError() {
-		return "error/404";
+		return "error/500";
 	}
 
 	@Override
