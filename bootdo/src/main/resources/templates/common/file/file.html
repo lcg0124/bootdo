@@ -20,7 +20,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <button type="button" class="layui-btn" id="test1" style="width: 100%;">
+                        <button type="button" class="layui-btn" id="test1" >
                             <i class="fa fa-cloud"></i>上传文件
                         </button>
                         <div class="hr-line-dashed"></div>
@@ -155,6 +155,7 @@
                                 app.getData();
                             } else {
                                 layer.msg(r.msg);
+                                app.getData();
                             }
                         }
                     });

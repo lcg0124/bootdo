@@ -48,9 +48,7 @@
                     <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>
                         bootstrap
                     </li>
-
                 </ul>
-
             </div>
         </div>
         <div class="col-sm-5">
@@ -61,7 +59,7 @@
                        value="admin"/>
                 <input type="password" name="password"
                        class="form-control pword m-b" value="111111"/>
-                <button class="btn btn-login btn-block">登录</button>
+                <a id="login" class="btn btn-login btn-block">登录</a>
                 <!--按钮模块-->
                 <div class="outside-login">
                     <div class="outside-login-tit">
@@ -109,6 +107,7 @@
 <script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#login").on('click',function(){$("#signupForm").submit();});
         validateRule();
     });
 
@@ -125,6 +124,9 @@
             data: $('#signupForm').serialize(),
             success: function (r) {
                 if (r.code == 0) {
+                    var index = layer.load(1, {
+                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                    });
                     parent.location.href = '/index';
                 } else {
                     layer.msg(r.msg);
@@ -155,8 +157,5 @@
         })
     }
 </script>
-
 </body>
-
-
 </html>
