@@ -48,7 +48,7 @@ public class WebLogAspect {
     @AfterReturning(returning = "ret", pointcut = "logPointCut()")// returning的值和doAfterReturning的参数名一致
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容(返回值太复杂时，打印的是物理存储空间的地址)
-        logger.info("返回值 : " + ret);
+        logger.debug("返回值 : " + ret);
     }
 
     @Around("logPointCut()")

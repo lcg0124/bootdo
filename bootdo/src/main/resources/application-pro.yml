@@ -3,6 +3,7 @@ bootdo:
 logging:
   level:
     root: error
+    com.bootdo: info
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

@@ -35,6 +35,7 @@ public class LoginController extends BaseController {
 	FileService fileService;
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
+
 		return "redirect:/blog";
 	}
 
@@ -89,8 +90,17 @@ public class LoginController extends BaseController {
 		return "main";
 	}
 
-	@GetMapping("/403")
-	String error403() {
+	@GetMapping("/test")
+	String test() {
+		Integer i = null;
+		System.out.println(i.toString());
+		return "403";
+	}
+	@ResponseBody
+	@GetMapping("/test2")
+	String test2() {
+		Integer i = null;
+		System.out.println(i.toString());
 		return "403";
 	}
 

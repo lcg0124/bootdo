@@ -2,8 +2,8 @@ bootdo:
   uploadPath: D:/var/uploaded_files/
 logging:
   level:
-    root: info
-    com.bootdo: debug
+    root: error
+    com.bootdo: info
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

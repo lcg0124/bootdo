@@ -4,8 +4,12 @@ package com.bootdo.common.redis.shiro;
  * @author bootdo 1992lcg@163.com
  * @version V1.0
  */
+
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -29,20 +33,20 @@ public class RedisManager {
 
     private static JedisPool jedisPool = null;
 
-    public RedisManager(){
+    public RedisManager() {
 
     }
 
     /**
      * 初始化方法
      */
-    public void init(){
-        if(jedisPool == null){
-            if(password != null && !"".equals(password)){
+    public void init() {
+        if (jedisPool == null) {
+            if (password != null && !"".equals(password)) {
                 jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout, password);
-            }else if(timeout != 0){
-                jedisPool = new JedisPool(new JedisPoolConfig(), host, port,timeout);
-            }else{
+            } else if (timeout != 0) {
+                jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout);
+            } else {
                 jedisPool = new JedisPool(new JedisPoolConfig(), host, port);
             }
 
@@ -51,110 +55,129 @@ public class RedisManager {
 
     /**
      * get value from redis
+     *
      * @param key
      * @return
      */
-    public byte[] get(byte[] key){
+    public byte[] get(byte[] key) {
         byte[] value = null;
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             value = jedis.get(key);
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return value;
     }
 
     /**
      * set
+     *
      * @param key
      * @param value
      * @return
      */
-    public byte[] set(byte[] key,byte[] value){
+    public byte[] set(byte[] key, byte[] value) {
         Jedis jedis = jedisPool.getResource();
-        try{
-            jedis.set(key,value);
-            if(this.expire != 0){
+        try {
+            jedis.set(key, value);
+            if (this.expire != 0) {
                 jedis.expire(key, this.expire);
             }
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return value;
     }
 
     /**
      * set
+     *
      * @param key
      * @param value
      * @param expire
      * @return
      */
-    public byte[] set(byte[] key,byte[] value,int expire){
+    public byte[] set(byte[] key, byte[] value, int expire) {
         Jedis jedis = jedisPool.getResource();
-        try{
-            jedis.set(key,value);
-            if(expire != 0){
+        try {
+            jedis.set(key, value);
+            if (expire != 0) {
                 jedis.expire(key, expire);
             }
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return value;
     }
 
     /**
      * del
+     *
      * @param key
      */
-    public void del(byte[] key){
+    public void del(byte[] key) {
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             jedis.del(key);
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
     /**
      * flush
      */
-    public void flushDB(){
+    public void flushDB() {
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             jedis.flushDB();
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
     /**
      * size
      */
-    public Long dbSize(){
+    public Long dbSize() {
         Long dbSize = 0L;
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             dbSize = jedis.dbSize();
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return dbSize;
     }
 
     /**
      * keys
+     *
      * @param regex
      * @return
      */
-    public Set<byte[]> keys(String pattern){
+    public Set<byte[]> keys(String pattern) {
         Set<byte[]> keys = null;
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             keys = jedis.keys(pattern.getBytes());
-        }finally{
-            jedisPool.returnResource(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
         return keys;
     }
@@ -198,7 +221,6 @@ public class RedisManager {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 
 }

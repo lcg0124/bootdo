@@ -83,6 +83,18 @@
     $(document).ajaxStop(function () {
         layer.closeAll('loading');
     });
+    1
+    /**
+     2  * 设置未来(全局)的AJAX请求默认选项
+     3  * 主要设置了AJAX请求遇到Session过期的情况
+     4  */
+    $.ajaxSetup({
+        complete: function (xhr, status,dataType) {
+            if('text/html;charset=UTF-8'==xhr.getResponseHeader('Content-Type')){
+                top.location.href = '/login';
+            }
+        }
+    });
 })(jQuery);
 
 
