@@ -15,6 +15,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -31,9 +33,11 @@ import com.bootdo.system.domain.UserDO;
 @Aspect
 @Component
 public class LogAspect {
+    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     @Autowired
     LogService logService;
+
 
     @Pointcut("@annotation(com.bootdo.common.annotation.Log)")
     public void logPointCut() {
