@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableAsync
 public class SpringAsyncConfig {
-    @Bean
-    public AsyncTaskExecutor taskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setMaxPoolSize(10);
-        return executor;
-    }
+//    @Bean
+//    public AsyncTaskExecutor taskExecutor() {
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        executor.setMaxPoolSize(10);
+//        return executor;
+//    }
 }

@@ -9,21 +9,17 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="common:sysDict:add" type="button"
+							<button shiro:hasPermission="common:dict:add" type="button"
 								class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="common:sysDict:batchRemove"
+							<button shiro:hasPermission="common:dict:batchRemove"
 								type="button" class="btn  btn-danger" onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
-						</div>
-						<div class="columns pull-right col-md-2">
-							<input id="searchName" type="text" class="form-control"
-								placeholder="">
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select data-placeholder="选择类别" class="form-control chosen-select"
@@ -46,17 +42,17 @@
 			var s_resetPwd_h = 'hidden';
 		</script>
 	</div>
-	<div shiro:hasPermission="common:sysDict:edit">
+	<div shiro:hasPermission="common:dict:edit">
 		<script type="text/javascript">
 			s_edit_h = '';
 		</script>
 	</div>
-	<div shiro:hasPermission="common:sysDict:remove">
+	<div shiro:hasPermission="common:dict:remove">
 		<script type="text/javascript">
 			var s_remove_h = '';
 		</script>
 	</div>
-	<div shiro:hasPermission="common:sysDict:add">
+	<div shiro:hasPermission="common:dict:add">
 		<script type="text/javascript">
 			var s_add_h = '';
 		</script>

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Author bootdo 1992lcg@163.com
  */
-public class PageUtils implements Serializable {
+public class  PageUtils implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int total;
 	private List<?> rows;

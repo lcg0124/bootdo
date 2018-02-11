@@ -21,9 +21,9 @@ public interface DictService {
 	
 	int count(Map<String, Object> map);
 	
-	int save(DictDO sysDict);
+	int save(DictDO dict);
 	
-	int update(DictDO sysDict);
+	int update(DictDO dict);
 	
 	int remove(Long id);
 	

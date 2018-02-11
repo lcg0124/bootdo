@@ -83,6 +83,14 @@
     $(document).ajaxStop(function () {
         layer.closeAll('loading');
     });
+    //登录过期，shiro返回登录页面
+    $.ajaxSetup({
+        complete: function (xhr, status,dataType) {
+            if('text/html;charset=UTF-8'==xhr.getResponseHeader('Content-Type')){
+                top.location.href = '/login';
+            }
+        }
+    });
 })(jQuery);
 
 

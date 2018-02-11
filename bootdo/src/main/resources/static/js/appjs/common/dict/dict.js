@@ -1,5 +1,5 @@
 
-var prefix = "/common/sysDict"
+var prefix = "/common/dict"
 $(function() {
 	
 	//	var config = {
@@ -25,7 +25,7 @@ $(function() {
 function selectLoad() {
 	var html = "";
 	$.ajax({
-		url : '/common/sysDict/type',
+		url : '/common/dict/type',
 		success : function(data) {
 			//加载数据
 			for (var i = 0; i < data.length; i++) {
