@@ -55,7 +55,6 @@ public class LogAspect {
         return result;
     }
 
-    @Async
     void saveLog(ProceedingJoinPoint joinPoint, long time) throws InterruptedException {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

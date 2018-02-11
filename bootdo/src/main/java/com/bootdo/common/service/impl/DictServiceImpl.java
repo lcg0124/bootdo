@@ -36,13 +36,13 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
-    public int save(DictDO sysDict) {
-        return dictDao.save(sysDict);
+    public int save(DictDO dict) {
+        return dictDao.save(dict);
     }
 
     @Override
-    public int update(DictDO sysDict) {
-        return dictDao.update(sysDict);
+    public int update(DictDO dict) {
+        return dictDao.update(dict);
     }
 
     @Override

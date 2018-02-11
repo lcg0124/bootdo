@@ -10,6 +10,7 @@ import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
+import io.swagger.models.auth.In;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -68,6 +69,7 @@ public class LoginController extends BaseController {
 	@PostMapping("/login")
 	@ResponseBody
 	R ajaxLogin(String username, String password) {
+
 		password = MD5Utils.encrypt(username, password);
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		Subject subject = SecurityUtils.getSubject();
@@ -88,20 +90,6 @@ public class LoginController extends BaseController {
 	@GetMapping("/main")
 	String main() {
 		return "main";
-	}
-
-	@GetMapping("/test")
-	String test() {
-		Integer i = null;
-		System.out.println(i.toString());
-		return "403";
-	}
-	@ResponseBody
-	@GetMapping("/test2")
-	String test2() {
-		Integer i = null;
-		System.out.println(i.toString());
-		return "403";
 	}
 
 }

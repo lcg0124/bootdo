@@ -52,7 +52,7 @@ function validateRule() {
 function loadType(){
 	var html = "";
 	$.ajax({
-		url : '/common/sysDict/list/oa_notify_type',
+		url : '/common/dict/list/oa_notify_type',
 		success : function(data) {
 			// 加载数据
 			for (var i = 0; i < data.length; i++) {
