@@ -84,3 +84,6 @@ BootDo 提供了常用工具进行封装，包括日志工具、缓存工具、�
 本软件使用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，请严格遵照协议内容
 
 - [x] 注：已上内容为整体规化，部分功能还在实现中
+
+如果感觉对您又帮助，请作者喝杯咖啡吧，请注明您的名字或者昵称，方便作者感谢o(*￣︶￣*)o
+![输入图片说明](https://gitee.com/uploads/images/2018/0228/171720_ab474b9d_1204498.jpeg "843167056429717736.jpg")![输入图片说明](https://gitee.com/uploads/images/2018/0228/171730_04500365_1204498.jpeg "12959670678378076.jpg")
