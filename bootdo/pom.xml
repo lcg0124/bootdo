@@ -5,7 +5,7 @@
 
     <groupId>com.bootdo</groupId>
     <artifactId>bootdo</artifactId>
-    <version>1.6.3</version>
+    <version>1.6.9</version>
     <packaging>jar</packaging>
 
     <name>bootdo</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -214,10 +214,23 @@
             <version>1.9.2</version>
         </dependency>
 
+        <!--war包部署需要-->
         <!--<dependency>-->
-            <!--<groupId>org.crazycake</groupId>-->
-            <!--<artifactId>shiro-redis</artifactId>-->
-            <!--<version>2.4.2.1-RELEASE</version>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+            <!--&lt;!&ndash; 移除嵌入式tomcat插件 &ndash;&gt;-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework.boot</groupId>-->
+                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+            <!--<version>3.1.0</version>-->
+            <!--<scope>provided</scope>-->
         <!--</dependency>-->
     </dependencies>
     <build>
