@@ -27,7 +27,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.bootdo.common.domain.ScheduleJob;
 import com.bootdo.common.quartz.factory.*;
-import com.bootdo.common.utils.SpringContextHolder;;
+//import com.bootdo.common.utils.SpringContextHolder;
 
 /**
  * 
