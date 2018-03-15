@@ -33,6 +33,8 @@ public interface RoleMenuDao {
 	List<Long> listMenuIdByRoleId(Long roleId);
 	
 	int removeByRoleId(Long roleId);
+
+	int removeByMenuId(Long menuId);
 	
 	int batchSave(List<RoleMenuDO> list);
 }
