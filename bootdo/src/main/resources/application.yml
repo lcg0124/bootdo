@@ -1,5 +1,4 @@
 server:
-    # context-path: /myboot 
   session-timeout: 1800
 #    tomcat:
 #        max-threads: 1000
