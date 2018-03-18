@@ -13,8 +13,12 @@
     <link href="/css/layui.css" rel="stylesheet">
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
     <style>
-        a:active  {color:yellow;}
-        a:hover   {color:red;}
+        .aactive {
+            color: #13b5b7 !important;
+        }
+        .hactive:hover{
+            color: #13b5b7 !important;
+        }
     </style>
 </head>
 <body class="gray-bg">
@@ -24,24 +28,29 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <button type="button" class="layui-btn" id="test1" >
+                        <button type="button" class="layui-btn" id="test1">
                             <i class="fa fa-cloud"></i>上传文件
                         </button>
                         <div class="hr-line-dashed"></div>
                         <ul class="folder-list" style="padding: 0">
-                            <li><a href="#" class="file-control "
-                                   onclick="changeType('')"><i class="fa fa-folder"></i>所有文件</a></li>
-                            <li><a href="javascript:void(0)"
-                                   class="file-control" href="javascript:void(0)"
-                                   onclick="changeType(0)"><i class="fa fa-folder"></i>图片</a></li>
-                            <li><a href="javascript:void(0)"
-                                   onclick="changeType(1)" class="file-control"><i class="fa fa-folder"></i>文档</a></li>
-                            <li><a href="javascript:void(0)" onclick="changeType(2)"
-                                   class="file-control"><i class="fa fa-folder"></i>视频</a></li>
-                            <li><a href="javascript:void(0)"
-                                   onclick="changeType(3)" class="file-control"><i class="fa fa-folder"></i>音乐</a>
-                            <li><a href="javascript:void(0)" onclick="changeType(99)"
-                                   class="file-control"><i class="fa fa-folder"></i>其他</a></li>
+                            <li><a href="javascript:void(0)" class="file-control hactive" :class="{'aactive':type === ''}"
+                                   v-on:click="changeType('')"><i class="fa fa-folder"></i>所有文件</a></li>
+
+                            <li><a href="javascript:void(0)" class="file-control hactive" :class="{'aactive':type === 0}"
+                                   v-on:click="changeType(0)"><i class="fa fa-folder"></i>图片</a></li>
+
+                            <li><a href="javascript:void(0)" :class="{'aactive':type === 1}"
+                                   v-on:click="changeType(1)" class="file-control hactive"><i class="fa fa-folder"></i>文档</a>
+                            </li>
+
+                            <li><a href="javascript:void(0)" v-on:click="changeType(2)" :class="{'aactive':type === 2}"
+                                   class="file-control hactive"><i class="fa fa-folder"></i>视频</a></li>
+
+                            <li><a href="javascript:void(0)" v-on:click="changeType(3)" :class="{'aactive':type === 3}"
+                                   class="file-control hactive"><i class="fa fa-folder"></i>音乐</a></li>
+
+                            <li><a href="javascript:void(0)" v-on:click="changeType(99)" :class="{'aactive':type === 99}"
+                                   class="file-control hactive"><i class="fa fa-folder"></i>其他</a></li>
                         </ul>
                     </div>
                 </div>
@@ -164,10 +173,15 @@
                         }
                     });
                 })
+            },
+            changeType: function (i) {
+                this.type = i;
+                this.offset = 0;
+                this.getData();
             }
         },
         created: function () {
-            this.getData();
+            this.changeType('')
         }
     });
 </script>
@@ -195,11 +209,12 @@
             }
         });
     });
-    function changeType(i) {
-        app.type = i;
-        app.offset = 0;
-        app.getData();
-    }
+
+    // function changeType(i) {
+    //     app.type = i;
+    //     app.offset = 0;
+    //     app.getData();
+    // }
 </script>
 </body>
 </html>

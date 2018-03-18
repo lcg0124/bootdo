@@ -1,34 +1,16 @@
 package com.bootdo.common.quartz.utils;
 
+import com.bootdo.common.domain.ScheduleJob;
+import org.apache.log4j.Logger;
+import org.quartz.*;
+import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.impl.matchers.GroupMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.apache.log4j.Logger;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.DateBuilder;
-import org.quartz.DateBuilder.IntervalUnit;
-import org.quartz.Job;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
-import org.quartz.impl.matchers.GroupMatcher;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-
-import com.bootdo.common.domain.ScheduleJob;
-import com.bootdo.common.quartz.factory.*;
-//import com.bootdo.common.utils.SpringContextHolder;
-
 /**
  * 
  * 
