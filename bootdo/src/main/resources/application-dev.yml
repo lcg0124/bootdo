@@ -2,7 +2,7 @@ bootdo:
   uploadPath: D:/var/uploaded_files/
 logging:
   level:
-    root: error
+    root: info
     com.bootdo: debug
 spring:
   datasource:

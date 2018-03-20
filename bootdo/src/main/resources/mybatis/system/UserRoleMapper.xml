@@ -82,6 +82,10 @@
 		delete from sys_user_role where user_id=#{userId}
 	</delete>
 
+	<delete id="removeByRoleId">
+		delete from sys_user_role where role_id=#{roleId}
+	</delete>
+
 	<delete id="batchRemoveByUserId">
 		delete from sys_user_role where user_id in
 		<foreach item="id" collection="array" open="(" separator=","

@@ -16,19 +16,5 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestDemo {
-    @Autowired
-    RedisTemplate redisTemplate;
-
-    @Test
-    public void jTestDemo() {
-
-    }
-
-    @GetMapping("/test/demo")
-    String restTest() {
-        Integer i = null;
-        i++;
-        return "hello test";
-    }
 
 }

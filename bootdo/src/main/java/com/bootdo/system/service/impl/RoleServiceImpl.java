@@ -82,6 +82,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int remove(Long id) {
         int count = roleMapper.remove(id);
+        userRoleMapper.removeByRoleId(id);
         roleMenuMapper.removeByRoleId(id);
         return count;
     }
