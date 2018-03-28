@@ -1,7 +1,7 @@
 # BootDo 面向学习型的开源框架
 
 ## 平台简介
-<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=72eed8026d196857521bd3b34d47e62d51401f754e25f513cb3e3b4097637ffe"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
+<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=54UlM7d"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
 
 BootDo是高效率，低封装，面向学习型，面向微服的**开源**Java EE开发框架。
 
@@ -77,7 +77,7 @@ BootDo 提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 ## 交流反馈
 
-## QQ群 669039323<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=72eed8026d196857521bd3b34d47e62d51401f754e25f513cb3e3b4097637ffe"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
+## QQ群 669039323（满），614726589<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=54UlM7d"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
 
 ## 版权声明
 
