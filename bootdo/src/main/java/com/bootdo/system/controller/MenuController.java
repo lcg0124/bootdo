@@ -117,16 +117,14 @@ public class MenuController extends BaseController {
 	@GetMapping("/tree")
 	@ResponseBody
 	Tree<MenuDO> tree() {
-		Tree<MenuDO> tree = new Tree<MenuDO>();
-		tree = menuService.getTree();
+		Tree<MenuDO>  tree = menuService.getTree();
 		return tree;
 	}
 
 	@GetMapping("/tree/{roleId}")
 	@ResponseBody
 	Tree<MenuDO> tree(@PathVariable("roleId") Long roleId) {
-		Tree<MenuDO> tree = new Tree<MenuDO>();
-		tree = menuService.getTree(roleId);
+		Tree<MenuDO> tree = menuService.getTree(roleId);
 		return tree;
 	}
 }
