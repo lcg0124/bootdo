@@ -2,7 +2,7 @@
 
 ## 平台简介
 
-一群[2000人可能会满员]<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5ojKYFG"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
+一群[]<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5ojKYFG"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
 二群<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=54UlM7d"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
 三群:<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5rB9i8M"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="BootDo交流群" title="BootDo交流群"></a>
 
