@@ -5,9 +5,9 @@ server:
 #        min-spare-threads: 30
   port: 80
 #    uri-encoding: utf-8
-security:
-  basic:
-    enabled: false
+#security:
+#  basic:
+#    enabled: false
 spring:
   thymeleaf:
     mode: LEGACYHTML5
@@ -17,7 +17,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   profiles: 
     active: dev
-  http:
+  servlet:
     multipart:
       max-file-size: 30Mb
       max-request-size: 30Mb

@@ -44,8 +44,8 @@ public class ShiroConfig {
     @Value("${spring.redis.timeout}")
     private int timeout;
 
-//    @Value("${spring.cache.type}")
-    private String cacheType = "ehcache";
+    @Value("${spring.cache.type}")
+    private String cacheType ;
 
     @Value("${server.session-timeout}")
     private int tomcatTimeout;
