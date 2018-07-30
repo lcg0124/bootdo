@@ -45,7 +45,7 @@ public class ShiroConfig {
     private int timeout;
 
     @Value("${spring.cache.type}")
-    private String cacheType;
+    private String cacheType ;
 
     @Value("${server.session-timeout}")
     private int tomcatTimeout;
@@ -99,7 +99,7 @@ public class ShiroConfig {
         securityManager.setRealm(userRealm());
         // 自定义缓存实现 使用redis
         if (Constant.CACHE_TYPE_REDIS.equals(cacheType)) {
-            securityManager.setCacheManager(cacheManager());
+            securityManager.setCacheManager(rediscacheManager());
         } else {
             securityManager.setCacheManager(ehCacheManager());
         }
@@ -149,7 +149,7 @@ public class ShiroConfig {
      *
      * @return
      */
-    public RedisCacheManager cacheManager() {
+    public RedisCacheManager rediscacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         return redisCacheManager;
@@ -193,8 +193,13 @@ public class ShiroConfig {
     @Bean
     public EhCacheManager ehCacheManager() {
         EhCacheManager em = new EhCacheManager();
-        em.setCacheManager(CacheManager.create());
+        em.setCacheManager(cacheManager());
         return em;
+    }
+
+    @Bean("cacheManager2")
+    CacheManager cacheManager(){
+        return CacheManager.create();
     }
 
 

@@ -1,10 +1,11 @@
 package com.bootdo.common.quartz.utils;
 
 import com.bootdo.common.domain.ScheduleJob;
-import org.apache.log4j.Logger;
 import org.quartz.*;
 import org.quartz.DateBuilder.IntervalUnit;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.Set;
  */
 @Service
 public class QuartzManager {
-	public final Logger log = Logger.getLogger(this.getClass());
+	public final Logger log = LoggerFactory.getLogger(QuartzManager.class);
 	// private SchedulerFactoryBean schedulerFactoryBean
 	// =SpringContextHolder.getBean(SchedulerFactoryBean.class);
 	// @Autowired
