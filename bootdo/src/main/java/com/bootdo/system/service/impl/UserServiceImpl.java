@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 
-//@CacheConfig(cacheNames = "user")
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
-//    @Cacheable(key = "#id")
+//    @Cacheable(value = "user",key = "#id")
     public UserDO get(Long id) {
         List<Long> roleIds = userRoleMapper.listRoleId(id);
         UserDO user = userMapper.get(id);
@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
         return r;
     }
 
+//    @CacheEvict(value = "user")
     @Override
     public int remove(Long userId) {
         userRoleMapper.removeByUserId(userId);
