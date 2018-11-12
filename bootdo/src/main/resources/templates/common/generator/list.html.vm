@@ -19,13 +19,16 @@
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
+                            <button class="btn btn-warning" onclick="reset()">重置</button>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
+                            <form name="${classname}SearchForm">
 							<input id="searchName" type="text" class="form-control"
 								placeholder="">
+                            </form>
 						</div>
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
+					<table id="${classname}Table" data-mobile-responsive="true">
 					</table>
 				</div>
 			</div>
