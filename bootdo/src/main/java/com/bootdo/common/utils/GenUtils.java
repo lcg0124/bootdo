@@ -26,9 +26,33 @@ import java.util.zip.ZipOutputStream;
  */
 public class GenUtils {
 
+    /**
+     * MySQL数据类型到mybatis jdbcType的映射关系
+     */
+    private static Map<String, String> mysqlTypeToJdbcTypeMap = new HashMap<>();
+    static {
+        mysqlTypeToJdbcTypeMap.put("blob", "BLOB");
+        mysqlTypeToJdbcTypeMap.put("char", "CHAR");
+        mysqlTypeToJdbcTypeMap.put("varchar", "VARCHAR");
+        mysqlTypeToJdbcTypeMap.put("datetime", "TIMESTAMP");
+        mysqlTypeToJdbcTypeMap.put("timestamp", "TIMESTAMP");
+        mysqlTypeToJdbcTypeMap.put("time", "TIME");
+        mysqlTypeToJdbcTypeMap.put("numeric", "NUMERIC");
+        mysqlTypeToJdbcTypeMap.put("decimal", "DECIMAL");
+        mysqlTypeToJdbcTypeMap.put("double", "DOUBLE");
+        mysqlTypeToJdbcTypeMap.put("float", "FLOAT");
+        mysqlTypeToJdbcTypeMap.put("tinyint", "TINYINT");
+        mysqlTypeToJdbcTypeMap.put("int", "INTEGER");
+        mysqlTypeToJdbcTypeMap.put("smallint", "SMALLINT");
+        mysqlTypeToJdbcTypeMap.put("mediumint", "INTEGER");
+        mysqlTypeToJdbcTypeMap.put("bigint", "BIGINT");
+        mysqlTypeToJdbcTypeMap.put("text", "CLOB");
+        mysqlTypeToJdbcTypeMap.put("real", "REAL");
+    }
+
 
     public static List<String> getTemplates() {
-        List<String> templates = new ArrayList<String>();
+        List<String> templates = new ArrayList<>();
         templates.add("templates/common/generator/domain.java.vm");
         templates.add("templates/common/generator/Dao.java.vm");
         //templates.add("templates/common/generator/Mapper.java.vm");
@@ -81,6 +105,7 @@ public class GenUtils {
             //列的数据类型，转换成Java类型
             String attrType = config.getString(columnDO.getDataType(), "unknowType");
             columnDO.setAttrType(attrType);
+            columnDO.setJdbcType(mysqlTypeToJdbcTypeMap.getOrDefault(columnDO.getDataType().toLowerCase(), "OTHER"));
 
             //是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey")) && tableDO.getPk() == null) {

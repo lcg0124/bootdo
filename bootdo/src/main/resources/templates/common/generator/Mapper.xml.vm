@@ -3,17 +3,27 @@
 
 <mapper namespace="${package}.dao.${className}Dao">
 
+	<sql id="${className}DO_fields">
+		#foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end
+	</sql>
+
 	<select id="get" resultType="${package}.domain.${className}DO">
-		select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName} where ${pk.columnName} = #{value}
+		select <include refid="${className}DO_fields"/>
+		from ${tableName} where ${pk.columnName} = #{value}
 	</select>
 
+	<sql id="${className}DO_where">
+        <where>
+            #foreach($column in $columns)
+                <if test="$column.attrname != null#if($column.attrType == 'String') and $column.attrname.trim() != ''#end"> and $column.columnName = #{$column.attrname} </if>
+            #end
+        </where>
+	</sql>
+
 	<select id="list" resultType="${package}.domain.${className}DO">
-		select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName}
-        <where>  
-		  #foreach($column in $columns)
-		  <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname} </if>
-		  #end
-		</where>
+		select <include refid="${className}DO_fields"/>
+		from ${tableName}
+        <include refid="${className}DO_where"/>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -29,11 +39,7 @@
 	
  	<select id="count" resultType="int">
 		select count(*) from ${tableName}
-		 <where>  
-		  #foreach($column in $columns)
-		  <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname} </if>
-		  #end
-		</where>
+        <include refid="${className}DO_where"/>
 	</select>
 	 
 	<insert id="save" parameterType="${package}.domain.${className}DO"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
@@ -50,7 +56,7 @@
 		(
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName || $pk.extra != 'auto_increment')
-			#{$column.attrname}#if($velocityCount != $columns.size()), #end
+			#{$column.attrname, jdbcType=$column.jdbcType}#if($velocityCount != $columns.size()), #end
 
 #end			
 #end
@@ -62,7 +68,7 @@
 		<set>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
-			<if test="$column.attrname != null">`$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()), #end</if>
+			<if test="$column.attrname != null">`$column.columnName` = #{$column.attrname, jdbcType=$column.jdbcType}#if($velocityCount != $columns.size()), #end</if>
 #end
 #end
 		</set>
