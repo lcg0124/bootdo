@@ -109,6 +109,7 @@
     $(document).ready(function () {
         $("#login").on('click',function(){$("#signupForm").submit();});
         validateRule();
+        $("body").keydown(keyDownLogon);
     });
 
     $.validator.setDefaults({
@@ -133,6 +134,12 @@
                 }
             },
         });
+    }
+
+    function keyDownLogon(){
+        if (event.keyCode == "13") {
+            $("#login").trigger('click');
+        }
     }
 
     function validateRule() {
