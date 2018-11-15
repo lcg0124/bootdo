@@ -8,6 +8,7 @@ import com.bootdo.common.config.BootdoConfig;
 import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.*;
+import com.bootdo.system.service.DeptService;
 import com.bootdo.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ public class UserServiceImpl implements UserService {
     private FileService sysFileService;
     @Autowired
     private BootdoConfig bootdoConfig;
+    @Autowired
+    DeptService deptService;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
@@ -58,6 +61,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDO> list(Map<String, Object> map) {
+        String deptId = map.get("deptId").toString();
+        if (StringUtils.isNotBlank(deptId)) {
+            Long deptIdl = Long.valueOf(deptId);
+            List<Long> childIds = deptService.listChildrenIds(deptIdl);
+            childIds.add(deptIdl);
+            map.put("deptId", null);
+            map.put("deptIds",childIds);
+        }
         return userMapper.list(map);
     }
 
@@ -105,7 +116,7 @@ public class UserServiceImpl implements UserService {
         return r;
     }
 
-//    @CacheEvict(value = "user")
+    //    @CacheEvict(value = "user")
     @Override
     public int remove(Long userId) {
         userRoleMapper.removeByUserId(userId);
