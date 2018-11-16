@@ -1,5 +1,7 @@
 bootdo:
   uploadPath: c:/var/uploaded_files/
+  username: admin
+  password: 111111
 logging:
   level:
     root: info
