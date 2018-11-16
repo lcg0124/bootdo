@@ -32,4 +32,6 @@ public interface DeptService {
 	Tree<DeptDO> getTree();
 	
 	boolean checkDeptHasUser(Long deptId);
+
+	List<Long> listChildrenIds(Long parentId);
 }
