@@ -125,7 +125,7 @@
             page: function () {
                 var options = {
                     currentPage: app.offset / 12 + 1, //当前页
-                    totalPages: app.total / (12 + 1) + 1, //总页数
+                    totalPages: Math.ceil(app.total / 12), //总页数
                     numberofPages: 4, //显示的页数
                     bootstrapMajorVersion: 3,
                     alignment: 'center',
