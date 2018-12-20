@@ -85,7 +85,7 @@ function batchCode() {
 	$.each(rows, function(i, row) {
 		tables[i] = row['tableName'];
 	});
-	location.href = prefix + "/batchCode?tables=" + JSON.stringify(tables);
+	location.href = prefix + "/batchCode?tables=" + JSON.stringify(tables).replace('[','%5B').replace(']','%5D');
 }
 
 function edit(){
