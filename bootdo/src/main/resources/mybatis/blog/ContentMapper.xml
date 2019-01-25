@@ -4,7 +4,7 @@
 <mapper namespace="com.bootdo.blog.dao.ContentDao">
 
 	<select id="get" resultType="com.bootdo.blog.domain.ContentDO">
-		select `cid`,`title`,`slug`,`created`,`modified`,`content`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content where cid = #{value}
+		select `cid`,`title`,`slug`,`created`,`modified`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content where cid = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.blog.domain.ContentDO">
