@@ -62,7 +62,7 @@ public class RandomValidateCodeUtil {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         Graphics g = image.getGraphics();// 产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
         g.fillRect(0, 0, width, height);//图片大小
-        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 18));//字体大小
+        g.setFont(new Font("Default", Font.ROMAN_BASELINE, 18));//字体大小
         g.setColor(getRandColor(110, 133));//字体颜色
         // 绘制干扰线
         for (int i = 0; i <= lineSize; i++) {
