@@ -60,6 +60,18 @@
                 <input type="password" name="password"
                        class="form-control pword m-b" th:value="${password}"/>
                 <a id="login" class="btn btn-login btn-block">登录</a>
+                <div class="row">
+                    <div class="col-xs-6 pull_left">
+                        <div class="form-group">
+                            <input class="form-control" type="tel" name="verify" id="verify" placeholder="请输入验证码" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 pull_left">
+                        <a href="javascript:void(0);" rel="external nofollow" title="点击更换验证码">
+                            <img style="margin-top: 12px;" id="imgVerify" src="" alt="更换验证码" height="36" width="100%" onclick="getVerify(this);">
+                        </a>
+                    </div>
+                </div>
                 <!--按钮模块-->
                 <div class="outside-login">
                     <div class="outside-login-tit">
@@ -92,7 +104,8 @@
         </div>
     </div>
 </div>
-<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<script th:inline="javascript"> var ctx = [[@{
+    /}]] ; </script>
 <!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
@@ -102,14 +115,19 @@
 
 <!-- jQuery Validation plugin javascript-->
 <script src="/js/ajax-util.js"></script>
-<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
 <script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#login").on('click',function(){$("#signupForm").submit();});
+        $("#login").on('click', function () {
+            $("#signupForm").submit();
+        });
         validateRule();
         $("body").keydown(keyDownLogon);
+        // getVerify($("#imgVerify"));
+        $("#imgVerify").click()
     });
 
     $.validator.setDefaults({
@@ -121,12 +139,12 @@
     function login() {
         $.ajax({
             type: "POST",
-            url: ctx+"login",
+            url: ctx + "login",
             data: $('#signupForm').serialize(),
             success: function (r) {
-                 if (r.code == 0) {
+                if (r.code == 0) {
                     var index = layer.load(1, {
-                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                        shade: [0.1, '#fff'] //0.1透明度的白色背景
                     });
                     parent.location.href = '/index';
                 } else {
@@ -136,11 +154,12 @@
         });
     }
 
-    function keyDownLogon(){
+    function keyDownLogon() {
         if (event.keyCode == "13") {
             $("#login").trigger('click');
         }
     }
+
 
     function validateRule() {
         var icon = "<i class='fa fa-times-circle'></i> ";
@@ -162,6 +181,12 @@
                 }
             }
         })
+    }
+
+    //获取验证码
+    function getVerify(obj) {
+        obj.src = "/getVerify?" + Math.random();
+        console.log(obj)
     }
 </script>
 </body>
