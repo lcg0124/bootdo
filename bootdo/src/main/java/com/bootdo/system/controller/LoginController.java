@@ -6,9 +6,7 @@ import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.service.FileService;
-import com.bootdo.common.utils.MD5Utils;
-import com.bootdo.common.utils.R;
-import com.bootdo.common.utils.ShiroUtils;
+import com.bootdo.common.utils.*;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
 import io.swagger.models.auth.In;
@@ -23,8 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -74,8 +75,22 @@ public class LoginController extends BaseController {
     @Log("登录")
     @PostMapping("/login")
     @ResponseBody
-    R ajaxLogin(String username, String password) {
+    R ajaxLogin(String username, String password,String verify,HttpServletRequest request) {
 
+        try {
+            //从session中获取随机数
+            String random = (String) request.getSession().getAttribute(RandomValidateCodeUtil.RANDOMCODEKEY);
+            if (StringUtils.isBlank(verify)) {
+                return R.error("请输入验证码");
+            }
+            if (random.equals(verify)) {
+            } else {
+                return R.error("请输入正确的验证码");
+            }
+        } catch (Exception e) {
+            logger.error("验证码校验失败", e);
+            return R.error("验证码校验失败");
+        }
         password = MD5Utils.encrypt(username, password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
@@ -96,6 +111,23 @@ public class LoginController extends BaseController {
     @GetMapping("/main")
     String main() {
         return "main";
+    }
+
+    /**
+     * 生成验证码
+     */
+    @GetMapping(value = "/getVerify")
+    public void getVerify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.setContentType("image/jpeg");//设置相应类型,告诉浏览器输出的内容为图片
+            response.setHeader("Pragma", "No-cache");//设置响应头信息，告诉浏览器不要缓存此内容
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expire", 0);
+            RandomValidateCodeUtil randomValidateCode = new RandomValidateCodeUtil();
+            randomValidateCode.getRandcode(request, response);//输出验证码图片方法
+        } catch (Exception e) {
+            logger.error("获取验证码失败>>>> ", e);
+        }
     }
 
 }
