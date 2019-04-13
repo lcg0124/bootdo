@@ -3,11 +3,11 @@ package com.bootdo.activiti.vo;
 import org.activiti.engine.task.Task;
 
 /**
-
+ *
  */
-public class TaskVO  {
+public class TaskVO {
 
-    public TaskVO(Task task){
+    public TaskVO(Task task) {
 
         this.setId(task.getId());
         this.setKey(task.getTaskDefinitionKey());
@@ -19,15 +19,18 @@ public class TaskVO  {
         this.setProcessDefinitionId(task.getProcessDefinitionId());
         this.setExecutionId(task.getExecutionId());
     }
-    private  String id;
+
+    private String id;
     private String name;
     private String key;
     private String description;
-    private  String formKey;
-    private  String assignee;
+    private String formKey;
+    private String assignee;
     private String processId;
     private String processDefinitionId;
     private String executionId;
+    private String processName;
+    private String processStartUserName;
 
     public String getId() {
         return id;
@@ -99,5 +102,21 @@ public class TaskVO  {
 
     public void setExecutionId(String executionId) {
         this.executionId = executionId;
+    }
+
+    public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName;
+    }
+
+    public String getProcessStartUserName() {
+        return processStartUserName;
+    }
+
+    public void setProcessStartUserName(String processStartUserName) {
+        this.processStartUserName = processStartUserName;
     }
 }

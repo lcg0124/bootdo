@@ -4,9 +4,13 @@ import com.bootdo.activiti.service.ActTaskService;
 import com.bootdo.activiti.vo.ProcessVO;
 import com.bootdo.activiti.vo.TaskVO;
 import com.bootdo.common.utils.PageUtils;
+import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.ShiroUtils;
 import org.activiti.engine.FormService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-
+ *
  */
 @RequestMapping("activiti/task")
 @RestController
@@ -36,8 +40,11 @@ public class TaskController {
     TaskService taskService;
     @Autowired
     ActTaskService actTaskService;
+    @Autowired
+    HistoryService historyService;
+
     @GetMapping("goto")
-    public ModelAndView gotoTask(){
+    public ModelAndView gotoTask() {
         return new ModelAndView("act/task/gotoTask");
     }
 
@@ -47,7 +54,7 @@ public class TaskController {
                 .listPage(offset, limit);
         int count = (int) repositoryService.createProcessDefinitionQuery().count();
         List<Object> list = new ArrayList<>();
-        for(ProcessDefinition processDefinition: processDefinitions){
+        for (ProcessDefinition processDefinition : processDefinitions) {
             list.add(new ProcessVO(processDefinition));
         }
 
@@ -56,31 +63,33 @@ public class TaskController {
     }
 
     @GetMapping("/form/{procDefId}")
-    public void startForm(@PathVariable("procDefId") String procDefId  ,HttpServletResponse response) throws IOException {
+    public void startForm(@PathVariable("procDefId") String procDefId, HttpServletResponse response) throws IOException {
         String formKey = actTaskService.getFormKey(procDefId, null);
         response.sendRedirect(formKey);
     }
 
     @GetMapping("/form/{procDefId}/{taskId}")
-    public void form(@PathVariable("procDefId") String procDefId,@PathVariable("taskId") String taskId ,HttpServletResponse response) throws IOException {
+    public void form(@PathVariable("procDefId") String procDefId, @PathVariable("taskId") String taskId, HttpServletResponse response) throws IOException {
         // 获取流程XML上的表单KEY
 
         String formKey = actTaskService.getFormKey(procDefId, taskId);
 
 
-        response.sendRedirect(formKey+"/"+taskId);
+        response.sendRedirect(formKey + "/" + taskId);
     }
 
     @GetMapping("/todo")
-    ModelAndView todo(){
+    ModelAndView todo() {
         return new ModelAndView("act/task/todoTask");
     }
 
     @GetMapping("/todoList")
-    List<TaskVO> todoList(){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
-        List<TaskVO> taskVOS =  new ArrayList<>();
-        for(Task task : tasks){
+    List<TaskVO> todoList() {
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(ShiroUtils.getUser().getUsername()).list();
+        List tasksByGroup = taskService.createTaskQuery().taskCandidateGroupIn(ShiroUtils.getUser().getRoleSigns()).list();
+        tasks.addAll(tasksByGroup);
+        List<TaskVO> taskVOS = new ArrayList<>();
+        for (Task task : tasks) {
             TaskVO taskVO = new TaskVO(task);
             taskVOS.add(taskVO);
         }
@@ -103,5 +112,13 @@ public class TaskController {
         }
     }
 
+    /**
+     * 已办任务（历史任务）
+     */
+    @GetMapping("/historyTask")
+    List historyTask() {
+        return historyService.createHistoricTaskInstanceQuery().
+                taskAssignee(ShiroUtils.getUser().getUsername()).orderByTaskId().desc().list();
+    }
 
 }

@@ -33,6 +33,8 @@ public interface UserRoleDao {
 
 	List<Long> listRoleId(Long userId);
 
+	List<String> listRoleSign(Long userId);
+
 	int removeByUserId(Long userId);
 
 	int removeByRoleId(Long roleId);

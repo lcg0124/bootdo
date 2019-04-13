@@ -33,6 +33,9 @@ public class UserDO implements Serializable {
     private Date gmtModified;
     //角色
     private List<Long> roleIds;
+
+    //角色标识
+    private List<String> roleSigns;
     //性别
     private Long sex;
     //出身日期
@@ -217,6 +220,14 @@ public class UserDO implements Serializable {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public List<String> getRoleSigns() {
+        return roleSigns;
+    }
+
+    public void setRoleSigns(List<String> roleSigns) {
+        this.roleSigns = roleSigns;
     }
 
     @Override

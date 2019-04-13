@@ -75,7 +75,7 @@ public class LoginController extends BaseController {
     @Log("登录")
     @PostMapping("/login")
     @ResponseBody
-    R ajaxLogin(String username, String password,String verify,HttpServletRequest request) {
+    R ajaxLogin(String username, String password, String verify, HttpServletRequest request) {
 
         try {
             //从session中获取随机数
@@ -94,12 +94,8 @@ public class LoginController extends BaseController {
         password = MD5Utils.encrypt(username, password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
-        try {
-            subject.login(token);
-            return R.ok();
-        } catch (AuthenticationException e) {
-            return R.error("用户或密码错误");
-        }
+        subject.login(token);
+        return R.ok();
     }
 
     @GetMapping("/logout")

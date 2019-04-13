@@ -20,5 +20,7 @@ public class Constant {
 
     public static String LOG_ERROR = "error";
 
-    
+    public static int WORKDAY_HOUR = 8;
+
+
 }
