@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.CustomActivitiesDao">
+
+    <select id="get" resultType="com.bootdo.activiti.domain.CustomActivitiesDO">
+		select `Id`,`process_definition_id`,`process_version`,`process_definition_key`,`activity_type`,`activity_id`,`activity_name`,`assignee_type`,`assignee`,`candidate_group`,`candidate_user` from act_custom_activities where Id = #{value}
+	</select>
+
+    <select id="list" resultType="com.bootdo.activiti.domain.CustomActivitiesDO">
+        select
+        `Id`,`process_definition_id`,`process_version`,`process_definition_key`,`activity_type`,`activity_id`,`activity_name`,`assignee_type`,`assignee`,`candidate_group`,`candidate_user`
+        from act_custom_activities
+        <where>
+            <if test="id != null and id != ''">and Id = #{id}</if>
+            <if test="processDefinitionId != null and processDefinitionId != ''">and process_definition_id =
+                #{processDefinitionId}
+            </if>
+            <if test="processVersion != null and processVersion != ''">and process_version = #{processVersion}</if>
+            <if test="processDefinitionKey != null and processDefinitionKey != ''">and process_definition_key =
+                #{processDefinitionKey}
+            </if>
+            <if test="activityType != null and activityType != ''">and activity_type = #{activityType}</if>
+            <if test="activityId != null and activityId != ''">and activity_id = #{activityId}</if>
+            <if test="activityName != null and activityName != ''">and activity_name = #{activityName}</if>
+            <if test="assigneeType != null and assigneeType != ''">and assignee_type = #{assigneeType}</if>
+            <if test="assignee != null and assignee != ''">and assignee = #{assignee}</if>
+            <if test="candidateGroup != null and candidateGroup != ''">and candidate_group = #{candidateGroup}</if>
+            <if test="candidateUser != null and candidateUser != ''">and candidate_user = #{candidateUser}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by Id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from act_custom_activities
+        <where>
+            <if test="id != null and id != ''">and Id = #{id}</if>
+            <if test="processDefinitionId != null and processDefinitionId != ''">and process_definition_id =
+                #{processDefinitionId}
+            </if>
+            <if test="processVersion != null and processVersion != ''">and process_version = #{processVersion}</if>
+            <if test="processDefinitionKey != null and processDefinitionKey != ''">and process_definition_key =
+                #{processDefinitionKey}
+            </if>
+            <if test="activityType != null and activityType != ''">and activity_type = #{activityType}</if>
+            <if test="activityId != null and activityId != ''">and activity_id = #{activityId}</if>
+            <if test="activityName != null and activityName != ''">and activity_name = #{activityName}</if>
+            <if test="assigneeType != null and assigneeType != ''">and assignee_type = #{assigneeType}</if>
+            <if test="assignee != null and assignee != ''">and assignee = #{assignee}</if>
+            <if test="candidateGroup != null and candidateGroup != ''">and candidate_group = #{candidateGroup}</if>
+            <if test="candidateUser != null and candidateUser != ''">and candidate_user = #{candidateUser}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.activiti.domain.CustomActivitiesDO" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into act_custom_activities
+		(
+			`process_definition_id`, 
+			`process_version`, 
+			`process_definition_key`, 
+			`activity_type`, 
+			`activity_id`, 
+			`activity_name`, 
+			`assignee_type`, 
+			`assignee`, 
+			`candidate_group`, 
+			`candidate_user`
+		)
+		values
+		(
+			#{processDefinitionId}, 
+			#{processVersion}, 
+			#{processDefinitionKey}, 
+			#{activityType}, 
+			#{activityId}, 
+			#{activityName}, 
+			#{assigneeType}, 
+			#{assignee}, 
+			#{candidateGroup}, 
+			#{candidateUser}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.activiti.domain.CustomActivitiesDO">
+        update act_custom_activities
+        <set>
+            <if test="processDefinitionId != null">`process_definition_id` = #{processDefinitionId},</if>
+            <if test="processVersion != null">`process_version` = #{processVersion},</if>
+            <if test="processDefinitionKey != null">`process_definition_key` = #{processDefinitionKey},</if>
+            <if test="activityType != null">`activity_type` = #{activityType},</if>
+            <if test="activityId != null">`activity_id` = #{activityId},</if>
+            <if test="activityName != null">`activity_name` = #{activityName},</if>
+            <if test="assigneeType != null">`assignee_type` = #{assigneeType},</if>
+            <if test="assignee != null">`assignee` = #{assignee},</if>
+            <if test="candidateGroup != null">`candidate_group` = #{candidateGroup},</if>
+            <if test="candidateUser != null">`candidate_user` = #{candidateUser}</if>
+        </set>
+        where Id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from act_custom_activities where Id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from act_custom_activities where Id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="removeByProcessId">
+		delete from act_custom_activities where process_definition_id = #{value}
+	</delete>
+
+</mapper>

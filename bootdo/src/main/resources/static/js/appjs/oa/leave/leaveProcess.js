@@ -1,9 +1,14 @@
 var prefix = "/oa/leave"
 $(function () {
-    load();
+    load()
 });
 
 function load() {
+    load1();
+    load2();
+}
+
+function load1() {
     $('#exampleTable')
         .bootstrapTable(
             {
@@ -46,10 +51,10 @@ function load() {
                     {
                         checkbox: true
                     },
-                    {
-                        field: 'id',
-                        title: 'id',
-                    },
+                    // {
+                    //     field: 'id',
+                    //     title: 'id',
+                    // },
                     {
                         field: 'reason',
                         title: '请假事由'
@@ -74,16 +79,10 @@ function load() {
                         field: 'id',
                         align: 'center',
                         formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + row.id
-                                + '\')"><i class="fa fa-edit"></i></a> ';
-                            var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + row.id
-                                + '\')"><i class="fa fa-remove"></i></a> ';
                             var f = '<a class="btn btn-success btn-sm" href="#" title="流程流转"  mce_href="#" onclick="resetPwd(\''
-                                + row.activitiDO.procInsId
-                                + '\')"><i class="fa fa-key"></i>流程跟踪</a> ';
-                            return e + d+f;
+                                + row.processInstanceId
+                                + '\')">流程图</a> ';
+                            return f;
                         }
                     }]
             });
@@ -91,6 +90,7 @@ function load() {
 
 function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
+    $('#exampleTable2').bootstrapTable('refresh');
 }
 
 function add() {
@@ -144,7 +144,7 @@ function resetPwd(procInsId) {
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
         area: ['800px', '520px'],
-        content: '/activiti/task/trace/photo/xx/'+procInsId // iframe的url
+        content: '/activiti/task/trace/photo/xx/' + procInsId // iframe的url
     });
 }
 

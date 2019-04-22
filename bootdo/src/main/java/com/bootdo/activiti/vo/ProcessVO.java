@@ -6,6 +6,8 @@ import org.activiti.engine.repository.ProcessDefinition;
 public class ProcessVO {
     private String id;
     private String name;
+    private String key;
+    private int version;
     private String deploymentId;
 
     public ProcessVO(Deployment processDefinition) {
@@ -17,6 +19,8 @@ public class ProcessVO {
         this.setId(processDefinition.getId());
         this.name = processDefinition.getName();
         this.deploymentId = processDefinition.getDeploymentId();
+        setKey(processDefinition.getKey());
+        setVersion(processDefinition.getVersion());
     }
 
     public String getId() {
@@ -41,5 +45,21 @@ public class ProcessVO {
 
     public void setDeploymentId(String deploymentId) {
         this.deploymentId = deploymentId;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

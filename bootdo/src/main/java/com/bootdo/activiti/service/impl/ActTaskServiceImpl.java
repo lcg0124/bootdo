@@ -1,15 +1,21 @@
 package com.bootdo.activiti.service.impl;
 
+import com.bootdo.activiti.config.ActivitiConstant;
 import com.bootdo.activiti.domain.ActivitiDO;
+import com.bootdo.activiti.domain.CustomActivitiesDO;
 import com.bootdo.activiti.service.ActTaskService;
+import com.bootdo.activiti.service.CustomActivitiesService;
+import com.bootdo.activiti.service.ProcessService;
+import com.bootdo.activiti.vo.HisTaskDTO;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.StringUtils;
+import com.bootdo.system.dao.UserDao;
+import com.bootdo.system.domain.UserDO;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
-import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
@@ -18,15 +24,14 @@ import org.activiti.engine.task.Task;
 import org.activiti.image.ProcessDiagramGenerator;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
+ *
  */
 @Service
 public class ActTaskServiceImpl implements ActTaskService {
@@ -50,6 +55,18 @@ public class ActTaskServiceImpl implements ActTaskService {
 
     @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    CustomActivitiesService customActivitiesService;
+
+    @Autowired
+    private SimpMessagingTemplate template;
+
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    ProcessService processService;
 
     @Override
     public List<ActivitiDO> listTodo(ActivitiDO act) {
@@ -83,40 +100,47 @@ public class ActTaskServiceImpl implements ActTaskService {
         if (StringUtils.isNotBlank(title)) {
             vars.put("title", title);
         }
-
         // 提交任务
         taskService.complete(taskId, vars);
+
     }
 
     @Override
     public void complete(String taskId, Map<String, Object> vars) {
-        // 2.1根据人物ID查询流程实力ID
         Task task = taskService.createTaskQuery()
                 .taskId(taskId).singleResult();
-        // 获取流程实例ID
-        String processInstance = task.getProcessInstanceId();
-        // 2.2根据流程实例ID，人物ID，评论的消息，保存教师或者学术对与该学生申请的评论信息
-//        taskService.addComment(taskId,
-//                processInstance, "");
-//        Map<String,Object> vars = new HashMap<>();
-//        vars.put("pass",  "1" );
-//        vars.put("title","");
+        String processDefinitionId = task.getProcessDefinitionId();
+        List<Task> lbefores = taskService.createTaskQuery().processDefinitionId(processDefinitionId).list();
         taskService.complete(taskId, vars);
+        this.setAssigneeByTaskId(processDefinitionId);
+        List<Task> lafters = taskService.createTaskQuery().processDefinitionId(processDefinitionId).list();
+        lafters.stream().filter(lafter ->
+                lbefores.stream().noneMatch(lbefore ->
+                        lbefore.getId().equals(lafter.getId())
+                )
+        ).forEach(task1 -> {
+            //发邮件等
+            List<UserDO> userDOs = userDao.list(new HashMap() {{
+                put("username", task1.getAssignee());
+            }});
+            if (userDOs.size() > 0) {
+                template.convertAndSendToUser(userDOs.get(0).toString(), "/queue/notifications", "新待办：" + task1.getName());
+            }
+        });
     }
 
     /**
      * 启动流程
      *
-     * @param procDefKey    流程定义KEY
-     * @param businessTable 业务表表名
-     * @param businessId    业务表编号
-     * @param title         流程标题，显示在待办任务标题
-     * @param vars          流程变量
+     * @param procDefKey 流程定义KEY
+     * @param businessId 业务表编号
+     * @param title      流程标题，显示在待办任务标题
+     * @param vars       流程变量
      * @return 流程实例ID
      */
     @Override
-    public String startProcess(String procDefKey, String businessTable, String businessId, String title, Map<String, Object> vars) {
-        String userId = ShiroUtils.getUser().getUsername();//ObjectUtils.toString(UserUtils.getUser().getId())
+    public ProcessInstance startProcess(String procDefKey, String businessId, String title, Map<String, Object> vars) {
+        String userId = ShiroUtils.getUserId().toString();//ObjectUtils.toString(UserUtils.getUser().getId())
 
         // 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
         identityService.setAuthenticatedUserId(userId);
@@ -131,10 +155,28 @@ public class ActTaskServiceImpl implements ActTaskService {
             vars.put("title", title);
         }
 
+
+        List<Task> lbefores = taskService.createTaskQuery().processDefinitionKey(procDefKey).list();
         // 启动流程
         ProcessInstance procIns = runtimeService.startProcessInstanceByKey(procDefKey, businessId, vars);
 
-        return null;
+        this.setAssignee(ActivitiConstant.ACTIVITI_PROCESS_LEAVE);
+
+        List<Task> lafters = taskService.createTaskQuery().processDefinitionKey(procDefKey).list();
+        lafters.stream().filter(lafter ->
+                lbefores.stream().noneMatch(lbefore ->
+                        lbefore.getId().equals(lafter.getId())
+                )
+        ).forEach(task1 -> {
+            //发邮件等
+            List<UserDO> userDOs = userDao.list(new HashMap() {{
+                put("username", task1.getAssignee());
+            }});
+            if (userDOs.size() > 0) {
+                template.convertAndSendToUser(userDOs.get(0).toString(), "/queue/notifications", "新待办：" + task1.getName());
+            }
+        });
+        return procIns;
     }
 
     /**
@@ -223,9 +265,48 @@ public class ActTaskServiceImpl implements ActTaskService {
         return null;
     }
 
+    @Override
+    public void setAssignee(String processKey) {
+        List<Task> list = taskService.createTaskQuery().processDefinitionKey(processKey).list();
+        list.forEach(e -> {
+            List<CustomActivitiesDO> activities = customActivitiesService.list(new HashMap() {{
+                put("processDefinitionKey", processKey);
+                put("activityId", e.getTaskDefinitionKey());
+            }});
+            if (activities.size() > 0) {
+                CustomActivitiesDO customActivitiesDO = activities.get(0);
+                taskService.setAssignee(e.getId(), customActivitiesDO.getAssignee());
+            }
+        });
+    }
+
+    @Override
+    public void setAssigneeByTaskId(String processDefId) {
+        List<Task> list = taskService.createTaskQuery().processDefinitionId(processDefId).list();
+        list.forEach(e -> {
+            List<CustomActivitiesDO> activities = customActivitiesService.list(new HashMap() {{
+                put("processDefinitionId", processDefId);
+                put("activityId", e.getTaskDefinitionKey());
+            }});
+            if (activities.size() > 0) {
+                CustomActivitiesDO customActivitiesDO = activities.get(0);
+                taskService.setAssignee(e.getId(), customActivitiesDO.getAssignee());
+            }
+        });
+    }
+
+    @Override
+    public List listHisTaskByTaskId(String taskId) {
+
+        String processInstanceId =
+                taskService.createTaskQuery().taskId(taskId).singleResult().getProcessInstanceId();
+        return processService.listHisTaskByInstanceId(processInstanceId);
+    }
+
 
     /**
      * 获取需要高亮的线
+     *
      * @param processDefinitionEntity
      * @param historicActivityInstances
      * @return

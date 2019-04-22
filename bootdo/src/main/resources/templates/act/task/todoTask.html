@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="row">
-			<div class="col-sm-11">
-				<div class="ibox">
-					<div class="ibox-body">
-						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-text"></i>待办工作</a>
-							</li>
-							<li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i>已办工作</a>
-							</li>
-							<li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-briefcase"></i>发起任务</a>
-							</li>
-						</ul>
-						<div class="tab-content">
-							<div id="tab-1" class="tab-pane active">
-								<table id="exampleTable" data-mobile-responsive="true">
-								</table>
-							</div>
-							<div id="tab-2" class="tab-pane ">
-								<table id="exampleTable2" data-mobile-responsive="true"></table>
-							</div>
-							<div id="tab-3" class="tab-pane ">
-								<table id="exampleTable3" data-mobile-responsive="true"></table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:edit">
-			<script type="text/javascript">
-				var s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:resetPwd">
-			<script type="text/javascript">
-				var s_resetPwd_h = '';
-			</script>
-		</div>
-	</div>
-	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/act/task/totoTask.js"></script>
-	<script type="text/javascript" src="/js/appjs/act/task/gotoTask.js"></script>
-	<script type="text/javascript" src="/js/appjs/act/task/hisTask.js"></script>
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-11">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-text"></i>待办工作</a>
+                        </li>
+                        <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i>已办工作</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                            <table id="exampleTable" data-mobile-responsive="true">
+                            </table>
+                        </div>
+                        <div id="tab-2" class="tab-pane ">
+                            <table id="exampleTable2" data-mobile-responsive="true"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+    <div>
+        <script type="text/javascript">
+            var s_edit_h = 'hidden';
+            var s_remove_h = 'hidden';
+            var s_resetPwd_h = 'hidden';
+        </script>
+    </div>
+    <div shiro:hasPermission="act:process:edit">
+        <script type="text/javascript">
+            var s_edit_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="act:process:remove">
+        <script type="text/javascript">
+            var s_remove_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="act:process:resetPwd">
+        <script type="text/javascript">
+            var s_resetPwd_h = '';
+        </script>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/task/totoTask.js"></script>
+<script type="text/javascript" src="/js/appjs/act/task/hisTask.js"></script>
 </body>
 </html>

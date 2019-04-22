@@ -1,5 +1,6 @@
 package com.bootdo.activiti.controller;
 
+import com.bootdo.activiti.service.CustomActivitiesService;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
@@ -15,6 +16,7 @@ import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.rest.editor.model.ModelEditorJsonRestResource;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -39,7 +41,7 @@ import static org.activiti.editor.constants.ModelDataJsonConstants.*;
  */
 @RequestMapping("/activiti")
 @RestController
-public class ModelController extends BaseController{
+public class ModelController extends BaseController {
     protected static final Logger LOGGER = LoggerFactory.getLogger(ModelEditorJsonRestResource.class);
 
     @Autowired
@@ -47,6 +49,9 @@ public class ModelController extends BaseController{
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    CustomActivitiesService customActivitiesService;
 
     @GetMapping("/model")
     ModelAndView model() {
@@ -71,12 +76,12 @@ public class ModelController extends BaseController{
         String name = "new-process";
         String description = "";
         int revision = 1;
-        String key = "process";
+        String key = "model";
 
         ObjectNode modelNode = objectMapper.createObjectNode();
         modelNode.put(ModelDataJsonConstants.MODEL_NAME, name);
         modelNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
-        modelNode.put(ModelDataJsonConstants.MODEL_REVISION, revision);
+//        modelNode.put(ModelDataJsonConstants.MODEL_REVISION, revision);
 
         model.setName(name);
         model.setKey(key);
@@ -183,7 +188,8 @@ public class ModelController extends BaseController{
                 .deploy();
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
-
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
+        customActivitiesService.synchroActivity(processDefinition.getKey(), processDefinition.getVersion());
         return R.ok();
     }
 

@@ -92,7 +92,7 @@ public class LogAspect {
             }
         } else {
             sysLog.setUserId(ShiroUtils.getUserId());
-            sysLog.setUsername(ShiroUtils.getUser().getUsername());
+            sysLog.setUsername(ShiroUtils. getUser().getUsername());
         }
         sysLog.setTime((int) time);
         // 系统当前时间

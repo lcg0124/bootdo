@@ -4,7 +4,7 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content ">
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
         <div class="panel-heading">审批中的请假</div>
         <div class="panel-body">
             <div class="col-sm-12">
@@ -12,13 +12,9 @@
                     <div class="ibox-body">
                         <div class="fixed-table-toolbar">
                             <div class="columns pull-left">
-                                <button shiro:hasPermission="oa:leave:add" type="button" class="btn  btn-primary"
+                                <button shiro:hasPermission="oa:leave:add" type="button" class="btn btn-success"
                                         onclick="add()">
                                     <i class="fa fa-plus" aria-hidden="true"></i>请假申请
-                                </button>
-                                <button shiro:hasPermission="oa:leave:batchRemove" type="button" class="btn  btn-danger"
-                                        onclick="batchRemove()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>删除
                                 </button>
                             </div>
                             <div class="columns pull-right">
@@ -36,9 +32,11 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
         <div class="panel-heading">历史请假记录</div>
         <div class="panel-body">
+            <table id="exampleTable2" data-mobile-responsive="true">
+            </table>
         </div>
     </div>
 </div>
@@ -69,5 +67,6 @@
 </div>
 <div th:include="include :: footer"></div>
 <script type="text/javascript" src="/js/appjs/oa/leave/leaveProcess.js"></script>
+<script type="text/javascript" src="/js/appjs/oa/leave/leaveProcess2.js"></script>
 </body>
 </html>

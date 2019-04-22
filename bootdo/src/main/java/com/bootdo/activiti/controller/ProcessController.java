@@ -1,9 +1,11 @@
 package com.bootdo.activiti.controller;
 
+import com.bootdo.activiti.service.CustomActivitiesService;
 import com.bootdo.activiti.service.ProcessService;
 import com.bootdo.activiti.vo.ProcessVO;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.BDException;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.R;
 import org.activiti.engine.ActivitiException;
@@ -29,7 +31,7 @@ import java.util.zip.ZipInputStream;
 
 @RequestMapping("activiti/process")
 @RestController
-public class ProcessController extends BaseController{
+public class ProcessController extends BaseController {
 
     @Autowired
     private RepositoryService repositoryService;
@@ -39,6 +41,9 @@ public class ProcessController extends BaseController{
 
     @Autowired
     private RuntimeService runtimeService;
+
+    @Autowired
+    CustomActivitiesService customActivitiesService;
 
     @GetMapping
     ModelAndView process() {
@@ -51,7 +56,7 @@ public class ProcessController extends BaseController{
                 .listPage(offset, limit);
         int count = (int) repositoryService.createProcessDefinitionQuery().count();
         List<Object> list = new ArrayList<>();
-        for(ProcessDefinition processDefinition: processDefinitions){
+        for (ProcessDefinition processDefinition : processDefinitions) {
             list.add(new ProcessVO(processDefinition));
         }
         PageUtils pageUtils = new PageUtils(list, count);
@@ -86,22 +91,13 @@ public class ProcessController extends BaseController{
                 String baseName = FilenameUtils.getBaseName(fileName);
                 deployment = repositoryService.createDeployment().addInputStream(baseName + ".bpmn20.xml", fileInputStream).deploy();
             } else {
-                message = "不支持的文件类型：" + extension;
+                throw new BDException("不支持的文件类型！");
             }
-
-            List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
-
+            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
             // 设置流程分类
-            for (ProcessDefinition processDefinition : list) {
-//					ActUtils.exportDiagramToFile(repositoryService, processDefinition, exportDir);
-                repositoryService.setProcessDefinitionCategory(processDefinition.getId(), category);
-                message += "部署成功，流程ID=" + processDefinition.getId() + "<br/>";
-            }
-
-            if (list.size() == 0) {
-                message = "部署失败，没有流程。";
-            }
-
+            repositoryService.setProcessDefinitionCategory(processDefinition.getId(), category);
+            message += "部署成功，流程ID=" + processDefinition.getId() + "<br/>";
+            customActivitiesService.synchroActivity(processDefinition.getKey(), processDefinition.getVersion());
         } catch (Exception e) {
             throw new ActivitiException("部署失败！", e);
         }
@@ -125,17 +121,17 @@ public class ProcessController extends BaseController{
         org.activiti.engine.repository.Model modelData = null;
         try {
             modelData = processService.convertToModel(procDefId);
-            return R.ok( "转换模型成功，模型ID=" + modelData.getId());
+            return R.ok("转换模型成功，模型ID=" + modelData.getId());
         } catch (Exception e) {
             e.printStackTrace();
-            return R.ok( "转换模型失败");
+            return R.ok("转换模型失败");
         }
 
     }
 
     @RequestMapping(value = "/resource/read/{xml}/{id}")
     public void resourceRead(@PathVariable("xml") String resType, @PathVariable("id") String id, HttpServletResponse response) throws Exception {
-        InputStream resourceAsStream = processService.resourceRead(id,resType);
+        InputStream resourceAsStream = processService.resourceRead(id, resType);
         byte[] b = new byte[1024];
         int len = -1;
         while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
@@ -144,21 +140,28 @@ public class ProcessController extends BaseController{
     }
 
     @PostMapping("/remove")
-    public R remove(String id){
+    public R remove(String id) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
             return R.error(1, "演示系统不允许修改,完整体验请部署程序");
         }
-        repositoryService.deleteDeployment(id,true);
+        customActivitiesService.removeByProcessId(repositoryService.createProcessDefinitionQuery().deploymentId(id).singleResult().getId());
+        repositoryService.deleteDeployment(id, true);
         return R.ok();
     }
+
     @PostMapping("/batchRemove")
     public R batchRemove(@RequestParam("ids[]") String[] ids) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
             return R.error(1, "演示系统不允许修改,完整体验请部署程序");
         }
         for (String id : ids) {
-            repositoryService.deleteDeployment(id,true);
+            repositoryService.deleteDeployment(id, true);
         }
         return R.ok();
+    }
+
+    @GetMapping("/listHisTaskByInstanceId")
+    List listHisTaskByInstanceId(String taskId) {
+        return processService.listHisTaskByInstanceId(taskId);
     }
 }

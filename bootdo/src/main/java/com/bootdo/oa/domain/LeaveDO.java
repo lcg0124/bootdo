@@ -34,7 +34,9 @@ public class LeaveDO implements Serializable {
     //hr是否通过（1同意0不同意）
     private Integer hrOpinion;
 
-    private ActivitiDO activitiDO;
+    private Integer UserOpinion;
+
+    private String processInstanceId;
 
     /**
      * 设置：id
@@ -134,11 +136,19 @@ public class LeaveDO implements Serializable {
         return hrOpinion;
     }
 
-    public ActivitiDO getActivitiDO() {
-        return activitiDO;
+    public String getProcessInstanceId() {
+        return processInstanceId;
     }
 
-    public void setActivitiDO(ActivitiDO activitiDO) {
-        this.activitiDO = activitiDO;
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
+    public Integer getUserOpinion() {
+        return UserOpinion;
+    }
+
+    public void setUserOpinion(Integer userOpinion) {
+        UserOpinion = userOpinion;
     }
 }

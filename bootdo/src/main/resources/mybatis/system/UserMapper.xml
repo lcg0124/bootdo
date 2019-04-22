@@ -159,4 +159,15 @@
     <select id="listAllDept" resultType="long">
 				select DISTINCT dept_id from sys_user
 	</select>
+
+    <select id="getByUsername" resultType="com.bootdo.system.domain.UserDO">
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where username = #{username} limit 1
+	</select>
+
+    <select id="getNameByUsername" resultType="string">
+		select `name` from sys_user where username = #{username} limit 1
+	</select>
+    <select id="getNameByUserId" resultType="java.lang.String">
+        select `name` from sys_user where user_id = #{userId}
+    </select>
 </mapper>

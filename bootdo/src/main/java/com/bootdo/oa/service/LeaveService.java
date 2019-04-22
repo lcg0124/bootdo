@@ -18,11 +18,13 @@ public interface LeaveService {
 
     List<LeaveDO> list(Map<String, Object> map);
 
+    List<LeaveDO> list2(Map<String, Object> map);
+
     int count(Map<String, Object> map);
 
     int save(LeaveDO leave);
 
-    int update(LeaveDO leave);
+    int update(LeaveDO leave, String taskId);
 
     int remove(String id);
 

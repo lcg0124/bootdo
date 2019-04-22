@@ -96,6 +96,7 @@ function load() {
 }
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
+	$('#exampleTable2').bootstrapTable('refresh');
 }
 function add() {
 	layer.open({

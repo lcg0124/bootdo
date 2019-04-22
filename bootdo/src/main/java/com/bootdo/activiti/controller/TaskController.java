@@ -11,6 +11,8 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.util.List;
 
 /**
  *
+ * @author lichunguang
  */
 @RequestMapping("activiti/task")
 @RestController
@@ -85,7 +88,7 @@ public class TaskController {
 
     @GetMapping("/todoList")
     List<TaskVO> todoList() {
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(ShiroUtils.getUser().getUsername()).list();
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(ShiroUtils.getUserId().toString()).list();
         List tasksByGroup = taskService.createTaskQuery().taskCandidateGroupIn(ShiroUtils.getUser().getRoleSigns()).list();
         tasks.addAll(tasksByGroup);
         List<TaskVO> taskVOS = new ArrayList<>();
@@ -118,7 +121,13 @@ public class TaskController {
     @GetMapping("/historyTask")
     List historyTask() {
         return historyService.createHistoricTaskInstanceQuery().
-                taskAssignee(ShiroUtils.getUser().getUsername()).orderByTaskId().desc().list();
+                taskAssignee(ShiroUtils.getUserId().toString()).orderByTaskId().desc().list();
     }
+
+    @GetMapping("/hisActivityByTaskId")
+    List hisActivityByTaskId(String taskId) {
+        return actTaskService.listHisTaskByTaskId(taskId);
+    }
+
 
 }

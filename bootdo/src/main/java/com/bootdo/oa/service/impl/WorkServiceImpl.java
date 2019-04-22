@@ -1,5 +1,6 @@
 package com.bootdo.oa.service.impl;
 
+import com.bootdo.activiti.config.ActivitiConstant;
 import com.bootdo.activiti.vo.TaskVO;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.oa.service.WorkService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author lichunguang
@@ -30,8 +32,12 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List listTodoWork() {
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(ShiroUtils.getUser().getUsername()).list();
-        List tasksByGroup = taskService.createTaskQuery().taskCandidateGroupIn(ShiroUtils.getUser().getRoleSigns()).list();
+        List<Task> tasks = taskService.createTaskQuery()
+                .processDefinitionKey(ActivitiConstant.ACTIVITI_PROCESS_LEAVE)
+                .taskAssignee(ShiroUtils.getUserId().toString()).list();
+        List tasksByGroup = taskService.createTaskQuery()
+                .processDefinitionKey(ActivitiConstant.ACTIVITI_PROCESS_LEAVE)
+                .taskCandidateGroupIn(ShiroUtils.getUser().getRoleSigns()).list();
         tasks.addAll(tasksByGroup);
         List<TaskVO> taskVOS = new ArrayList<>();
         for (Task task : tasks) {
@@ -39,9 +45,9 @@ public class WorkServiceImpl implements WorkService {
             HistoricProcessInstance processInstance =
                     historyService.createHistoricProcessInstanceQuery()
                             .processInstanceId(task.getProcessInstanceId()).singleResult();
-            taskVO.setProcessName(processInstance.getName());
-            String userName = userDao.get(Long.valueOf(processInstance.getStartUserId())).getName();
-            taskVO.setProcessStartUserName(userName);
+            taskVO.setProcessDefinitionKey(processInstance.getProcessDefinitionKey());
+            taskVO.setProcessDefinitionName(processInstance.getProcessDefinitionName());
+            taskVO.setProcessStartUserName(userDao.getNameByUserId(processInstance.getStartUserId()));
             taskVOS.add(taskVO);
         }
         return taskVOS;

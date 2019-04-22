@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="col-sm-12">
+                        <h4>导入流程</h4>
+                    </div>
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">类别：</label>
+                            <div class="col-sm-4">
+                                <input id="category" name="category" type="input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">导入流程：</label>
+                            <div class="col-sm-4">
+                                <input id="file" name="file" type="file">
+                            </div>
+                        </div>
+
+                        <div class="text-right form-group">
+                            <a class="btn btn-default waves-effect waves-light"
+                               onclick="returnList()">返回</a>
+                            <button
+                                    class="btn btn-primary waves-effect waves-light" type="submit">保存
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/act/process/add.js">
+</script>
+</body>
+</html>

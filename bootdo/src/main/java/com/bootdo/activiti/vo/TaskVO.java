@@ -28,6 +28,8 @@ public class TaskVO {
     private String assignee;
     private String processId;
     private String processDefinitionId;
+    private String processDefinitionKey;
+    private String processDefinitionName;
     private String executionId;
     private String processName;
     private String processStartUserName;
@@ -118,5 +120,21 @@ public class TaskVO {
 
     public void setProcessStartUserName(String processStartUserName) {
         this.processStartUserName = processStartUserName;
+    }
+
+    public String getProcessDefinitionName() {
+        return processDefinitionName;
+    }
+
+    public void setProcessDefinitionName(String processDefinitionName) {
+        this.processDefinitionName = processDefinitionName;
+    }
+
+    public String getProcessDefinitionKey() {
+        return processDefinitionKey;
+    }
+
+    public void setProcessDefinitionKey(String processDefinitionKey) {
+        this.processDefinitionKey = processDefinitionKey;
     }
 }

@@ -1,6 +1,7 @@
 package com.bootdo.activiti.service;
 
 import com.bootdo.activiti.domain.ActivitiDO;
+import org.activiti.engine.runtime.ProcessInstance;
 
 import java.io.InputStream;
 import java.util.List;
@@ -15,9 +16,20 @@ public interface ActTaskService {
 
     void complete(String taskId,Map<String,Object> vars);
 
-    String startProcess(String procDefKey, String businessTable, String businessId, String title, Map<String, Object> vars);
+    ProcessInstance startProcess(String procDefKey, String businessId, String title, Map<String, Object> vars);
 
     String getFormKey(String procDefId, String taskDefKey);
 
     InputStream tracePhoto(String processDefinitionId, String executionId);
+
+    void setAssignee(String procesKey);
+
+    void setAssigneeByTaskId(String taskId);
+
+    /**
+     * 根据任务id查询流转信息
+     * @param taskId
+     * @return
+     */
+    List listHisTaskByTaskId(String taskId);
 }

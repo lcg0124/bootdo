@@ -1,18 +1,14 @@
 var prefix = "/activiti/task"
-$(function () {
-    load();
-});
+// $(function () {
+//     load2();
+// });
 
-function load() {
-    load1();
-}
-
-function load1() {
-    $('#exampleTable')
+function load2() {
+    $('#exampleTable2')
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: prefix + "/todoList", // 服务器数据的加载地址
+                url: prefix + "/historyTask", // 服务器数据的加载地址
                 // showRefresh : true,
                 // showToggle : true,
                 // showColumns : true,
@@ -55,18 +51,6 @@ function load1() {
                         title: '任务' // 列标题
                     },
                     {
-                        field: 'key', // 列字段名
-                        title: '任务key' // 列标题
-                    },
-                    {
-                        field: 'processId', // 列字段名
-                        title: '流程编号' // 列标题
-                    },
-                    {
-                        field: 'processDefinitionId', // 列字段名
-                        title: '流程定义编号' // 列标题
-                    },
-                    {
                         field: 'name',
                         title: '任务名称'
                     },
@@ -78,23 +62,22 @@ function load1() {
                         }
                     },
                     {
-                        title: '操作',
+                        title: '查看',
                         field: 'id',
                         align: 'center',
                         formatter: function (value, row, index) {
-
-                            var f = '<a class="btn btn-primary btn-sm " href="#" title="签收任务"  mce_href="#" onclick="form(\''
-                                + row.processDefinitionKey + '\',\'' + row.id
-                                + '\')">审批<i class="fa fa-key"></i></a> ';
+                            var f = '<a class="btn btn-primary btn-sm " href="#" title="详情"  mce_href="#" onclick="form(\''
+                                + row.processDefinitionId + '\',\'' + row.id
+                                + '\')">详情<i class="fa fa-key"></i></a> ';
                             return f;
                         }
                     }]
             });
 }
 
-function reLoad() {
-    $('#exampleTable').bootstrapTable('refresh');
-}
+// function reLoad() {
+//     $('#exampleTable2').bootstrapTable('refresh');
+// }
 
 function add() {
     // iframe层
@@ -143,16 +126,16 @@ function edit(id) {
     layer.full(page);
 }
 
-function form(proId, id) {
-    layer.open({
-        type: 2,
-        title: '发起流程',
-        maxmin: true,
-        shadeClose: false,
-        area: ['100%', '100%'],
-        content: prefix + '/form/' + proId + '/' + id
-    })
-}
+// function form(proId, id) {
+//     layer.open({
+//         type: 2,
+//         title: '发起流程',
+//         maxmin: true,
+//         shadeClose: false,
+//         area: ['100%', '100%'],
+//         content: prefix + '/form/' + proId + '/' + id
+//     })
+// }
 
 function batchRemove() {
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
