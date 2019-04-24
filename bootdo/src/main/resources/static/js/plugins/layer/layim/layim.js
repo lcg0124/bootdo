@@ -149,7 +149,7 @@ xxim.popchat = function(param){
         xxim.chatbox = layero.find('#layim_chatbox');
         log.chatlist = xxim.chatbox.find('.layim_chatmore>ul');
 
-        log.chatlist.html('<li data-id="'+ param.id +'" type="'+ param.type +'"  id="layim_user'+ param.type + param.id +'"><span>'+ param.name +'</span><em>×</em></li>')
+        log.chatlist.html('<li data-id="' + param.id + '" type="' + param.type + '"  id="layim_user' + param.type + param.id + '"><span>' + param.name + '</span><em>×</em></li>');
         xxim.tabchat(param, xxim.chatbox);
 
         //最小化聊天窗
@@ -217,7 +217,7 @@ xxim.popchat = function(param){
             log.sendType.show();
         });
         log.sendTypes.on('click', function(){
-            log.sendTypes.find('i').text('')
+            log.sendTypes.find('i').text('');
             $(this).find('i').text('√');
         });
 

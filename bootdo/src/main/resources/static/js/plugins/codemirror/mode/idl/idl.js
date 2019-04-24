@@ -13,9 +13,9 @@
 
   function wordRegexp(words) {
     return new RegExp('^((' + words.join(')|(') + '))\\b', 'i');
-  };
+  }
 
-  var builtinArray = [
+    var builtinArray = [
     'a_correlate', 'abs', 'acos', 'adapt_hist_equal', 'alog',
     'alog2', 'alog10', 'amoeba', 'annotate', 'app_user_dir',
     'app_user_dir_query', 'arg_present', 'array_equal', 'array_indices',
@@ -276,9 +276,9 @@
     // Handle non-detected items
     stream.next();
     return 'error';
-  };
+  }
 
-  CodeMirror.defineMode('idl', function() {
+    CodeMirror.defineMode('idl', function () {
     return {
       token: function(stream) {
         return tokenBase(stream);

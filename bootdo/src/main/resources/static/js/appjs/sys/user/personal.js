@@ -1,4 +1,4 @@
-var prefix = "/sys/user"
+var prefix = "/sys/user";
 $(function () {
     laydate({
         elem : '#birth'

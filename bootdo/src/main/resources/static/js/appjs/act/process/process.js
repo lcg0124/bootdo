@@ -1,4 +1,4 @@
-var prefix = "/activiti/process"
+var prefix = "/activiti/process";
 $(function () {
     load();
 });
@@ -181,7 +181,7 @@ function batchRemove() {
         btn: ['确定', '取消']
         // 按钮
     }, function () {
-        var ids = new Array();
+        var ids = [];
         // 遍历所有选择的行数据，取每条数据对应的ID
         $.each(rows, function (i, row) {
             ids[i] = row['id'];
@@ -231,14 +231,14 @@ $('#jstree').on("changed.jstree", function (e, data) {
             query: {
                 deptId: '',
             }
-        }
+        };
         $('#exampleTable').bootstrapTable('refresh', opt);
     } else {
         var opt = {
             query: {
                 deptId: data.selected[0],
             }
-        }
+        };
         $('#exampleTable').bootstrapTable('refresh', opt);
     }
 

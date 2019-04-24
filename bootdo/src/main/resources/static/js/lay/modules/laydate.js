@@ -48,8 +48,8 @@
       (function poll() { 
         if(++timeout > 8 * 1000 / 100){
           return window.console && console.error('laydate.css: Invalid');
-        };
-        parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
+        }
+          parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
       }());
     }
   }
@@ -140,7 +140,7 @@
         : obj[i];
       }
       return target;
-    }
+    };
 
     args[0] = typeof args[0] === 'object' ? args[0] : {};
 
@@ -223,7 +223,7 @@
     str = str.replace(/\s+/, ' ');
     new_str = new_str.replace(/\s+/, ' ').split(' ');
     lay.each(new_str, function(ii, item){
-      var exp = new RegExp('\\b'+ item + '\\b')
+        var exp = new RegExp('\\b' + item + '\\b');
       if(exp.test(str)){
         str = str.replace(exp, '');
       }
@@ -892,9 +892,8 @@
     if(that.startState && !that.endState){
       delete that.startState;
       that.endState = true;
-    };
-
-    if(typeof value === 'string' && value){
+    }
+      if (typeof value === 'string' && value) {
       if(that.EXP_IF.test(value)){ //校验日期格式
         if(options.range){
           value = value.split(' '+ options.range +' ');
@@ -1044,7 +1043,7 @@
     lay(elemYM[1]).attr('lay-ym', dateTime.year + '-' + (dateTime.month + 1));
     
     if(options.lang === 'cn'){
-      lay(elemYM[0]).attr('lay-type', 'year').html(dateTime.year + '年')
+        lay(elemYM[0]).attr('lay-type', 'year').html(dateTime.year + '年');
       lay(elemYM[1]).attr('lay-type', 'month').html((dateTime.month + 1) + '月');
     } else {
       lay(elemYM[0]).attr('lay-type', 'month').html(lang.month[dateTime.month]);
@@ -1082,7 +1081,7 @@
     
     //赋值双日历
     if(options.range && !value){
-      var EYM = that.getAsYM(dateTime.year, dateTime.month)
+        var EYM = that.getAsYM(dateTime.year, dateTime.month);
       that.calendar(lay.extend({}, dateTime, {
         year: EYM[0]
         ,month: EYM[1]
@@ -1260,7 +1259,7 @@
       }), scroll = function(){ //滚动条定位
         lay(ul).find('ol').each(function(i){
           var ol = this
-          ,li = lay(ol).find('li')
+              , li = lay(ol).find('li');
           ol.scrollTop = 30*(that[startEnd][hms[i]] - 2);
           if(ol.scrollTop <= 0){
             li.each(function(ii, item){
@@ -1272,8 +1271,8 @@
           }
         });
       }, haveSpan = lay(elemHeader[2]).find('.'+ ELEM_TIME_TEXT);
-      scroll()
-      span.innerHTML = options.range ? [lang.startTime,lang.endTime][index] : lang.timeTips
+        scroll();
+        span.innerHTML = options.range ? [lang.startTime, lang.endTime][index] : lang.timeTips;
       lay(that.elemMain[index]).addClass('laydate-time-show');
       if(haveSpan[0]) haveSpan.remove();
       elemHeader[2].appendChild(span);
@@ -1394,7 +1393,7 @@
     var that = this
     ,options = that.config
     ,elem = that.bindElem || options.elem[0]
-    ,valType = that.isInput(elem) ? 'val' : 'html'
+        , valType = that.isInput(elem) ? 'val' : 'html';
     
     options.position === 'static' || lay(elem)[valType](value || '');
     return this;
@@ -1450,7 +1449,7 @@
     var that = this
     ,options = that.config
     ,start = lay.extend({}, that.startDate ? lay.extend(that.startDate, that.startTime) : options.dateTime)
-    ,end = lay.extend({}, lay.extend(that.endDate, that.endTime))
+        , end = lay.extend({}, lay.extend(that.endDate, that.endTime));
     
     lay.each([start, end], function(i, item){
       if(!('month' in item)) return;
@@ -1586,7 +1585,7 @@
         isStatic && (
           lay.extend(dateTime, that.firstDate)
           ,that.calendar()
-        )
+        );
         options.range && (
           delete that.startState
           ,delete that.endState
@@ -1693,7 +1692,7 @@
       }
       ,nextYear: function(){
         if(addSubYeay()) return;
-        dateTime.year++
+            dateTime.year++;
         that.checkDate('limit').calendar();
         options.range || that.done(null, 'change');
       }

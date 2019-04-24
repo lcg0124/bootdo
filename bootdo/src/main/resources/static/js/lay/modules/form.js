@@ -95,7 +95,7 @@ layui.define('layer', function(exports){
           ,title = reElem.find('.' + TITLE)
           ,input = title.find('input')
           ,dl = reElem.find('dl')
-          ,dds = dl.children('dd')
+              , dds = dl.children('dd');
           
           
           if(disabled) return;
@@ -224,7 +224,7 @@ layui.define('layer', function(exports){
             }
             
             othis.siblings().removeClass(THIS);
-            select.val(value).removeClass('layui-form-danger')
+              select.val(value).removeClass('layui-form-danger');
             layui.event.call(this, MOD_NAME, 'select('+ filter +')', {
               elem: select[0]
               ,value: value
@@ -241,7 +241,7 @@ layui.define('layer', function(exports){
           
           //关闭下拉
           $(document).off('click', hide).on('click', hide);
-        }
+        };
         
         selects.each(function(index, select){
           var othis = $(this)
@@ -315,7 +315,7 @@ layui.define('layer', function(exports){
               ,othis: reElem
             });
           });
-        }
+        };
         
         checks.each(function(index, check){
           var othis = $(this), skin = othis.attr('lay-skin')

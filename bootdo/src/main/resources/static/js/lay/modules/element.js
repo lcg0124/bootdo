@@ -107,7 +107,7 @@ layui.define('jquery', function(exports){
     ,tabDelete: function(e, othis){
       var li = othis || $(this).parent(), index = li.index();
       var parents = li.parents('.layui-tab').eq(0);
-      var item = parents.children('.layui-tab-content').children('.layui-tab-item')
+              var item = parents.children('.layui-tab-content').children('.layui-tab-item');
       
       if(li.hasClass(THIS)){
         if(li.next()[0]){
@@ -272,11 +272,11 @@ layui.define('jquery', function(exports){
               clearTimeout(timerMore[index]);
             }
             timerMore[index] = setTimeout(function(){
-              child.addClass(SHOW)
+                child.addClass(SHOW);
               othis.find('.'+NAV_MORE).addClass(NAV_MORE+'d');
             }, 300);
           }
-        }
+        };
         
         $(NAV_ELEM).each(function(index){
           var othis = $(this)
@@ -298,7 +298,7 @@ layui.define('jquery', function(exports){
               }
             });
             othis.on('mouseleave', function(){
-              clearTimeout(timer[index])
+                clearTimeout(timer[index]);
               timeEnd[index] = setTimeout(function(){
                 if(othis.hasClass(NAV_TREE)){
                   bar.css({
@@ -374,7 +374,7 @@ layui.define('jquery', function(exports){
         var ELEM = 'layui-collapse';
         
         $('.'+ELEM).each(function(){
-          var elemItem = $(this).find('.layui-colla-item')
+            var elemItem = $(this).find('.layui-colla-item');
           elemItem.each(function(){
             var othis = $(this)
             ,elemTitle = othis.find('.layui-colla-title')

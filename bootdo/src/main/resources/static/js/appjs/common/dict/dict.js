@@ -1,5 +1,4 @@
-
-var prefix = "/common/dict"
+var prefix = "/common/dict";
 $(function() {
 	
 	//	var config = {
@@ -42,7 +41,7 @@ function selectLoad() {
 					query : {
 						type : params.selected,
 					}
-				}
+                };
 				$('#exampleTable').bootstrapTable('refresh', opt);
 			});
 		}
@@ -177,7 +176,7 @@ function reLoad() {
 		query : {
 			type : $('.chosen-select').val(),
 		}
-	}
+    };
 	$('#exampleTable').bootstrapTable('refresh', opt);
 }
 function add() {
@@ -242,7 +241,7 @@ function batchRemove() {
 		btn : [ '确定', '取消' ]
 	// 按钮
 	}, function() {
-		var ids = new Array();
+        var ids = [];
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
 			ids[i] = row['id'];

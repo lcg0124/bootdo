@@ -89,6 +89,7 @@ public class LeaveServiceImpl implements LeaveService {
         return historicProcessInstanceList
                 .stream().map(e -> {
                             LeaveDO leaveDO = leaveDao.get(e.getBusinessKey());
+                    leaveDO.setProcessInstanceId(e.getId());
                             return leaveDO;
                         }
                 ).collect(Collectors.toList());

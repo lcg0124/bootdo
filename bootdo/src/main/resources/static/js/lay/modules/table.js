@@ -193,7 +193,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
     options.request = $.extend({
       pageName: 'page'
       ,limitName: 'limit'
-    }, options.request)
+    }, options.request);
     
     //响应数据的自定义格式
     options.response = $.extend({
@@ -296,7 +296,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
       });
     } else if(options.data && options.data.constructor === Array){ //已知数据
       var res = {}
-      ,startLimit = curr*options.limit - options.limit
+          , startLimit = curr * options.limit - options.limit;
       
       res[response.dataName] = options.data.concat().splice(startLimit, options.limit);
       res[response.countName] = options.data.length;
@@ -320,7 +320,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
         //如果是组合列，则捕获对应的子列
         if(item2.colspan > 1){
           var childIndex = 0;
-          index++
+          index++;
           item2.CHILD_COLS = [];
           layui.each(cols[i1 + 1], function(i22, item22){
             if(item22.PARENT_COL || childIndex == item2.colspan) return;
@@ -473,7 +473,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
   //渲染表单
   Class.prototype.renderForm = function(type){
     form.render((type || 'checkbox'), 'LAY-table-'+ this.index);
-  }
+  };
   
   //数据排序
   Class.prototype.sort = function(th, type, pull, formEvent){
@@ -581,8 +581,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
       });
       return checked;
     };
-    
-    if(!checkAllElem[0]) return
+
+    if (!checkAllElem[0]) return;
 
     if(table.checkStatus(that.key).isAll){
       if(!checkAllElem[0].checked){
@@ -744,7 +744,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
     }).find(ELEM_SORT+' .layui-edge ').on('click', function(e){
       var othis = $(this)
       ,index = othis.index()
-      ,field = othis.parents('th').eq(0).data('field')
+          , field = othis.parents('th').eq(0).data('field');
       layui.stope(e);
       if(index === 0){
         that.sort(field, 'asc', null, true);

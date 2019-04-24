@@ -59,6 +59,7 @@ public class LeaveController {
         PageUtils pageUtils = new PageUtils(leaveList, total);
         return pageUtils;
     }
+
     @ResponseBody
     @GetMapping("/list2")
     @RequiresPermissions("oa:leave:leave")
@@ -66,7 +67,7 @@ public class LeaveController {
         //查询列表数据
         Query query = new Query(params);
         List<LeaveDO> leaveList = leaveService.list2(query);
-        int total = leaveService.count(query);
+        int total = leaveList.size();
         PageUtils pageUtils = new PageUtils(leaveList, total);
         return pageUtils;
     }
@@ -122,7 +123,7 @@ public class LeaveController {
     @RequestMapping("/update")
 //    @RequiresPermissions("oa:leave:edit")
     public R update(LeaveDO leave, String taskId) {
-        leaveService.update(leave,  taskId);
+        leaveService.update(leave, taskId);
         return R.ok();
     }
 

@@ -16,7 +16,7 @@ function hisActivityByTaskId() {
         success: function (data) {
             var html = "";
             for (var i = 0; i < data.length; i++) {
-                var e = data[i]
+                var e = data[i];
                 html += "<li>" +e.user + "于" + e.date + "执行" + e.name + "</li>";
             }
             document.getElementById("hisActivity").innerHTML = html;

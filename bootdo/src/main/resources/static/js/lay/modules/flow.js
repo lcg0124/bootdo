@@ -161,7 +161,7 @@ layui.define('jquery', function(exports){
       var timer;
       scrollElem.on('scroll', function(){
         var othis = $(this);
-        if(timer) clearTimeout(timer)
+          if (timer) clearTimeout(timer);
         timer = setTimeout(function(){
           render(null, othis);
         }, 50);

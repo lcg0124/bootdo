@@ -126,7 +126,7 @@ function batchRemove() {
 	layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
 		btn : [ '确定', '取消' ]
 	}, function() {
-		var ids = new Array();
+        var ids = [];
 		$.each(rows, function(i, row) {
 			ids[i] = row['roleId'];
 		});

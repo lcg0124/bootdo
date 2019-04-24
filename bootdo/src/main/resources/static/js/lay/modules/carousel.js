@@ -186,13 +186,13 @@ layui.define('jquery', function(exports){
     //避免重复插入
     if(options.elem.find('.'+ELEM_ARROW)[0]){
       options.elem.find('.'+ELEM_ARROW).remove();
-    };
-    options.elem.append(tplArrow);
+    }
+      options.elem.append(tplArrow);
     
     //事件
     tplArrow.on('click', function(){
       var othis = $(this)
-      ,type = othis.attr('lay-type')
+          , type = othis.attr('lay-type');
       that.slide(type);
     });
   };
@@ -219,8 +219,8 @@ layui.define('jquery', function(exports){
     //避免重复插入
     if(options.elem.find('.'+ELEM_IND)[0]){
       options.elem.find('.'+ELEM_IND).remove();
-    };
-    options.elem.append(tplInd);
+    }
+      options.elem.append(tplInd);
     
     if(options.anim === 'updown'){
       tplInd.css('margin-top', -(tplInd.height()/2));
@@ -262,10 +262,10 @@ layui.define('jquery', function(exports){
       setTimeout(function(){
         elemItem.eq(thisIndex).addClass(ELEM_LEFT);
         elemItem.eq(options.index).addClass(ELEM_LEFT);
-      }, 50);  
-    };
-    
-    //移除过度类
+      }, 50);
+
+    }
+      //移除过度类
     setTimeout(function(){
       elemItem.removeClass(THIS + ' ' + ELEM_PREV + ' ' + ELEM_NEXT + ' ' + ELEM_LEFT + ' ' + ELEM_RIGHT);
       elemItem.eq(options.index).addClass(THIS);

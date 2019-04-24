@@ -115,7 +115,7 @@ var openDept = function(){
 		area : [ '300px', '450px' ],
 		content:"/system/sysDept/treeView"
 	})
-}
+};
 function loadDept( deptId,deptName){
 	$("#deptId").val(deptId);
 	$("#deptName").val(deptName);

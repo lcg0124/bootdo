@@ -90,7 +90,7 @@ $(function () {
         var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
         lineChart.setOption(lineoption);
         $(window).resize(lineChart.resize);
-    })
+    });
 
 
     var barChart = echarts.init(document.getElementById("echarts-bar-chart"));

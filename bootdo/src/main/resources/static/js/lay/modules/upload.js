@@ -153,7 +153,7 @@ layui.define('layer' , function(exports){
     var elem = this.config.elem[0];
     if(!elem) return;
     return elem.tagName.toLocaleLowerCase() === 'input' && elem.type === 'file'
-  }
+  };
   
   //预读图片信息
   Class.prototype.preview = function(callback){
@@ -300,7 +300,7 @@ layui.define('layer' , function(exports){
       }
       
       ajaxSend();
-    }
+        };
 
     //校验文件格式
     value = value.length === 0 
@@ -346,8 +346,8 @@ layui.define('layer' , function(exports){
         if(file.size > 1024*options.size){
           var size = options.size/1024;
           size = size >= 1 
-            ? (Math.floor(size) + (size%1 > 0 ? size.toFixed(1) : 0)) + 'MB' 
-          : options.size + 'KB'
+            ? (Math.floor(size) + (size%1 > 0 ? size.toFixed(1) : 0)) + 'MB'
+              : options.size + 'KB';
           elemFile.value = '';
           limitSize = size;
           
@@ -407,11 +407,11 @@ layui.define('layer' , function(exports){
     //拖拽上传
     if(!(device.ie && device.ie < 10)){
       options.elem.off('upload.over').on('upload.over', function(){
-        var othis = $(this)
+          var othis = $(this);
         othis.attr('lay-over', '');
       })
       .off('upload.leave').on('upload.leave', function(){
-        var othis = $(this)
+          var othis = $(this);
         othis.removeAttr('lay-over');
       })
       .off('upload.drop').on('upload.drop', function(e, param){

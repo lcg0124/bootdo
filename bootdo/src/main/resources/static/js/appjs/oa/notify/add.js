@@ -68,7 +68,7 @@ function loadType(){
 					query : {
 						type : params.selected,
 					}
-				}
+                };
 				$('#exampleTable').bootstrapTable('refresh', opt);
 			});
 		}
@@ -82,7 +82,7 @@ var openUser = function(){
 		area : [ '300px', '450px' ],
 		content:"/sys/user/treeView"
 	})
-}
+};
 
 function loadUser(userIds,userNames){
 	$("#userIds").val(userIds);

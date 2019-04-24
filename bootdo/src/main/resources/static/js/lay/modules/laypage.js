@@ -298,7 +298,7 @@ layui.define(function(exports){
       }) : elem.addEventListener(even, fn, false);
       return this;
     }
-  }
+  };
 
   exports(MOD_NAME, laypage);
 });

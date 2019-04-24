@@ -54,8 +54,8 @@ var isLayui = window.layui && layui.define, $, win, ready = {
     (function poll() {
       if(++timeout > 8 * 1000 / 100){
         return window.console && console.error('layer.css: Invalid');
-      };
-      parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
+      }
+        parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
     }());
   }
 };
@@ -343,9 +343,8 @@ Class.pt.creat = function(){
     that.layero.addClass(animClass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
       $(this).removeClass(animClass);
     });
-  };
-  
-  //记录关闭动画
+  }
+    //记录关闭动画
   if(config.isOutAnim){
     that.layero.data('isOutAnim', true);
   }
@@ -388,9 +387,8 @@ Class.pt.auto = function(index){
         setHeight('.'+doms[5]);
       }
     break;
-  };
-  
-  return that;
+  }
+    return that;
 };
 
 //计算坐标
@@ -472,7 +470,7 @@ Class.pt.tips = function(){
       tipsG.css({right: 12, left: 'auto'});
     } else {
       goal.tipLeft = goal.left;
-    };
+    }
   };
   
   //辨别tips的方位
@@ -514,7 +512,7 @@ Class.pt.tips = function(){
     left: goal.tipLeft - (config.fixed ? win.scrollLeft() : 0), 
     top: goal.tipTop  - (config.fixed ? win.scrollTop() : 0)
   });
-}
+};
 
 //拖拽层
 Class.pt.move = function(){
@@ -592,7 +590,7 @@ Class.pt.move = function(){
       layer.style(that.index, {
         width: dict.area[0] + X
         ,height: dict.area[1] + Y
-      })
+      });
       dict.isResize = true;
       config.resizing && config.resizing(layero);
     }
@@ -788,11 +786,10 @@ layer.style = function(index, options, limit){
   if(!limit){
     if(parseFloat(options.width) <= 260){
       options.width = 260;
-    };
-    
-    if(parseFloat(options.height) - titHeight - btnHeight <= 64){
+    }
+      if (parseFloat(options.height) - titHeight - btnHeight <= 64) {
       options.height = 64 + titHeight + btnHeight;
-    };
+      }
   }
   
   layero.css(options);
@@ -1098,7 +1095,7 @@ layer.photos = function(options, loop, key){
         full: options.full
       }), true);
       pushData();
-    })
+    });
     
     //不直接弹出
     if(!loop) return;
@@ -1121,7 +1118,9 @@ layer.photos = function(options, loop, key){
     dict.imgIndex++;
     if(dict.imgIndex > data.length){
       dict.imgIndex = 1;
-      if (errorMsg) {return};
+        if (errorMsg) {
+            return
+        }
     }
     dict.tabimg(key)
   };
@@ -1139,7 +1138,7 @@ layer.photos = function(options, loop, key){
         layer.close(dict.index);
       }
     }
-  }
+  };
   
   //切换
   dict.tabimg = function(key){
@@ -1150,7 +1149,7 @@ layer.photos = function(options, loop, key){
     setTimeout(function(){
       layer.photos(options, true, key);
     }, 200);
-  }
+  };
   
   //一些动作
   dict.event = function(){
@@ -1187,10 +1186,11 @@ layer.photos = function(options, loop, key){
     img.onerror = function(e){
       img.onerror = null;
       error(e);
-    };  
-  };
-  
-  dict.loadi = layer.load(1, {
+    };
+
+  }
+
+    dict.loadi = layer.load(1, {
     shade: 'shade' in options ? false : 0.9,
     scrollbar: false
   });

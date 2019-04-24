@@ -111,7 +111,6 @@ public class CustomActivitiesServiceImpl implements CustomActivitiesService {
                         put("processDefinitionKey", processKey);
                         put("activityId", e.getId());
                     }});
-                    ;
                     //保存activity
                     CustomActivitiesDO customActivitiesDO = new CustomActivitiesDO();
                     customActivitiesDO.setActivityId(e.getId());

@@ -125,9 +125,9 @@ public class DictController extends BaseController {
 	@ResponseBody
 	public List<DictDO> listType() {
 		return dictService.listType();
-	};
+    }
 
-	// 类别已经指定增加
+    // 类别已经指定增加
 	@GetMapping("/add/{type}/{description}")
 	@RequiresPermissions("common:dict:add")
 	String addD(Model model, @PathVariable("type") String type, @PathVariable("description") String description) {
