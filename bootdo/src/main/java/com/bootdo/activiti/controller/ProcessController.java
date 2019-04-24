@@ -80,14 +80,14 @@ public class ProcessController extends BaseController {
             InputStream fileInputStream = file.getInputStream();
             Deployment deployment = null;
             String extension = FilenameUtils.getExtension(fileName);
-            if (extension.equals("zip") || extension.equals("bar")) {
+            if ("zip".equals(extension) || "bar".equals(extension)) {
                 ZipInputStream zip = new ZipInputStream(fileInputStream);
                 deployment = repositoryService.createDeployment().addZipInputStream(zip).deploy();
-            } else if (extension.equals("png")) {
+            } else if ("png".equals(extension)) {
                 deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
             } else if (fileName.indexOf("bpmn20.xml") != -1) {
                 deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
-            } else if (extension.equals("bpmn")) { // bpmn扩展名特殊处理，转换为bpmn20.xml
+            } else if ("bpmn".equals(extension)) { // bpmn扩展名特殊处理，转换为bpmn20.xml
                 String baseName = FilenameUtils.getBaseName(fileName);
                 deployment = repositoryService.createDeployment().addInputStream(baseName + ".bpmn20.xml", fileInputStream).deploy();
             } else {

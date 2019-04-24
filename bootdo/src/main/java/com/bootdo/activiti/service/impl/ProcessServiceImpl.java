@@ -82,9 +82,9 @@ public class ProcessServiceImpl implements ProcessService {
 
 
         String resourceName = "";
-        if (resType.equals("image")) {
+        if ("image".equals(resType)) {
             resourceName = processDefinition.getDiagramResourceName();
-        } else if (resType.equals("xml")) {
+        } else if ("xml".equals(resType)) {
             resourceName = processDefinition.getResourceName();
         }
         return repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
