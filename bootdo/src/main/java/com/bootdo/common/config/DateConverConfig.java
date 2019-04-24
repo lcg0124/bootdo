@@ -23,11 +23,11 @@ public class DateConverConfig {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;
                 try {
-                    date = sdf.parse((String) source);
+                    date = sdf.parse(source);
                 } catch (Exception e) {
                     SimpleDateFormat sdfday = new SimpleDateFormat("yyyy-MM-dd");
                     try {
-                        date = sdfday.parse((String) source);
+                        date = sdfday.parse(source);
                     } catch (ParseException e1) {
                         e1.printStackTrace();
                     }

@@ -36,7 +36,7 @@ public class JsoupUtil {
 		return Jsoup.clean(content, "", whitelist, outputSettings);
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws IOException {
 		String text = "<a href=\"http://www.baidu.com/a\" onclick=\"alert(1);\">sss</a><script>alert(0);</script>sss";
 		System.out.println(clean(text));
 	}

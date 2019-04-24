@@ -128,9 +128,8 @@
         }
       }
       stream.next();
-    };
-
-    return {
+    }
+      return {
       startState: function () {
         return {tokenize: tokenBase};
       },

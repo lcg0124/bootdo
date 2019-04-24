@@ -13,10 +13,10 @@ var ANCHOR_TYPE= {
 
 function Anchor(uuid, type, x, y) {
 	this.uuid = uuid; 
-	this.x = x
-	this.y = y
+	this.x = x;
+	this.y = y;
 	this.type = (type == ANCHOR_TYPE.middle) ? ANCHOR_TYPE.middle : ANCHOR_TYPE.main;
-};
+}
 Anchor.prototype = {
 	uuid: null,
 	x: 0,
@@ -51,8 +51,7 @@ function Polyline(uuid, points, strokeWidth) {
 	this.closePath = false;
 	
 	this.init();
-};
-
+}
 Polyline.prototype = {
 	id: null,
 	points: [],
@@ -126,7 +125,7 @@ Polyline.prototype = {
 	},
 	
 	getAnchors: function(){
-		// вернуть отсортированный массив
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		// ????
 		return this.anchors;
 	},
@@ -155,7 +154,7 @@ Polyline.prototype = {
 		} else if (!index) {
 			index = this.anchors.length;
 		} else {
-			// перебрать anchors, сдвинуть позицию для каждого, начиная с index
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ anchors, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ index
 			//var anchor = this.getAnchor()
 			for(var i=0; i < this.getAnchorsCount(); i++){
 				var anchor = this.anchors[i];
@@ -210,7 +209,7 @@ Polyline.prototype = {
 		for(var i = 0; i < this.getAnchorsCount(); i++){
 			var anchor = this.getAnchor(i);
 			
-			var pathType = ""
+			var pathType = "";
 			if (i==0)
 				pathType = "M";
 			else 
@@ -239,8 +238,8 @@ Polyline.prototype = {
 				
 				if (AO < 2*this.radius && i>1) {
 					targetX = anchor.x - this.getLineLengthX(i-1)/2;
-					targetY = anchor.y - this.getLineLengthY(i-1)/2;;
-				}
+                    targetY = anchor.y - this.getLineLengthY(i - 1) / 2;
+                }
 					
 				// pivot point of next line
 				var AO = this.getLineLength(i);
@@ -254,8 +253,8 @@ Polyline.prototype = {
 					
 				if (AO < 2*this.radius && i<this.getAnchorsCount()-2) {
 					nextSrcX = anchor.x + this.getLineLengthX(i)/2;
-					nextSrcY = anchor.y + this.getLineLengthY(i)/2;;
-				}
+                    nextSrcY = anchor.y + this.getLineLengthY(i) / 2;
+                }
 					
 				
 				var dx0 = (cx - targetX) / 3,
@@ -341,9 +340,7 @@ function Polygone(points, strokeWidth) {
 	
 	this.closePath = true;
 	this.init();
-};
-
-
+}
 /*
  * Poligone is inherited from Poliline: draws closedPath of polyline
  */
@@ -359,7 +356,7 @@ Polygone.prototype.rebuildPath = function(){
 	for(var i = 0; i < this.getAnchorsCount(); i++){
 		var anchor = this.getAnchor(i);
 		
-		var pathType = ""
+		var pathType = "";
 		if (i==0)
 			pathType = "M";
 		else 

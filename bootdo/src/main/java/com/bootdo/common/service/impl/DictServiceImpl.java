@@ -77,7 +77,7 @@ public class DictServiceImpl implements DictService {
         List<DictDO> hobbyList = dictDao.list(param);
 
         if (StringUtils.isNotEmpty(userDO.getHobby())) {
-            String userHobbys[] = userDO.getHobby().split(";");
+            String[] userHobbys = userDO.getHobby().split(";");
             for (String userHobby : userHobbys) {
                 for (DictDO hobby : hobbyList) {
                     if (!Objects.equals(userHobby, hobby.getId().toString())) {

@@ -39,7 +39,7 @@ layui.define('jquery', function(exports){
   
   //树节点解析
   Tree.prototype.tree = function(elem, children){
-    var that = this, options = that.options
+    var that = this, options = that.options;
     var nodes = children || options.nodes;
     
     layui.each(nodes, function(index, item){
@@ -110,13 +110,13 @@ layui.define('jquery', function(exports){
   //伸展节点
   Tree.prototype.spread = function(elem, item){
     var that = this, options = that.options;
-    var arrow = elem.children('.layui-tree-spread')
+    var arrow = elem.children('.layui-tree-spread');
     var ul = elem.children('ul'), a = elem.children('a');
     
     //执行伸展
     var open = function(){
       if(elem.data('spread')){
-        elem.data('spread', null)
+        elem.data('spread', null);
         ul.removeClass('layui-show');
         arrow.html(icon.arrow[0]);
         a.find('.layui-icon').html(icon.branch[0]);
@@ -133,7 +133,7 @@ layui.define('jquery', function(exports){
     
     arrow.on('click', open);
     a.on('dblclick', open);
-  }
+  };
   
   //通用事件
   Tree.prototype.on = function(elem){
@@ -187,7 +187,7 @@ layui.define('jquery', function(exports){
       }
     };
     a.on('mousedown', function(){
-      var move = that.move
+      var move = that.move;
       move.from = {
         item: item
         ,elem: elem

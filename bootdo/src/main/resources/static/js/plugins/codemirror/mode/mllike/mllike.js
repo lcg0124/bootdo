@@ -101,9 +101,8 @@ CodeMirror.defineMode('mllike', function(_config, parserConfig) {
       state.tokenize = tokenBase;
     }
     return 'string';
-  };
-
-  function tokenComment(stream, state) {
+  }
+    function tokenComment(stream, state) {
     var prev, next;
     while(state.commentLevel > 0 && (next = stream.next()) != null) {
       if (prev === '(' && next === '*') state.commentLevel++;

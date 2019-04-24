@@ -106,7 +106,7 @@ function OBJ(type){
 	this.c = null;
 	this.type = type;
 	this.nestedElements = [];
-};
+}
 OBJ.prototype = {
 	
 };
@@ -827,13 +827,13 @@ ProcessDiagramCanvas.prototype = {
 				console.error("destination activity["+destinationActivityId+"] not found");
 			return null;
 		}
-			var bbSourceActivity = sourceActivity.getBBox()
-			var bbDestinationActivity = destinationActivity.getBBox()
+			var bbSourceActivity = sourceActivity.getBBox();
+			var bbDestinationActivity = destinationActivity.getBBox();
 			
 			var path = [];
 			var newWaypoints = [];
 			for(var i = 0; i < waypoints.length; i++){
-				var pathType = ""
+				var pathType = "";
 				if (i==0)
 					pathType = "M";
 				else 
@@ -2023,8 +2023,8 @@ ProcessDiagramCanvas.prototype = {
 				}
 			}
 			i++;
-		};
-		//console.log(layouts);
+        }
+        //console.log(layouts);
 		
 		measurer.rafaelTextObject.attr({"text": layouts.join("\n")});
 		

@@ -29,7 +29,7 @@
 {%- for item in li -%}
   &lt;li&gt;{{ item.label }}&lt;/li&gt;
 {% endfor -%}
-{{ item.sand == true and item.keyword == false ? 1 : 0 }}
+{{ item.sand == true; and; item.keyword == false ? 1 : 0 }}
 {{ app.get(55, 1.2, true) }}
 {% if app.get(&#39;_route&#39;) == (&#39;_home&#39;) %}home{% endif %}
 {% if app.session.flashbag.has(&#39;message&#39;) %}

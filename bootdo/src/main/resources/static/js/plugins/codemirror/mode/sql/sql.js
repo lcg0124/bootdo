@@ -242,9 +242,8 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       return "variable-2";
     }
     return null;
-  };
-
-  // short client keyword token
+  }
+    // short client keyword token
   function hookClient(stream) {
     // \N means NULL
     // ref: http://dev.mysql.com/doc/refman/5.5/en/null-values.html

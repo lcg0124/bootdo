@@ -1,5 +1,5 @@
 
-var prefix = "/oa/leave"
+var prefix = "/oa/leave";
 $(function() {
 	load();
 });
@@ -152,7 +152,7 @@ function batchRemove() {
 		btn : [ '确定', '取消' ]
 	// 按钮
 	}, function() {
-		var ids = new Array();
+		var ids = [];
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
 			ids[i] = row['id'];

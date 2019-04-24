@@ -291,7 +291,7 @@
             }
 
             return this;
-        }
+        };
 
         this._draw = function () {
 
@@ -473,7 +473,7 @@
         // Utils
         this.h2rgba = function (h, a) {
             var rgb;
-            h = h.substring(1,7)
+            h = h.substring(1,7);
             rgb = [parseInt(h.substring(0,2),16)
                 ,parseInt(h.substring(2,4),16)
                 ,parseInt(h.substring(4,6),16)];

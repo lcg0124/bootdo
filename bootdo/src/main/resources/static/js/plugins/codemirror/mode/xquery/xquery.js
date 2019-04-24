@@ -47,25 +47,29 @@ CodeMirror.defineMode("xquery", function() {
     'preceding-sibling','processing-instruction','ref','return','returns','satisfies','schema','schema-element',
     'self','some','sortby','stable','text','then','to','treat','typeswitch','union','variable','version','where',
     'xquery', 'empty-sequence'];
-    for(var i=0, l=basic.length; i < l; i++) { kwObj[basic[i]] = kw(basic[i]);};
-
-    // a list of types. For each add a property to kwObj with the value of
+      for (var i = 0, l = basic.length; i < l; i++) {
+          kwObj[basic[i]] = kw(basic[i]);
+      }
+      // a list of types. For each add a property to kwObj with the value of
     // {type: "atom", style: "atom"}
     var types = ['xs:string', 'xs:float', 'xs:decimal', 'xs:double', 'xs:integer', 'xs:boolean', 'xs:date', 'xs:dateTime',
     'xs:time', 'xs:duration', 'xs:dayTimeDuration', 'xs:time', 'xs:yearMonthDuration', 'numeric', 'xs:hexBinary',
     'xs:base64Binary', 'xs:anyURI', 'xs:QName', 'xs:byte','xs:boolean','xs:anyURI','xf:yearMonthDuration'];
-    for(var i=0, l=types.length; i < l; i++) { kwObj[types[i]] = atom;};
-
-    // each operator will add a property to kwObj with value of {type: "operator", style: "keyword"}
+      for (var i = 0, l = types.length; i < l; i++) {
+          kwObj[types[i]] = atom;
+      }
+      // each operator will add a property to kwObj with value of {type: "operator", style: "keyword"}
     var operators = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', ':=', '=', '>', '>=', '<', '<=', '.', '|', '?', 'and', 'or', 'div', 'idiv', 'mod', '*', '/', '+', '-'];
-    for(var i=0, l=operators.length; i < l; i++) { kwObj[operators[i]] = operator;};
-
-    // each axis_specifiers will add a property to kwObj with value of {type: "axis_specifier", style: "qualifier"}
+      for (var i = 0, l = operators.length; i < l; i++) {
+          kwObj[operators[i]] = operator;
+      }
+      // each axis_specifiers will add a property to kwObj with value of {type: "axis_specifier", style: "qualifier"}
     var axis_specifiers = ["self::", "attribute::", "child::", "descendant::", "descendant-or-self::", "parent::",
     "ancestor::", "ancestor-or-self::", "following::", "preceding::", "following-sibling::", "preceding-sibling::"];
-    for(var i=0, l=axis_specifiers.length; i < l; i++) { kwObj[axis_specifiers[i]] = qualifier; };
-
-    return kwObj;
+      for (var i = 0, l = axis_specifiers.length; i < l; i++) {
+          kwObj[axis_specifiers[i]] = qualifier;
+      }
+      return kwObj;
   }();
 
   // Used as scratch variables to communicate multiple values without
@@ -285,8 +289,9 @@ CodeMirror.defineMode("xquery", function() {
 
     // a variable may start with a quoted EQName so if the next character is quote, consume to the next quote
     if(stream.eat("\"")) {
-      while(stream.next() !== '\"'){};
-      stream.eat(":");
+        while (stream.next() !== '\"') {
+        }
+        stream.eat(":");
     } else {
       stream.eatWhile(isVariableChar);
       if(!stream.match(":=", false)) stream.eat(":");

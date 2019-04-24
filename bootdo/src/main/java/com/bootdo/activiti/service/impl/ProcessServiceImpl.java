@@ -23,6 +23,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ProcessServiceImpl implements ProcessService {
         InputStream bpmnStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(),
                 processDefinition.getResourceName());
         XMLInputFactory xif = XMLInputFactory.newInstance();
-        InputStreamReader in = new InputStreamReader(bpmnStream, "UTF-8");
+        InputStreamReader in = new InputStreamReader(bpmnStream, StandardCharsets.UTF_8);
         XMLStreamReader xtr = xif.createXMLStreamReader(in);
         BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
 
@@ -68,7 +69,7 @@ public class ProcessServiceImpl implements ProcessService {
 
         repositoryService.saveModel(modelData);
 
-        repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes("utf-8"));
+        repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes(StandardCharsets.UTF_8));
 
         return modelData;
     }

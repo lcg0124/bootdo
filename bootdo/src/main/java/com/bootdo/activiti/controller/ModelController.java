@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.activiti.editor.constants.ModelDataJsonConstants.*;
@@ -98,7 +99,7 @@ public class ModelController extends BaseController {
         stencilSetNode.put("namespace",
                 "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.put("stencilset", stencilSetNode);
-        repositoryService.addModelEditorSource(id, editorNode.toString().getBytes("utf-8"));
+        repositoryService.addModelEditorSource(id, editorNode.toString().getBytes(StandardCharsets.UTF_8));
         try {
             response.sendRedirect("/modeler.html?modelId=" + id);
         } catch (IOException e) {
@@ -120,7 +121,7 @@ public class ModelController extends BaseController {
                 }
                 modelNode.put(MODEL_ID, model.getId());
                 ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(
-                        new String(repositoryService.getModelEditorSource(model.getId()), "utf-8"));
+                        new String(repositoryService.getModelEditorSource(model.getId()), StandardCharsets.UTF_8));
                 modelNode.put("model", editorJsonNode);
 
             } catch (Exception e) {
@@ -180,7 +181,7 @@ public class ModelController extends BaseController {
         String processName = modelData.getName() + ".bpmn20.xml";
         Deployment deployment = repositoryService.createDeployment()
                 .name(modelData.getName())
-                .addString(processName, new String(bpmnBytes, "UTF-8"))
+                .addString(processName, new String(bpmnBytes, StandardCharsets.UTF_8))
                 .deploy();
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
@@ -218,9 +219,9 @@ public class ModelController extends BaseController {
 
             repositoryService.saveModel(model);
 
-            repositoryService.addModelEditorSource(model.getId(), json_xml.getBytes("utf-8"));
+            repositoryService.addModelEditorSource(model.getId(), json_xml.getBytes(StandardCharsets.UTF_8));
 
-            InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes("utf-8"));
+            InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes(StandardCharsets.UTF_8));
             TranscoderInput input = new TranscoderInput(svgStream);
 
             PNGTranscoder transcoder = new PNGTranscoder();

@@ -1,4 +1,4 @@
-var prefix = "/activiti/task"
+var prefix = "/activiti/task";
 $(function() {
 	load3();
 });

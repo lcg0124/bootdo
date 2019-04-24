@@ -79,7 +79,7 @@ layui.define(['layer', 'form'], function(exports){
       ,'<div class="layui-layedit-iframe">'
         ,'<iframe id="'+ name +'" name="'+ name +'" textarea="'+ id +'" frameborder="0"></iframe>'
       ,'</div>'
-    ,'</div>'].join(''))
+    ,'</div>'].join(''));
     
     //编辑器不兼容ie8以下
     if(device.ie && device.ie < 8){
@@ -88,7 +88,7 @@ layui.define(['layer', 'form'], function(exports){
 
     haveBuild[0] && (haveBuild.remove());
 
-    setIframe.call(that, editor, textArea[0], set)
+    setIframe.call(that, editor, textArea[0], set);
     textArea.addClass('layui-hide').after(editor);
 
     return that.index;
@@ -120,8 +120,8 @@ layui.define(['layer', 'form'], function(exports){
       $(iframeWin[0].document.body).append(content)
     }else{
       $(iframeWin[0].document.body).html(content)
-    };
-    layedit.sync(index)
+    }
+      layedit.sync(index)
   };
   //将编辑器内容同步到textarea（一般用于异步提交时）
   Edit.prototype.sync = function(index){
@@ -199,7 +199,7 @@ layui.define(['layer', 'form'], function(exports){
         ,parentNode = container.parentNode;
         
         if(parentNode.tagName.toLowerCase() === 'pre'){
-          if(e.shiftKey) return
+          if(e.shiftKey) return;
           layer.msg('请暂时用shift+enter');
           return false;
         }
@@ -265,7 +265,7 @@ layui.define(['layer', 'form'], function(exports){
   //在选区插入内联元素
   ,insertInline = function(tagName, attr, range){
     var iframeDOM = this.document
-    ,elem = document.createElement(tagName)
+    ,elem = document.createElement(tagName);
     for(var key in attr){
       elem.setAttribute(key, attr[key]);
     }
@@ -297,7 +297,7 @@ layui.define(['layer', 'form'], function(exports){
     ,container = getContainer(Range(iframeDOM))
     ,item = function(type){
       return tools.find('.layedit-tool-'+type)
-    }
+    };
 
     if(othis){
       othis[othis.hasClass(CHECK) ? 'removeClass' : 'addClass'](CHECK);
@@ -439,7 +439,7 @@ layui.define(['layer', 'form'], function(exports){
       body.focus();
       
       var range = Range(iframeDOM)
-      ,container = range.commonAncestorContainer
+      ,container = range.commonAncestorContainer;
       
       if(command){
         iframeDOM.execCommand(command);
@@ -455,7 +455,7 @@ layui.define(['layer', 'form'], function(exports){
       toolCheck.call(iframeWin, tools, othis);
     }
     
-    ,isClick = /image/
+    ,isClick = /image/;
 
     tools.find('>i').on('mousedown', function(){
       var othis = $(this)
@@ -538,7 +538,7 @@ layui.define(['layer', 'form'], function(exports){
       if($(e.target).attr('layedit-event') !== 'face'){
         layer.close(face.index);
       }
-    }
+    };
     return face.index = layer.tips(function(){
       var content = [];
       layui.each(faces, function(key, item){

@@ -35,7 +35,7 @@ var ActivitiRest = {
 				var processDefinitionDiagramLayout = data;
 				if (!processDefinitionDiagramLayout) {
 					console.error("Process definition diagram layout '" + processDefinitionId + "' not found");
-					return;
+
 				} else {
 					callback.apply({processDefinitionDiagramLayout: processDefinitionDiagramLayout});
 				}
@@ -60,7 +60,7 @@ var ActivitiRest = {
 				var highLights = data;
 				if (!highLights) {
 					console.log("highLights not found");
-					return;
+
 				} else {
 					callback.apply({highLights: highLights});
 				}

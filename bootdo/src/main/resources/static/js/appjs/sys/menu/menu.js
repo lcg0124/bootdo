@@ -1,4 +1,4 @@
-var prefix = "/sys/menu"
+var prefix = "/sys/menu";
 $(document).ready(function () {
     load();
 });
@@ -100,7 +100,7 @@ var load = function () {
                         }
                     }]
             });
-}
+};
 
 function reLoad() {
     load();

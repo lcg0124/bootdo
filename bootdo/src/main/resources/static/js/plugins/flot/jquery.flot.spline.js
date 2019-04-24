@@ -39,7 +39,7 @@
  */
 
 (function($) {
-    'use strict'
+    'use strict';
 
     /**
      * @param {Number} x0, y0, x1, y1: coordinates of the end (knot) points of the segment

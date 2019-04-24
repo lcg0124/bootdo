@@ -1,4 +1,4 @@
-var prefix = "/sys/menu"
+var prefix = "/sys/menu";
 $(function() {
 	validateRule();
 

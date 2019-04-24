@@ -37,9 +37,9 @@ public class GeneratorController {
 	List<Map<String, Object>> list() {
 		List<Map<String, Object>> list = generatorService.list();
 		return list;
-	};
+	}
 
-	@RequestMapping("/code/{tableName}")
+    @RequestMapping("/code/{tableName}")
 	public void code(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("tableName") String tableName) throws IOException {
 		String[] tableNames = new String[] { tableName };

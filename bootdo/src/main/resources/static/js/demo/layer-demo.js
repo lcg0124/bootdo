@@ -46,7 +46,7 @@
                         });
                         parent.layer.close(index);
                     });
-                };
+                }
             }());
             break;
         case 6:

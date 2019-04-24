@@ -81,9 +81,8 @@ layui.define(['layer-mobile', 'zepto'] , function(exports){
           item.parent().next().remove();
           item.unwrap().unwrap();
         }
-      };
-      
-      //包裹元素
+      }
+        //包裹元素
       item.wrap(form);
       
       //触发上传
@@ -100,9 +99,8 @@ layui.define(['layer-mobile', 'zepto'] , function(exports){
 
     if(!val){
       return;
-    };
-    
-    //校验文件
+    }
+      //校验文件
     switch(type){
       case 'file': //一般文件
         if(ext && !RegExp('\\w\\.('+ ext +')$', 'i').test(escape(val))){

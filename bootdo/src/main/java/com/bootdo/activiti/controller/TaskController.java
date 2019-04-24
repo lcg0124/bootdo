@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author lichunguang
  */
 @RequestMapping("activiti/task")
@@ -60,7 +59,6 @@ public class TaskController {
         for (ProcessDefinition processDefinition : processDefinitions) {
             list.add(new ProcessVO(processDefinition));
         }
-
         PageUtils pageUtils = new PageUtils(list, count);
         return pageUtils;
     }
@@ -74,10 +72,7 @@ public class TaskController {
     @GetMapping("/form/{procDefId}/{taskId}")
     public void form(@PathVariable("procDefId") String procDefId, @PathVariable("taskId") String taskId, HttpServletResponse response) throws IOException {
         // 获取流程XML上的表单KEY
-
         String formKey = actTaskService.getFormKey(procDefId, taskId);
-
-
         response.sendRedirect(formKey + "/" + taskId);
     }
 
@@ -128,6 +123,5 @@ public class TaskController {
     List hisActivityByTaskId(String taskId) {
         return actTaskService.listHisTaskByTaskId(taskId);
     }
-
 
 }

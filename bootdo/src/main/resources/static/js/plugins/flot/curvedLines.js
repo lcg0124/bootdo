@@ -162,8 +162,8 @@
             var points = datapoints.points, ps = datapoints.pointsize;
             var num = curvedLinesOptions.curvePointFactor * (points.length / ps);
 
-            var xdata = new Array;
-            var ydata = new Array;
+            var xdata = [];
+            var ydata = [];
 
             var curX = -1;
             var curY = -1;
@@ -230,8 +230,8 @@
 
             var n = xdata.length;
 
-            var y2 = new Array();
-            var delta = new Array();
+            var y2 = [];
+            var delta = [];
             y2[0] = 0;
             y2[n - 1] = 0;
             delta[0] = 0;
@@ -257,9 +257,9 @@
             //   xmax  - xmin  / #points
             var step = (xdata[n - 1] - xdata[0]) / (num - 1);
 
-            var xnew = new Array;
-            var ynew = new Array;
-            var result = new Array;
+            var xnew = [];
+            var ynew = [];
+            var result = [];
 
             xnew[0] = xdata[0];
             ynew[0] = ydata[0];
