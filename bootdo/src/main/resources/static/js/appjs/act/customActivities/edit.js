@@ -48,16 +48,16 @@ function validateRule() {
 	})
 }
 
-var openUser = function(){
-	layer.open({
-		type:2,
-		title:"选择人员",
-		area : [ '300px', '450px' ],
-		content:"/sys/user/treeView"
-	})
-}
-
-function loadUser(userIds,userNames){
-	$("#candidateUser").val(userIds);
-	$("#candidateUserName").val(userNames);
-}
+// var openUser = function(){
+// 	layer.open({
+// 		type:2,
+// 		title:"选择人员",
+// 		area : [ '300px', '450px' ],
+// 		content:"/sys/user/treeView"
+// 	})
+// }
+//
+// function loadUser(userIds,userNames){
+// 	$("#candidateUser").val(userIds);
+// 	$("#candidateUserName").val(userNames);
+// }

@@ -81,16 +81,24 @@ function load() {
                     //     field: 'assigneeType',
                     //     title: ''
                     // },
+                    // {
+                    //     field: 'assignee',
+                    //     title: '办理人'
+                    // },
                     {
-                        field: 'assignee',
+                        field: 'assigneeName',
                         title: '办理人'
                     },
                     {
                         field: 'candidateGroup',
                         title: '候选组'
                     },
+                    // {
+                    //     field: 'candidateUser',
+                    //     title: '候选人'
+                    // },
                     {
-                        field: 'candidateUser',
+                        field: 'candidateUserName',
                         title: '候选人'
                     },
                     {
@@ -98,16 +106,10 @@ function load() {
                         field: 'id',
                         align: 'center',
                         formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
+                            var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="设置" onclick="edit(\''
                                 + row.id
-                                + '\')"><i class="fa fa-edit"></i></a> ';
-                            var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + row.id
-                                + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm" href="#" title="设置"  mce_href="#" onclick="resetPwd(\''
-                                + row.id
-                                + '\')"><i class="fa fa-key"></i></a> ';
-                            return e + d + f;
+                                + '\')"><i class="fa fa-cog"></i></a> ';
+                            return e;
                         }
                     }]
             });
@@ -131,7 +133,7 @@ function add() {
 function edit(id) {
     layer.open({
         type: 2,
-        title: '编辑',
+        title: '节点设置',
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
         area: ['800px', '520px'],

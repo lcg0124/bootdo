@@ -167,19 +167,15 @@ public class ModelController extends BaseController {
         //获取模型
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
-
         if (bytes == null) {
             return R.error("模型数据为空，请先设计流程并成功保存，再进行发布。");
         }
-
         JsonNode modelNode = new ObjectMapper().readTree(bytes);
-
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if (model.getProcesses().size() == 0) {
             return R.error("数据模型不符要求，请至少设计一条主线流程。");
         }
         byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
-
         //发布流程
         String processName = modelData.getName() + ".bpmn20.xml";
         Deployment deployment = repositoryService.createDeployment()

@@ -3,65 +3,163 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-<div class="wrapper wrapper-content ">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="signupForm">
-                        <input id="Id" name="Id" th:value="${customActivities.Id}" type="hidden">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">节点名称：</label>
-                            <div class="col-sm-8">
+<div class="wrapper wrapper-content" id="app">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-text"></i>人员管理</a>
+        </li>
+        <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i>邮件管理</a>
+        </li>
+        <li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-briefcase"></i>待办管理</a>
+        </li>
+        <li class=""><a data-toggle="tab" href="#tab-4"><i class="fa fa-briefcase"></i>自定义事件</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane active">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <form class="form-horizontal m-t" id="signupForm">
+                                <input id="Id" name="Id" th:value="${customActivities.Id}" type="hidden">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">节点名称：</label>
+                                    <div class="col-sm-8">
                                 <span id="activityName" name="activityName" th:text="${customActivities.activityName}"
-                                       class="form-control" type="text"/>
-                            </div>
-                        </div>
-                        <!--<div class="form-group">-->
-                        <!--<label class="col-sm-3 control-label">：</label>-->
-                        <!--<div class="col-sm-8">-->
-                        <!--<input id="assigneeType" name="assigneeType" th:value="${customActivities.assigneeType}"-->
-                        <!--class="form-control" type="text">-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">办理人：</label>
-                            <div class="col-sm-8">
-                                <input id="assignee" name="assignee" th:value="${customActivities.assignee}"
-                                       type="text" class="form-control">
+                                      class="form-control" type="text"/>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">：</label>-->
+                                <!--<div class="col-sm-8">-->
+                                <!--<input id="assigneeType" name="assigneeType" th:value="${customActivities.assigneeType}"-->
+                                <!--class="form-control" type="text">-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">办理人：</label>
+                                    <div class="col-sm-8">
+                                        <input id="assignee" name="assignee" th:value="${customActivities.assignee}"
+                                               type="text" class="hidden" v-model="assignee">
+                                        <input id="assigneeName" name="assigneeName" class="form-control"
+                                               type="text" @click="openUser(1)" v-model="assigneeName"
+                                               readonly="readonly" th:value="${customActivities.assigneeName}">
 
-                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">候选组：</label>
+                                    <div class="col-sm-8">
+                                        <input id="candidateGroup" name="candidateGroup"
+                                               th:value="${customActivities.candidateGroup}" class="form-control"
+                                               type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">候选人：</label>
+                                    <div class="col-sm-8">
+                                        <input id="candidateUser" name="candidateUser"
+                                               th:value="${customActivities.candidateUser}" type="text" class="hidden"
+                                               v-model="candidateUser">
+                                        <input id="candidateUserName" name="candidateUserName" class="form-control"
+                                               type="text" @click="openUser(2)"
+                                               readonly="readonly" v-model="candidateUserName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">候选组：</label>
-                            <div class="col-sm-8">
-                                <input id="candidateGroup" name="candidateGroup"
-                                       th:value="${customActivities.candidateGroup}" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">候选人：</label>
-                            <div class="col-sm-8">
-                                <input id="candidateUser" name="candidateUser"
-                                       th:value="${customActivities.candidateUser}" type="text" class="hidden">
-                                <input id="candidateUserName" name="candidateUserName" class="form-control"
-                                       type="text" onclick="openUser()"
-                                       readonly="readonly" placeholder="点击选择办理人">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-3">
-                                <button type="submit" class="btn btn-primary">提交</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="tab-2" class="tab-pane active">
+        </div>
+        <div id="tab-3" class="tab-pane ">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <form class="form-horizontal m-t" id="signupForm1">
+                                <input name="Id" th:value="${customActivities.Id}" type="hidden">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">待办模板：</label>
+                                    <div class="col-sm-8">
+                                        <input name="todoMessage" th:value="${customActivities.todoMessage}"
+                                               class="form-control" type="text"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary" onclick="update1()">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab-4" class="tab-pane active">
+        </div>
     </div>
+
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript" src="/js/appjs/act/customActivities/edit.js">
+</script>
+<script type="text/javascript" src="/js/appjs/act/customActivities/edit1.js"></script>
+
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            type: 1,
+            assignee: "[[${customActivities.assignee}]]",
+            assigneeName: "[[${customActivities.assigneeName}]]",
+            candidateUser: "[[${customActivities.candidateUser}]]",
+            candidateUserName: "[[${customActivities.candidateUserName}]]",
+        },
+        methods: {
+            openUser: function (type) {
+                this.type = type
+                var userIds;
+                if (this.type === 1) {
+                    userIds = this.assignee
+                } else {
+                    userIds = this.candidateUser
+                }
+                layer.open({
+                    type: 2,
+                    title: "选择人员",
+                    area: ['300px', '450px'],
+                    content: "/sys/user/treeView?userIds=" + userIds
+                })
+            },
+            loadUser: function (userIds, userNames) {
+                if (this.type === 1) {
+                    this.assignee = userIds;
+                    //校验是否多选
+                    console.log(userIds)
+                    if (userIds.length > 1) {
+                        layer.alert("处理人只能选一个")
+                        return
+                    }
+                    this.assigneeName = userNames
+                } else if (this.type === 2) {
+                    this.candidateUser = userIds;
+                    this.candidateUserName = userNames
+                }
+            }
+        }
+    })
+    loadUser = function (userIds, userNames) {
+        vue.loadUser(userIds, userNames)
+    }
 </script>
 </body>
 </html>

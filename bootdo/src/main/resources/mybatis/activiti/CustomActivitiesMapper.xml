@@ -4,7 +4,7 @@
 <mapper namespace="com.bootdo.activiti.dao.CustomActivitiesDao">
 
     <select id="get" resultType="com.bootdo.activiti.domain.CustomActivitiesDO">
-		select `Id`,`process_definition_id`,`process_version`,`process_definition_key`,`activity_type`,`activity_id`,`activity_name`,`assignee_type`,`assignee`,`candidate_group`,`candidate_user` from act_custom_activities where Id = #{value}
+		select `Id`,`process_definition_id`,`process_version`,`process_definition_key`,`activity_type`,`activity_id`,`activity_name`,`assignee_type`,`assignee`,`candidate_group`,`candidate_user` ,`todo_message` from act_custom_activities where Id = #{value}
 	</select>
 
     <select id="list" resultType="com.bootdo.activiti.domain.CustomActivitiesDO">
@@ -33,12 +33,36 @@
                 order by ${sort} ${order}
             </when>
             <otherwise>
-                order by Id desc
+                order by Id asc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
+    </select>
+
+    <select id="getOne" resultType="com.bootdo.activiti.domain.CustomActivitiesDO">
+        select
+        `Id`,`process_definition_id`,`process_version`,`process_definition_key`,`activity_type`,`activity_id`,`activity_name`,`assignee_type`,`assignee`,`candidate_group`,`candidate_user`,`todo_message`
+        from act_custom_activities
+        <where>
+            <if test="id != null and id != ''">and Id = #{id}</if>
+            <if test="processDefinitionId != null and processDefinitionId != ''">and process_definition_id =
+                #{processDefinitionId}
+            </if>
+            <if test="processVersion != null and processVersion != ''">and process_version = #{processVersion}</if>
+            <if test="processDefinitionKey != null and processDefinitionKey != ''">and process_definition_key =
+                #{processDefinitionKey}
+            </if>
+            <if test="activityType != null and activityType != ''">and activity_type = #{activityType}</if>
+            <if test="activityId != null and activityId != ''">and activity_id = #{activityId}</if>
+            <if test="activityName != null and activityName != ''">and activity_name = #{activityName}</if>
+            <if test="assigneeType != null and assigneeType != ''">and assignee_type = #{assigneeType}</if>
+            <if test="assignee != null and assignee != ''">and assignee = #{assignee}</if>
+            <if test="candidateGroup != null and candidateGroup != ''">and candidate_group = #{candidateGroup}</if>
+            <if test="candidateUser != null and candidateUser != ''">and candidate_user = #{candidateUser}</if>
+        </where>
+        order by Id asc limit 1
     </select>
 
     <select id="count" resultType="int">
@@ -105,6 +129,7 @@
             <if test="assignee != null">`assignee` = #{assignee},</if>
             <if test="candidateGroup != null">`candidate_group` = #{candidateGroup},</if>
             <if test="candidateUser != null">`candidate_user` = #{candidateUser}</if>
+            <if test="todoMessage != null">`todo_message` = #{todoMessage}</if>
         </set>
         where Id = #{id}
     </update>

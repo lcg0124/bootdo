@@ -1,6 +1,7 @@
 package com.bootdo.activiti.service.impl;
 
 import com.bootdo.activiti.config.ActivitiConstant;
+import com.bootdo.activiti.dao.CustomActivitiesDao;
 import com.bootdo.activiti.domain.ActivitiDO;
 import com.bootdo.activiti.domain.CustomActivitiesDO;
 import com.bootdo.activiti.service.ActTaskService;
@@ -9,6 +10,7 @@ import com.bootdo.activiti.service.ProcessService;
 import com.bootdo.activiti.vo.HisTaskDTO;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.common.utils.StringUtils;
+import com.bootdo.common.utils.VelocityUtils;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.domain.UserDO;
 import org.activiti.bpmn.model.BpmnModel;
@@ -68,6 +70,9 @@ public class ActTaskServiceImpl implements ActTaskService {
     @Autowired
     ProcessService processService;
 
+    @Autowired
+    CustomActivitiesDao customActivitiesDao;
+
     @Override
     public List<ActivitiDO> listTodo(ActivitiDO act) {
         String userId = String.valueOf(ShiroUtils.getUserId());
@@ -75,35 +80,11 @@ public class ActTaskServiceImpl implements ActTaskService {
         return result;
     }
 
-    /**
-     * 提交任务, 并保存意见
-     *
-     * @param taskId    任务ID
-     * @param procInsId 流程实例ID，如果为空，则不保存任务提交意见
-     * @param comment   任务提交意见的内容
-     * @param title     流程标题，显示在待办任务标题
-     * @param vars      任务变量
-     */
     @Override
-    public void complete(String taskId, String procInsId, String comment, String title, Map<String, Object> vars) {
-        // 添加意见
-        if (StringUtils.isNotBlank(procInsId) && StringUtils.isNotBlank(comment)) {
-            taskService.addComment(taskId, procInsId, comment);
-        }
-
-        // 设置流程变量
-        if (vars == null) {
-            vars = new HashMap<>();
-        }
-
-        // 设置流程标题
-        if (StringUtils.isNotBlank(title)) {
-            vars.put("title", title);
-        }
-        // 提交任务
-        taskService.complete(taskId, vars);
+    public void beforeComplete(String taskKey) {
 
     }
+
 
     @Override
     public void complete(String taskId, Map<String, Object> vars) {
@@ -112,21 +93,30 @@ public class ActTaskServiceImpl implements ActTaskService {
         String processDefinitionId = task.getProcessDefinitionId();
         List<Task> lbefores = taskService.createTaskQuery().processDefinitionId(processDefinitionId).list();
         taskService.complete(taskId, vars);
+        //处理任务完成后的自定义行为
+        afterComplete(task.getTaskDefinitionKey());
         this.setAssigneeByTaskId(processDefinitionId);
         List<Task> lafters = taskService.createTaskQuery().processDefinitionId(processDefinitionId).list();
+        //处理任务开始的自定义行为，如待办提醒等
         lafters.stream().filter(lafter ->
                 lbefores.stream().noneMatch(lbefore ->
                         lbefore.getId().equals(lafter.getId())
                 )
         ).forEach(task1 -> {
-            //发邮件等
-            List<UserDO> userDOs = userDao.list(new HashMap() {{
-                put("username", task1.getAssignee());
+            String message = Optional.ofNullable(customActivitiesDao.getOne(new HashMap() {{
+                put("processDefinitionId", processDefinitionId);
+                put("activityId", task1.getTaskDefinitionKey());
+            }})).map(u -> u.getTodoMessage()).orElse("");
+            message = VelocityUtils.RenderData(message, new HashMap() {{
+                put("taskName", task1.getName());
             }});
-            if (userDOs.size() > 0) {
-                template.convertAndSendToUser(userDOs.get(0).toString(), "/queue/notifications", "新待办：" + task1.getName());
-            }
+            template.convertAndSendToUser(userDao.get(Long.valueOf(task1.getAssignee())).toString(), "/queue/notifications", message);
         });
+    }
+
+    @Override
+    public void afterComplete(String taskKey) {
+
     }
 
     /**
@@ -141,40 +131,28 @@ public class ActTaskServiceImpl implements ActTaskService {
     @Override
     public ProcessInstance startProcess(String procDefKey, String businessId, String title, Map<String, Object> vars) {
         String userId = ShiroUtils.getUserId().toString();//ObjectUtils.toString(UserUtils.getUser().getId())
-
         // 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
         identityService.setAuthenticatedUserId(userId);
-
         // 设置流程变量
         if (vars == null) {
             vars = new HashMap();
         }
-
         // 设置流程标题
         if (StringUtils.isNotBlank(title)) {
             vars.put("title", title);
         }
-
-
         List<Task> lbefores = taskService.createTaskQuery().processDefinitionKey(procDefKey).list();
         // 启动流程
         ProcessInstance procIns = runtimeService.startProcessInstanceByKey(procDefKey, businessId, vars);
-
         this.setAssignee(ActivitiConstant.ACTIVITI_PROCESS_LEAVE);
-
         List<Task> lafters = taskService.createTaskQuery().processDefinitionKey(procDefKey).list();
         lafters.stream().filter(lafter ->
                 lbefores.stream().noneMatch(lbefore ->
                         lbefore.getId().equals(lafter.getId())
                 )
         ).forEach(task1 -> {
-            //发邮件等
-            List<UserDO> userDOs = userDao.list(new HashMap() {{
-                put("username", task1.getAssignee());
-            }});
-            if (userDOs.size() > 0) {
-                template.convertAndSendToUser(userDOs.get(0).toString(), "/queue/notifications", "新待办：" + task1.getName());
-            }
+            //发待办通知等
+            template.convertAndSendToUser(userDao.get(Long.valueOf(task1.getAssignee())).toString(), "/queue/notifications", "新待办：" + task1.getName());
         });
         return procIns;
     }

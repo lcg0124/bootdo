@@ -58,3 +58,5 @@ crashlytics-build.properties
 fabric.properties
 
 /bootdo.iml
+
+applog/

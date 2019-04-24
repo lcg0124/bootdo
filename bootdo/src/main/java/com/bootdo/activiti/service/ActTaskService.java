@@ -8,13 +8,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ *
  */
 public interface ActTaskService {
     List<ActivitiDO> listTodo(ActivitiDO act);
 
-    void complete(String taskId, String procInsId, String comment, String title, Map<String, Object> vars);
+    void beforeComplete(String taskKey);
 
-    void complete(String taskId,Map<String,Object> vars);
+    void complete(String taskId, Map<String, Object> vars);
+
+    /**
+     * 完成任务时的操作，开发者自己实现接口
+     * @param taskKey
+     */
+    void afterComplete(String taskKey);
 
     ProcessInstance startProcess(String procDefKey, String businessId, String title, Map<String, Object> vars);
 
@@ -28,6 +35,7 @@ public interface ActTaskService {
 
     /**
      * 根据任务id查询流转信息
+     *
      * @param taskId
      * @return
      */

@@ -80,7 +80,7 @@ public class BDExceptionHandler {
         logService.save(logDO);
         logger.error(e.getMessage(), e);
         if (HttpServletUtils.jsAjax(request)) {
-            return R.error(500, "服务器错误，请联系管理员");
+            return R.error(500, e.getMessage());
         }
         return new ModelAndView("error/500");
     }

@@ -33,10 +33,18 @@ public class CustomActivitiesDO implements Serializable {
 	private Integer assigneeType;
 	//
 	private String assignee;
+
+	private String assigneeName;
 	//
 	private String candidateGroup;
+
+	private String candidateGroupName;
 	//
 	private String candidateUser;
+
+	private String candidateUserName;
+
+	private String todoMessage;
 
 	/**
 	 * 设置：
@@ -169,5 +177,37 @@ public class CustomActivitiesDO implements Serializable {
 	 */
 	public String getCandidateUser() {
 		return candidateUser;
+	}
+
+	public String getAssigneeName() {
+		return assigneeName;
+	}
+
+	public void setAssigneeName(String assigneeName) {
+		this.assigneeName = assigneeName;
+	}
+
+	public String getCandidateGroupName() {
+		return candidateGroupName;
+	}
+
+	public void setCandidateGroupName(String candidateGroupName) {
+		this.candidateGroupName = candidateGroupName;
+	}
+
+	public String getCandidateUserName() {
+		return candidateUserName;
+	}
+
+	public void setCandidateUserName(String candidateUserName) {
+		this.candidateUserName = candidateUserName;
+	}
+
+	public String getTodoMessage() {
+		return todoMessage;
+	}
+
+	public void setTodoMessage(String todoMessage) {
+		this.todoMessage = todoMessage;
 	}
 }

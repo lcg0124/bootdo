@@ -112,13 +112,11 @@ function add() {
     // iframe层
     var page = layer.open({
         type: 2,
-        title: '新建模型',
-        maxmin: true,
+        title: '导入流程',
         shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
+        area: ['720px', '400px'],
         content: prefix + '/add'
     });
-    layer.full(page);
 }
 
 function remove(id) {
@@ -150,7 +148,7 @@ function edit(id) {
         maxmin: true,
         shadeClose: false,
         area: ['100%', '100%'],
-        content:  "/activiti/customActivities?processId="+id
+        content: "/activiti/customActivities?processId=" + id
     });
 }
 

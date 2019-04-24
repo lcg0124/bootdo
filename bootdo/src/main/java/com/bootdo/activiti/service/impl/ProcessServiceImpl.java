@@ -105,7 +105,7 @@ public class ProcessServiceImpl implements ProcessService {
             if (ActivitiConstant.ACTIVITY_TYPE_USER_TASK.equals(e.getActivityType())) {
                 HisTaskDTO hisTaskDTO1 = new HisTaskDTO();
                 hisTaskDTO1.setName(e.getActivityName());
-                hisTaskDTO1.setUser(userDao.getNameByUsername(e.getAssignee()));
+                hisTaskDTO1.setUser(userDao.getNameByUserId(e.getAssignee()));
                 hisTaskDTO1.setDate(e.getEndTime());
                 list.add(hisTaskDTO1);
             }
