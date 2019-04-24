@@ -10,7 +10,7 @@ import java.util.Map;
  * @author lichunguang
  */
 public class VelocityUtils {
-    public static String RenderData(String source, Map parameter) {
+    public static String renderData(String source, Map parameter) {
         // 初始化并取得Velocity引擎
         VelocityEngine ve = new VelocityEngine();
         ve.init();

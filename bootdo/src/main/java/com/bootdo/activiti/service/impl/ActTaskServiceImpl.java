@@ -107,7 +107,7 @@ public class ActTaskServiceImpl implements ActTaskService {
                 put("processDefinitionId", processDefinitionId);
                 put("activityId", task1.getTaskDefinitionKey());
             }})).map(u -> u.getTodoMessage()).orElse("");
-            message = VelocityUtils.RenderData(message, new HashMap() {{
+            message = VelocityUtils.renderData(message, new HashMap() {{
                 put("taskName", task1.getName());
             }});
             template.convertAndSendToUser(userDao.get(Long.valueOf(task1.getAssignee())).toString(), "/queue/notifications", message);

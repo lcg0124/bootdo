@@ -83,7 +83,7 @@ public class ContentController extends BaseController {
 		bContent.setGtmCreate(new Date());
 		bContent.setGtmModified(new Date());
 		int count;
-		if (bContent.getCid() == null || "".equals(bContent.getCid())) {
+		if (bContent.getCid() == null) {
 			count = bContentService.save(bContent);
 		} else {
 			count = bContentService.update(bContent);

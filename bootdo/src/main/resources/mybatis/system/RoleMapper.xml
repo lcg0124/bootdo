@@ -24,7 +24,7 @@
 		</where>
 		<choose>
 			<when test="sort != null and sort.trim() != ''">
-                order by #{sort} #{order}
+                order by #{sort}
 			</when>
 			<otherwise>
 				order by role_id desc
