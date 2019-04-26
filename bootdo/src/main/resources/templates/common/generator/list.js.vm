@@ -1,12 +1,15 @@
 
-var prefix = "/${pathName}/${classname}"
+var prefix = "/${pathName}/${classname}";
+var ${classname}SearchForm = $("form[name='${classname}SearchForm']");
 $(function() {
 	load();
 });
+function getQueryParams(queryParams){
+    //查询条件
+}
 
 function load() {
-	$('#exampleTable')
-			.bootstrapTable(
+	$('#${classname}Table').bootstrapTable(
 					{
 						method : 'get', // 服务器数据的请求方式 get or post
 						url : prefix + "/list", // 服务器数据的加载地址
@@ -29,13 +32,12 @@ function load() {
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
 						queryParams : function(params) {
-							return {
-								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
-								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
-					           // username:$('#searchName').val()
-							};
+                            var queryParams = {
+                                limit: params.limit,
+                                offset:params.offset
+                            };
+                            getQueryParams(queryParams);
+                            return queryParams;
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
 						// queryParamsType = 'limit' ,返回参数必须包含
@@ -73,8 +75,15 @@ function load() {
 					});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+	$('#${classname}Table').bootstrapTable('refresh');
 }
+
+//重置查询条件
+function reset() {
+    ${classname}SearchForm[0].reset();
+    reLoad();
+}
+
 function add() {
 	layer.open({
 		type : 2,
@@ -120,7 +129,7 @@ function remove(id) {
 function resetPwd(id) {
 }
 function batchRemove() {
-	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	var rows = $('#${classname}Table').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
 		layer.msg("请选择要删除的数据");
 		return;

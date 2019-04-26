@@ -21,6 +21,8 @@ public class ColumnDO {
 	private String attrType;
 	// auto_increment
 	private String extra;
+	// jdbcType
+	private String jdbcType;
 
 	public String getColumnName() {
 		return columnName;
@@ -89,5 +91,23 @@ public class ColumnDO {
 				", attrType='" + attrType + '\'' +
 				", extra='" + extra + '\'' +
 				'}';
+	}
+
+	/**
+	 * 获取 jdbcType
+	 *
+	 * @return jdbcType jdbcType
+	 */
+	public String getJdbcType() {
+		return this.jdbcType;
+	}
+
+	/**
+	 * 设置 jdbcType
+	 *
+	 * @param jdbcType jdbcType
+	 */
+	public void setJdbcType(String jdbcType) {
+		this.jdbcType = jdbcType;
 	}
 }
